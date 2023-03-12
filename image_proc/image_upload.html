@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image manipulation</title>
+</head>
+<body>
+    <div>
+        <div> Upload image below </div>
+        <img id="imageContainer" alt="No Image Uploaded"> 
+        <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg" title="Upload Image">
+    </div>
+    <script>
+        "use strict";
+        const uploadButton = document.getElementById("uploadButton");
+        const readerImg = new FileReader();
+        const imgElement = document.getElementById("imageContainer");
+
+        uploadButton.addEventListener("change", (event) => {
+            console.log(uploadButton.files[0]);
+
+            readerImg.addEventListener("load", (event) => {
+            console.log("On load event");
+            // imgElement.src = event.target.result;
+            imgElement.src = readerImg.result;
+        });
+
+            readerImg.readAsDataURL(uploadButton.files[0]);
+            console.log("File should be read so far");
+        });
+    </script>
+</body>
+</html>
