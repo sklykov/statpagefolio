@@ -1,0 +1,17 @@
+# My composition
+docs/*
+Docs/*
+Documents/*
+*.doc
+*.docx
+*.odt
+*.txt
+*.rtf
+*.jpg
+*.jpeg
+*.png
+*.tiff
+*.tif
+*.pdf
+.idea/
+.vscode/
