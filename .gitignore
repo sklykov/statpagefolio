@@ -5,7 +5,7 @@ Documents/*
 *.doc
 *.docx
 *.odt
-*.txt
+# *.txt
 *.rtf
 *.jpg
 *.jpeg
@@ -13,5 +13,5 @@ Documents/*
 *.tiff
 *.tif
 *.pdf
-.idea/
-.vscode/
+.idea/*
+.vscode/*
