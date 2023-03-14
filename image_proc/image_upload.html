@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,12 +10,17 @@
     <!-- Load page logic from the external script file -->
     <script src="image_load_process.js"></script>
 
+    <!-- Styling -->
+    <link rel="stylesheet" href="image_upload_styles.css"> 
+
 </head>
+
 <body>
     <div>
-        <div> Upload image below </div>
-        <img id="imageContainer" alt="No Image Uploaded"> 
+        <div id="uploadInfoStr"> Upload image: </div>
         <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg" title="Upload Image">
+        <img id="imageContainer" alt="No Image Uploaded, image holder"> 
     </div>
 </body>
+
 </html>

@@ -1,19 +1,24 @@
 document.addEventListener("DOMContentLoaded", ()=>{
     "use strict";
+
+    // Elements selectors
     const uploadButton = document.getElementById("uploadButton");
     const imgElement = document.getElementById("imageContainer");
-    const readerImg = new FileReader();  // 
+    const uploadInfoStr = document.getElementById("uploadInfoStr");
+
+    // Images reader
+    const readerImg = new FileReader();
+
+    uploadButton.value = "";  // put default "No file selected" to the input button
 
     uploadButton.addEventListener("change", (event) => {
-        console.log(uploadButton.files[0]);
-
-        readerImg.addEventListener("load", (event) => {
-            console.log("On load event");
-            // imgElement.src = event.target.result;
-            imgElement.src = readerImg.result;
-        });
-
         readerImg.readAsDataURL(uploadButton.files[0]);
-        console.log("File should be read so far");
     });
+
+    readerImg.addEventListener("load", (event) => {
+        imgElement.src = readerImg.result;
+        console.log(readerImg.result);
+        uploadInfoStr.innerText = `Image uploaded and shown below. Name of image: ${uploadButton.files[0].name}. Upload new image: `;
+    });
+    
 })
