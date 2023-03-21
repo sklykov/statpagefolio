@@ -1,7 +1,9 @@
 #imageContainer{
-    width: 64%; height: auto;
-    /* width: 64vw; height: 64vh;  */
-    padding: 6px;
+    padding: 6px; display: block;
+}
+
+#imageAsCanvas{
+    padding: 6px; display: block;
 }
 
 #uploadInfoStr, #uploadButton{
@@ -10,8 +12,4 @@
 
 #uploadInfoStr{
     font-size: 16px;
-}
-
-#imageContainer{
-    display: block;
 }
