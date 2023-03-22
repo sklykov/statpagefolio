@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Images reader and value for storing original image
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
+    let widthSet = "55%";  // width setting
 
     uploadButton.value = "";  // put default "No file selected" to the input button
 
@@ -28,14 +29,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
             canvas.width = imgElement.width; canvas.height = imgElement.height;  // make canvas to inherit geometrical properties of <img> element
             console.log(`Image WxH: ${imgElement.width}x${imgElement.height}`);
             // Set now styling for restrict image sizes
-            imgElement.style.width = "64%"; imgElement.style.height = "auto";  // to prevent wrong transfer to canvas file
+            imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to canvas file
             imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
             imageClass.onload = () => {
                 contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
-                canvas.style.width = "64%"; canvas.style.height = "auto";  // same styling as <img> element
+                canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
             };
         }; 
         uploadInfoStr.innerText = `Image uploaded and shown below. Name of image: ${uploadButton.files[0].name}. Upload new image: `;
-        imgElement.style.filter = "blur(2px)";
+        // imgElement.style.filter = "blur(2px)";
     });
 })

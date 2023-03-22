@@ -1,15 +1,28 @@
-#imageContainer{
-    padding: 6px; display: block;
+body *{
+    /* Default settings for all elements, see the selector */
+    padding: 0.25em;
 }
 
-#imageAsCanvas{
-    padding: 6px; display: block;
+#imageContainer, #imageAsCanvas{
+    display: block; margin: 0.25em;
 }
 
 #uploadInfoStr, #uploadButton{
-    padding: 5px; display: inline-block; 
+    display: inline-block; 
 }
 
 #uploadInfoStr{
     font-size: 16px;
+}
+
+#pageHeader{
+    text-align: center; margin: 0.4em;
+}
+ 
+#widthInputContainer{
+    display: flex;
+}
+
+#width-label{
+    margin-left: 0.5em;
 }
