@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const uploadInfoStr = document.getElementById("uploadInfoStr");
     const canvas = document.getElementById("imageAsCanvas");  // canvas element allows also pixel manipulation
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
+    const widthInput = document.getElementById("widthImageInput"); 
 
     // Images reader and value for storing original image
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
-    let widthSet = "55%";  // width setting
+    let widthSet = "55%"; widthInput.value = 55;  // default width setting
+    let imageUploaded = false;
 
     uploadButton.value = "";  // put default "No file selected" to the input button
 
@@ -34,9 +36,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imageClass.onload = () => {
                 contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
                 canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
+                imageUploaded = true;
             };
         }; 
         uploadInfoStr.innerText = `Image uploaded and shown below. Name of image: ${uploadButton.files[0].name}. Upload new image: `;
         // imgElement.style.filter = "blur(2px)";
+    });
+
+    // Listen to change of width input
+    widthInput.addEventListener("change", () => {
+        if (imageUploaded){
+            widthSet = `${widthInput.value}%`;
+            canvas.style.width = widthSet; imgElement.style.width = widthSet; 
+        }
     });
 })

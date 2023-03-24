@@ -24,18 +24,22 @@
         <!-- Upload button, img element -->
         <div id="uploadInfoStr"> Upload image using button: </div>
         <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg" title="Upload Image">
-        <img id="imageContainer" alt="No Image Uploaded if you see this :-)">
 
         <!-- Width of the images control -->
         <div id="widthInputContainer">
-            <datalist id="width-ticks">
-                <option value="10" label="10"> </option>
-                <option value="55" label="55"> </option>
-                <option value="100" label="100"> </option>
-            </datalist>
-            <input type="range" min="10" max="100" id="widthImageInput" name="width-input" value="55" list="width-ticks">
+            <div id="input-ticks-container"> 
+                <input type="range" min="10" max="100" id="widthImageInput" name="width-input" value="55" list="width-ticks" autocomplete="off">
+                <datalist id="width-ticks">
+                    <option value="10" label="10"> </option>
+                    <option value="55" label="55"> </option>
+                    <option value="100" label="100"> </option>
+                </datalist>
+            </div>
             <label for="widthImageInput" id="width-label"> - Image width as % of the page width </label> 
         </div>
+
+        <!-- Image container -->
+        <img id="imageContainer" alt="No Image Uploaded if you see this :-)">
 
         <!-- Canvas element -->
         <p> Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element </p>

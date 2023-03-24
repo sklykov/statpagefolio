@@ -1,10 +1,10 @@
 body *{
     /* Default settings for all elements, see the selector */
-    padding: 0.25em;
+    padding: 0.25em; margin: 0.15em;
 }
 
 #imageContainer, #imageAsCanvas{
-    display: block; margin: 0.25em;
+    display: block;
 }
 
 #uploadInfoStr, #uploadButton{
@@ -18,9 +18,25 @@ body *{
 #pageHeader{
     text-align: center; margin: 0.4em;
 }
- 
+
+/* Styling of the width input label, input and datalist elements */
 #widthInputContainer{
-    display: flex;
+    display: flex; padding-top: 0.65em; margin: 0px;
+}
+
+#input-ticks-container{
+    /* display: flex;  */   /* Inherited from the parent above */
+    flex-direction: column;  
+}
+
+#widthImageInput{
+    padding: 0px; width: 180px;
+}
+
+#width-ticks{
+    display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
+    justify-content: space-between;   /* Spread elements on the whole length */
+    width: 104%; padding: 0px;  /* Adjustment to fit with the ticks on <input> element */
 }
 
 #width-label{
