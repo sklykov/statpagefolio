@@ -4,7 +4,7 @@ body *{
 }
 
 #imageContainer, #imageAsCanvas{
-    display: block;
+    display: block; margin: 0.1em; padding: 0.2em;
 }
 
 #uploadInfoStr, #uploadButton{
@@ -19,14 +19,18 @@ body *{
     text-align: center; margin: 0.4em;
 }
 
+#image-manipulation-controls-box{
+    display: flex; flex-direction: row;
+}
+
 /* Styling of the width input label, input and datalist elements */
 #widthInputContainer{
-    display: flex; padding-top: 0.65em; margin: 0px;
+    display: flex; padding-top: 0.65em; margin: 0px; padding-bottom: 0.1em;
 }
 
 #input-ticks-container{
     /* display: flex;  */   /* Inherited from the parent above */
-    flex-direction: column;  
+    flex-direction: column;  margin: 0px;
 }
 
 #widthImageInput{
@@ -36,7 +40,7 @@ body *{
 #width-ticks{
     display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
     justify-content: space-between;   /* Spread elements on the whole length */
-    width: 104%; padding: 0px;  /* Adjustment to fit with the ticks on <input> element */
+    width: 105%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
 }
 
 #width-label{
