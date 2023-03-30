@@ -8,11 +8,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const canvas = document.getElementById("imageAsCanvas");  // canvas element allows also pixel manipulation
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
     const widthInput = document.getElementById("widthImageInput"); 
+    const blurInput = document.getElementById("blur-control"); 
+    const blurValue = document.getElementById("blur-value");
 
     // Images reader and value for storing original image
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
     let widthSet = "55%"; widthInput.value = 55;  // default width setting
+    let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
 
@@ -25,7 +28,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Event listener that reacts to finished loaded event from above (readerImg.readAsDataURL(...))
     readerImg.addEventListener("load", (event) => {
-        imageUploaded = false; widthInput.disabled = true; // default values - before it will be confirmed that the image loaded
+        // Below - default values for the case that image not uploaded - before it will be confirmed that the image loaded
+        imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; 
         // console.log(readerImg.result.slice(5, 10));  // will print out the type of the uploaded file
         fileType = readerImg.result.slice(5, 10);
         // Simple uploaded type checker - if the FileReader reports that uploaded image, then proceed to drawing of its content
@@ -33,9 +37,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imgElement.src = readerImg.result;  // transfer loaded image to the HTML element, evoke "load" event in the end of loading
             // Add event listener to finished load of an image
             imgElement.onload = () => {
-                console.log(imgElement);
-                canvas.width = imgElement.width; canvas.height = imgElement.height;  // make canvas to inherit geometrical properties of <img> element
-                console.log(`Image WxH: ${imgElement.width}x${imgElement.height}`);
+                canvas.width = imgElement.naturalWidth; canvas.height = imgElement.naturalHeight;  // make canvas to inherit geometrical properties of <img> element
+                console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);  // note of usage of naturalWidth and naturalHeight - original image properties
                 // Set now styling for restrict image sizes
                 imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
                 imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
@@ -43,7 +46,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
                     canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
                     // check that it was normal image (width and height more than 1 pixel)
-                    if ((Number.parseInt(imgElement.width) > 1) && (Number.parseInt(imgElement.height) > 1)){
+                    if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
                         changePropsImgUploaded();  // centrally changing of properties when the image is uploaded
                     } else {
                         window.alert("The uploaded image width and / or height isn't more than 1 pixel, it will be ignored!");
@@ -53,7 +56,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
         } else {
             clearCanvas();
         }
-        // setTimeout(750, clearCanvas());  // clear image on canvas if it hasn't been uploaded 
     });
 
     // Listen to a change on the page of the width input
@@ -64,9 +66,28 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     });
 
+    // Blurring image if the blur control changed
+    blurInput.addEventListener("change", ()=>{
+        if (imageUploaded){
+            blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
+            imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element
+            blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
+
+            // Below - manually cleaning drawn image, applying filter, drawing the result, but the result is different compared to the result of 
+            // the same filter applied to the <img> element (code above)
+            // contextCanvas.clearRect(0, 0, canvas.width, canvas.height);
+            // contextCanvas.filter = `blur(${blurPixelValue})`;  
+            // contextCanvas.drawImage(imageClass, 0, 0);
+
+            // Applying the filter on the canvas and drawing the direct result, instead of drawing original image
+            canvas.style.filter = `blur(${blurPixelValue})`;  
+            contextCanvas.drawImage(canvas, 0, 0);
+        }
+    }); 
+
     // Change properties of page elements if the image was successfully uploaded to the browser
     function changePropsImgUploaded(){
-        imageUploaded = true; widthInput.disabled = false;
+        imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false;
         uploadInfoStr.innerText = `Image uploaded and shown below. Name of image: ${uploadButton.files[0].name}. Upload new image: `;
     };
 

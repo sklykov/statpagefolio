@@ -38,15 +38,15 @@
             <label for="widthImageInput" id="width-label"> - Image width as % of the page width </label> 
         </div>
 
-        <!-- Image manipulation control -->
-        <div id="image-manipulation-controls-box">
-            <div> 
-                Image blur control: 
-            </div>
-        </div>
-
         <!-- Image container -->
         <img id="imageContainer" alt="No Image Uploaded if you see this :-)">
+
+        <!-- Image manipulation controls for effects: blur, ... -->
+        <div id="image-manipulation-controls-box">
+            <label for="blur-control" id="blur-label"> Blur as Gaussian kernel with width pixel (0.0, 0.1... - 10.0): </label>
+            <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
+            <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+        </div>
 
         <!-- Canvas element -->
         <p> Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element </p>

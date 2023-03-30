@@ -3,8 +3,9 @@ body *{
     padding: 0.25em; margin: 0.15em;
 }
 
+/* Styling of common page elements */
 #imageContainer, #imageAsCanvas{
-    display: block; margin: 0.1em; padding: 0.2em;
+    display: block;
 }
 
 #uploadInfoStr, #uploadButton{
@@ -17,10 +18,6 @@ body *{
 
 #pageHeader{
     text-align: center; margin: 0.4em;
-}
-
-#image-manipulation-controls-box{
-    display: flex; flex-direction: row;
 }
 
 /* Styling of the width input label, input and datalist elements */
@@ -45,4 +42,22 @@ body *{
 
 #width-label{
     margin-left: 0.5em;
+}
+
+/* Styling of image manipulation controls */
+#image-manipulation-controls-box{
+    display: flex; flex-direction: row;
+    padding-left: 0px; 
+}
+
+#blur-label{
+    padding-left: 0px;
+}
+
+#blur-control{
+    width: 200px;
+}
+
+#blur-value{
+    color: darkslategray;
 }
