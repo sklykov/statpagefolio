@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Elements selectors from DOM
     const uploadButton = document.getElementById("uploadButton");
-    const imgElement = document.getElementById("imageContainer");
+    const imgElement = document.getElementById("imageContainer");  // it points to the <img> HTML element
     const uploadInfoStr = document.getElementById("uploadInfoStr");
-    const canvas = document.getElementById("imageAsCanvas");  // canvas element allows also pixel manipulation
+    const canvas = document.getElementById("imageAsCanvas");  // HTML <canvas> element allows pixel manipulation in addition to operations
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
     const widthInput = document.getElementById("widthImageInput"); 
     const blurInput = document.getElementById("blur-control"); 
@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
+    let windowWidth = window.innerWidth; let windowHeight = window.innerHeight; 
+    let loadedImgWidth = 0; let loadedImgHeight = 0;
 
     uploadButton.value = "";  // put default "No file selected" to the input button
 
@@ -37,9 +39,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imgElement.src = readerImg.result;  // transfer loaded image to the HTML element, evoke "load" event in the end of loading
             // Add event listener to finished load of an image
             imgElement.onload = () => {
+                windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
                 canvas.width = imgElement.naturalWidth; canvas.height = imgElement.naturalHeight;  // make canvas to inherit geometrical properties of <img> element
                 console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);  // note of usage of naturalWidth and naturalHeight - original image properties
-                // Set now styling for restrict image sizes
+                console.log(`Browser viewport / Document WxH: ${windowWidth}x${windowHeight}`);  // log the view port of the browser size
+                loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
+
+                // Set now styling for restrict image sizes, taking into account the window properties
+                // Below - recalculate width set in % of the window width
+                if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
+                    widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
+                } else {
+                    widthInput.value = 85; widthSet = `${widthInput.value}%`;  // then the loaded image is less then the window size, just use most of the page width
+                }
+
+                // Set the width % to the style of elements
                 imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
                 imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
                 imageClass.onload = () => {
@@ -98,4 +112,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imgElement.src = "";
         }
     };
+
+    // Window size changed event
+    window.addEventListener("resize", () => {
+        windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
+        // console.log("Window resized: "+`${windowWidth}x${windowHeight}`);
+    });
 })
