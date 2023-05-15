@@ -1,63 +1,78 @@
 body *{
     /* Default settings for all elements, see the selector */
     padding: 0.25em; margin: 0.15em;
+    font-size: 1.025em;
 }
 
 /* Styling of common page elements */
 #imageContainer, #imageAsCanvas{
-    display: block;
+    /* display: block;  */   /* will be changed to this value by JS code, when the image uploaded */
+    display: none;
 }
-
-#uploadInfoStr, #uploadButton{
-    display: inline-block; 
-}
-
-#uploadInfoStr{
-    font-size: 16px;
-}
-
 #pageHeader{
-    text-align: center; margin: 0.4em;
+    text-align: center; margin: 0.4em; font-size: 1.25em;
+}
+
+/* Upload section styling */
+#uploadBtnContainer{
+    display: block; 
+    text-align: center;  /* Put the content to the center of the webpage */
+    margin: auto; margin-top: 0.75em;
+    font-weight: bold;  /* make text bold in the container */
+    border: solid 1px darkolivegreen;
+    width: fit-content;
+}
+#uploadInfoStr, #uploadButton{
+    display: inline-block; text-align: center; margin-top: 1.0em; margin-bottom: 1.0em; margin-left: 1.25em; margin-right: 1.25em;
+}
+#uploadButton{
+    font-size: 1.0em; color: red;
+    border: 1px solid darkkhaki; 
 }
 
 /* Styling of the width input label, input and datalist elements */
 #widthInputContainer{
-    display: flex; padding-top: 0.65em; margin: 0px; padding-bottom: 0.1em;
+    /* display: flex;  */  /* will be changed to this value by JS code, when the image uploaded */
+    display: none;
+    padding-top: 0.65em; margin: 0px; padding-bottom: 0.1em;
 }
-
 #input-ticks-container{
     /* display: flex;  */   /* Inherited from the parent above */
     flex-direction: column;  margin: 0px;
 }
-
 #widthImageInput{
     padding: 0px; width: 180px;
 }
-
 #width-ticks{
     display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
     justify-content: space-between;   /* Spread elements on the whole length */
     width: 105%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
+    font-size: 0.95em;
 }
-
 #width-label{
     margin-left: 0.5em;
 }
 
 /* Styling of image manipulation controls */
 #image-manipulation-controls-box{
-    display: flex; flex-direction: row;
+    /* display: flex; flex-direction: row; */
+    display: none;
     padding-left: 0px; 
 }
-
 #blur-label{
     padding-left: 0px;
 }
-
 #blur-control{
     width: 200px;
 }
-
 #blur-value{
     color: darkslategray;
+}
+
+#info-two-image-elements{
+    display: none;
+}
+
+#download-image-btn{
+    display: none;
 }

@@ -19,11 +19,14 @@
 </head>
 
 <body>
-    <h3 id="pageHeader"> Uploaded image manipulation using Vanilla JS </h3>
+    <h3 id="pageHeader"> Project: Processing of uploaded image (serverless) using Vanilla JS </h3>
     <div id="uploadImgContainer">
-        <!-- Upload button, img element -->
-        <div id="uploadInfoStr"> Upload image using button: </div>
-        <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg" title="Upload Image">
+        <!-- Upload button, select image file-->
+        <div id="uploadBtnContainer">
+            <div id="uploadInfoStr" for="uploadButton"> To proceed upload image using button: </div>
+            <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg" title="Upload Image" />
+        </div>
+        
 
         <!-- Width of the images control -->
         <div id="widthInputContainer">
@@ -35,7 +38,7 @@
                     <option value="100" label="100"> </option>
                 </datalist>
             </div>
-            <label for="widthImageInput" id="width-label"> - Image width as % of the page width </label> 
+            <label for="widthImageInput" id="width-label"> - Control image width as % of the page width </label> 
         </div>
 
         <!-- Image container -->
@@ -43,14 +46,19 @@
 
         <!-- Image manipulation controls for effects: blur, ... -->
         <div id="image-manipulation-controls-box">
-            <label for="blur-control" id="blur-label"> Blur as Gaussian kernel with width pixel (0.0, 0.1... - 10.0): </label>
+            <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
             <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
             <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
         </div>
 
         <!-- Canvas element -->
-        <p> Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended now for debugging. </p>
+        <p id="info-two-image-elements"> 
+            Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended now for debugging. 
+        </p>
         <canvas id="imageAsCanvas"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
+
+        <!-- Download image button -->
+        <button id="download-image-btn"> Download Image </button>
     </div>
 </body>
 

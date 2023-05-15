@@ -8,13 +8,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const canvas = document.getElementById("imageAsCanvas");  // HTML <canvas> element allows pixel manipulation in addition to operations
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
     const widthInput = document.getElementById("widthImageInput"); 
-    const blurInput = document.getElementById("blur-control"); 
-    const blurValue = document.getElementById("blur-value");
+    const blurInput = document.getElementById("blur-control"); const blurValue = document.getElementById("blur-value");
+    const widthInputContainer = document.getElementById("widthInputContainer");
+    const uploadBtnContainer = document.getElementById("uploadBtnContainer");
+    const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
+    const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
+    const downloadBtn = document.getElementById("download-image-btn");
 
     // Images reader and value for storing original image
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
-    let widthSet = "55%"; widthInput.value = 55;  // default width setting
+    let widthSet = "55%"; widthInput.value = 55; let defaultWidthPercentage = 55; // default width setting
     let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
@@ -37,6 +41,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Simple uploaded type checker - if the FileReader reports that uploaded image, then proceed to drawing of its content
         if (fileType == "image"){
             imgElement.src = readerImg.result;  // transfer loaded image to the HTML element, evoke "load" event in the end of loading
+
             // Add event listener to finished load of an image
             imgElement.onload = () => {
                 windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
@@ -45,30 +50,34 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 console.log(`Browser viewport / Document WxH: ${windowWidth}x${windowHeight}`);  // log the view port of the browser size
                 loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
 
+                // If new image uploaded, change width control to the default one and compare with the default percentage of the page width = 55%
+                widthInput.value = defaultWidthPercentage;
+
                 // Set now styling for restrict image sizes, taking into account the window properties
                 // Below - recalculate width set in % of the window width
                 if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
                     widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
-                } else {
-                    widthInput.value = 85; widthSet = `${widthInput.value}%`;  // then the loaded image is less then the window size, just use most of the page width
                 }
 
                 // Set the width % to the style of elements
                 imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
                 imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
+
+                // Draw image on the <canvas> element
                 imageClass.onload = () => {
                     contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
                     canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
                     // check that it was normal image (width and height more than 1 pixel)
                     if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
-                        changePropsImgUploaded();  // centrally changing of properties when the image is uploaded
+                        changePropsImgUploaded();  // centrally changing of flags and elements content by 
+                        changePageStyleImgUploaded();  // change style of elements to show loaded image
                     } else {
                         window.alert("The uploaded image width and / or height isn't more than 1 pixel, it will be ignored!");
                     }
                 };
             };
         } else {
-            clearCanvas();
+            clearImagesFromElements();
         }
     });
 
@@ -102,20 +111,34 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Change properties of page elements if the image was successfully uploaded to the browser
     function changePropsImgUploaded(){
         imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false;
-        uploadInfoStr.innerText = `Image uploaded and shown below. Name of image: ${uploadButton.files[0].name}. Upload new image: `;
+        uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
+        uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>Upload new image:`;
     };
 
-    // Remove previously uploaded image from <img> and <canvas> elements
-    function clearCanvas(){
+    // Change styling after uploading image on the page
+    // TODO - better way to get all rules from an external file?
+    function changePageStyleImgUploaded(){
+        imgElement.style.display = "block";   // Display the <image> element on the page
+        canvas.style.display = "block";  // Display the <canvas> element on the page
+        widthInputContainer.style.display = "flex"; infoTwoImagesStr.style.display = "block";
+        uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
+        uploadBtnContainer.style.marginTop = "0.1em"; uploadInfoStr.style.marginRight = "0.1em";
+        uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
+        uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
+        processingCtrlBox.style.display = "flex"; processingCtrlBox.style.flexDirection = "row";
+        downloadBtn.style.display = "block";
+    }
+
+    // Remove previously uploaded image from <img> and <canvas> elements, also handle if the image not uploaded
+    function clearImagesFromElements(){
         if (!imageUploaded){
-            contextCanvas.clearRect(0, 0, canvas.width, canvas.height);
-            imgElement.src = "";
+            contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = ""; 
+            // Specifying below default styling if the image haven't been uploaded
+            imgElement.style.display = "none"; canvas.style.display = "none";
+            widthInputContainer.style.display = "none"; infoTwoImagesStr.style.display = "none";
+            processingCtrlBox.style.display = "none"; uploadInfoStr.innerHTML = '<span style="color: red;">Image not uploaded!</span> Upload new image:';
+            downloadBtn.style.display = "none";
         }
     };
-
-    // Window size changed event
-    window.addEventListener("resize", () => {
-        windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
-        // console.log("Window resized: "+`${windowWidth}x${windowHeight}`);
-    });
-})
+    
+});
