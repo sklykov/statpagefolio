@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const uploadBtnContainer = document.getElementById("uploadBtnContainer");
     const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
     const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
-    const downloadBtn = document.getElementById("download-image-btn");
+    const downloadBtn = document.getElementById("download-button");
+    const pageHeader = document.getElementById("pageHeader");  // for changing its margin-top
 
     // Images reader and value for storing original image
     const readerImg = new FileReader();  // IO API from JS
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight; 
-    let loadedImgWidth = 0; let loadedImgHeight = 0;
+    let loadedImgWidth = 0; let loadedImgHeight = 0; let imageFormat = ""; 
 
     uploadButton.value = "";  // put default "No file selected" to the input button
 
@@ -36,46 +37,53 @@ document.addEventListener("DOMContentLoaded", ()=>{
     readerImg.addEventListener("load", (event) => {
         // Below - default values for the case that image not uploaded - before it will be confirmed that the image loaded
         imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; 
-        // console.log(readerImg.result.slice(5, 10));  // will print out the type of the uploaded file
-        fileType = readerImg.result.slice(5, 10);
+        // console.log(readerImg.result.slice(5, 10));  // will print out the type of the uploaded file - image or not
+        fileType = readerImg.result.slice(5, 10); 
         // Simple uploaded type checker - if the FileReader reports that uploaded image, then proceed to drawing of its content
         if (fileType == "image"){
             imgElement.src = readerImg.result;  // transfer loaded image to the HTML element, evoke "load" event in the end of loading
+            console.log(imgElement.src.slice(11, 14));  // print out of uploaded file extension
+            imageFormat = imgElement.src.slice(11, 14);  // store recognized image format
+            // Check uploaded image type, restrict support only to jpeg, png, bmp formats
+            if (imageFormat == "jpe" || imageFormat == "jpg" || imageFormat == "png" || imageFormat == "bmp"){
+                // Add event listener to finished load of an image
+                imgElement.onload = () => {
+                    windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
+                    canvas.width = imgElement.naturalWidth; canvas.height = imgElement.naturalHeight;  // make canvas to inherit geometrical properties of <img> element
+                    console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);  // note of usage of naturalWidth and naturalHeight - original image properties
+                    console.log(`Browser viewport / Document WxH: ${windowWidth}x${windowHeight}`);  // log the view port of the browser size
+                    loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
 
-            // Add event listener to finished load of an image
-            imgElement.onload = () => {
-                windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
-                canvas.width = imgElement.naturalWidth; canvas.height = imgElement.naturalHeight;  // make canvas to inherit geometrical properties of <img> element
-                console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);  // note of usage of naturalWidth and naturalHeight - original image properties
-                console.log(`Browser viewport / Document WxH: ${windowWidth}x${windowHeight}`);  // log the view port of the browser size
-                loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
+                    // If new image uploaded, change width control to the default one and compare with the default percentage of the page width = 55%
+                    widthInput.value = defaultWidthPercentage;
 
-                // If new image uploaded, change width control to the default one and compare with the default percentage of the page width = 55%
-                widthInput.value = defaultWidthPercentage;
-
-                // Set now styling for restrict image sizes, taking into account the window properties
-                // Below - recalculate width set in % of the window width
-                if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
-                    widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
-                }
-
-                // Set the width % to the style of elements
-                imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
-                imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
-
-                // Draw image on the <canvas> element
-                imageClass.onload = () => {
-                    contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
-                    canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
-                    // check that it was normal image (width and height more than 1 pixel)
-                    if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
-                        changePropsImgUploaded();  // centrally changing of flags and elements content by 
-                        changePageStyleImgUploaded();  // change style of elements to show loaded image
-                    } else {
-                        window.alert("The uploaded image width and / or height isn't more than 1 pixel, it will be ignored!");
+                    // Set now styling for restrict image sizes, taking into account the window properties
+                    // Below - recalculate width set in % of the window width
+                    if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
+                        widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
                     }
+
+                    // Set the width % to the style of elements
+                    imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
+                    imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
+
+                    // Draw image on the <canvas> element
+                    imageClass.onload = () => {
+                        contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
+                        canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
+                        // check that it was normal image (width and height more than 1 pixel)
+                        if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
+                            changePropsImgUploaded();  // centrally changing of flags and elements content by 
+                            changePageStyleImgUploaded();  // change style of elements to show loaded image
+                        } else {
+                            window.alert("The uploaded image width and / or height isn't more than 1 pixel, it will be ignored!");
+                        }
+                    };
                 };
-            };
+            } else {
+                window.alert(`Uploaded image with format "${imageFormat}" not supported. Please upload jpeg/jpg, png or bmp image`);
+                clearImagesFromElements();
+            }
         } else {
             clearImagesFromElements();
         }
@@ -126,7 +134,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
         uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
         processingCtrlBox.style.display = "flex"; processingCtrlBox.style.flexDirection = "row";
-        downloadBtn.style.display = "block";
+        downloadBtn.style.display = "block"; pageHeader.style.marginTop = "0.5em"; 
     }
 
     // Remove previously uploaded image from <img> and <canvas> elements, also handle if the image not uploaded

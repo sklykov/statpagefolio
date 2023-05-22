@@ -10,14 +10,15 @@ body *{
     display: none;
 }
 #pageHeader{
-    text-align: center; margin: 0.4em; font-size: 1.25em;
+    text-align: center; margin-top: 16%;  /* Note that % calculated from the element width, not height! */
+    font-size: 1.3em; color: rgb(39, 39, 219);
 }
 
 /* Upload section styling */
 #uploadBtnContainer{
     display: block; 
     text-align: center;  /* Put the content to the center of the webpage */
-    margin: auto; margin-top: 0.75em;
+    margin: auto; margin-top: 4%;
     font-weight: bold;  /* make text bold in the container */
     border: solid 1px darkolivegreen;
     width: fit-content;
@@ -73,6 +74,6 @@ body *{
     display: none;
 }
 
-#download-image-btn{
+#download-button{
     display: none;
 }
