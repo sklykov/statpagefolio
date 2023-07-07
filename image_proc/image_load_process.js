@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const downloadBtn = document.getElementById("download-button");
     const pageHeader = document.getElementById("pageHeader");  // for changing its margin-top
 
-    // Images reader and value for storing original image
+    // Default parameters and initialization of containers for image reading and storing
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
     let widthSet = "55%"; widthInput.value = 55; let defaultWidthPercentage = 55; // default width setting
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight; 
     let loadedImgWidth = 0; let loadedImgHeight = 0; let imageFormat = ""; 
-
     uploadButton.value = "";  // put default "No file selected" to the input button
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
@@ -35,6 +34,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Event listener that reacts to finished loaded event from above (readerImg.readAsDataURL(...))
     readerImg.addEventListener("load", (event) => {
+        if (imageUploaded){
+            // Set blur pixel value to 0.0 if the image re-uploaded and this setting is non-zero
+            if (blurInput.value > 0.0){
+                zeroBlurInput();  // workaround for updating the blur filter value to the default == 0px
+            }
+        }
+
         // Below - default values for the case that image not uploaded - before it will be confirmed that the image loaded
         imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; 
         // console.log(readerImg.result.slice(5, 10));  // will print out the type of the uploaded file - image or not
@@ -42,10 +48,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Simple uploaded type checker - if the FileReader reports that uploaded image, then proceed to drawing of its content
         if (fileType == "image"){
             imgElement.src = readerImg.result;  // transfer loaded image to the HTML element, evoke "load" event in the end of loading
-            console.log(imgElement.src.slice(11, 14));  // print out of uploaded file extension
-            imageFormat = imgElement.src.slice(11, 14);  // store recognized image format
+            // console.log(imgElement.src.slice(11, 14));  // print out of uploaded file extension (debug)
+            imageFormat = imgElement.src.slice(11, 14);  // store recognized image format, only 3 letters
+            if (imageFormat == "jpe"){
+                imageFormat = imgElement.src.slice(11, 15);  // store proper extension for "jpeg", 4 letters
+            }
             // Check uploaded image type, restrict support only to jpeg, png, bmp formats
-            if (imageFormat == "jpe" || imageFormat == "jpg" || imageFormat == "png" || imageFormat == "bmp"){
+            if (imageFormat == "jpeg" || imageFormat == "jpg" || imageFormat == "png" || imageFormat == "bmp"){
                 // Add event listener to finished load of an image
                 imgElement.onload = () => {
                     windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
@@ -103,30 +112,36 @@ document.addEventListener("DOMContentLoaded", ()=>{
             blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
             imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element
             blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
-
-            // Below - manually cleaning drawn image, applying filter, drawing the result, but the result is different compared to the result of 
-            // the same filter applied to the <img> element (code above)
-            // contextCanvas.clearRect(0, 0, canvas.width, canvas.height);
-            // contextCanvas.filter = `blur(${blurPixelValue})`;  
-            // contextCanvas.drawImage(imageClass, 0, 0);
-
             // Applying the filter on the canvas and drawing the direct result, instead of drawing original image
-            canvas.style.filter = `blur(${blurPixelValue})`;  
-            contextCanvas.drawImage(canvas, 0, 0);
+            // canvas.style.filter = `blur(${blurPixelValue})`;  // non-destructive applying of the filter, not changing the image content
+            imageClass.src = readerImg.result;  // refresh image for applying again the filter
+            contextCanvas.drawImage(imageClass, 0, 0);
+            // !!!: below -  applying filter to contextCanvas changes the content of the image data, which could be downloaded later
+            contextCanvas.filter = `blur(${blurPixelValue})`; // according to https://www.bit-101.com/blog/2021/07/new-html-canvas-stuff-filters/
+            contextCanvas.drawImage(imageClass, 0, 0);  // update image shown on the canvas element
         }
-    }); 
+    });
+
+    // Workaround for making blurInput zero after reloading of an image
+    function zeroBlurInput(){
+        blurInput.value = 0.0; 
+        blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
+        imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element
+        blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
+    }
 
     // Change properties of page elements if the image was successfully uploaded to the browser
     function changePropsImgUploaded(){
         imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false;
         uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
-        uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>Upload new image:`;
+        uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
+        console.log("Image uploaded");
     };
 
     // Change styling after uploading image on the page
     // TODO - better way to get all rules from an external file?
     function changePageStyleImgUploaded(){
-        imgElement.style.display = "block";   // Display the <image> element on the page
+        // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
         canvas.style.display = "block";  // Display the <canvas> element on the page
         widthInputContainer.style.display = "flex"; infoTwoImagesStr.style.display = "block";
         uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
@@ -148,5 +163,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
             downloadBtn.style.display = "none";
         }
     };
+
+    // Function for downloading processed image
+    downloadBtn.addEventListener("click", (event) =>{
+        if (imageUploaded){
+            const temporary_link = document.createElement('a'); 
+            let file_name_wt_ext = uploadButton.files[0].name.split(".")[0];  // split file name based on dot, excluding extension of the file
+            temporary_link.download = `${file_name_wt_ext}_processed.${imageFormat}`;
+            if (imageFormat == 'jpeg' || imageFormat == 'jpg'){ 
+                temporary_link.href = canvas.toDataURL(`image/${imageFormat}`, 1.0);  // max jpg quality used
+            } else {
+                temporary_link.href = canvas.toDataURL(`image/${imageFormat}`); 
+            }
+            temporary_link.click(); temporary_link.delete;  // temporary link is clicked evoking image downloading, after it is deleted
+        }
+    });
     
 });
