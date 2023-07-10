@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
     const downloadBtn = document.getElementById("download-button");
     const pageHeader = document.getElementById("pageHeader");  // for changing its margin-top
+    const brightnessInput = document.getElementById("brightness-control"); 
 
     // Default parameters and initialization of containers for image reading and storing
     const readerImg = new FileReader();  // IO API from JS
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
 
         // Below - default values for the case that image not uploaded - before it will be confirmed that the image loaded
-        imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; 
+        imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; brightnessInput.disabled = true;
         // console.log(readerImg.result.slice(5, 10));  // will print out the type of the uploaded file - image or not
         fileType = readerImg.result.slice(5, 10); 
         // Simple uploaded type checker - if the FileReader reports that uploaded image, then proceed to drawing of its content
@@ -132,7 +133,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Change properties of page elements if the image was successfully uploaded to the browser
     function changePropsImgUploaded(){
-        imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false;
+        imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
         uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
         uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
         console.log("Image uploaded");

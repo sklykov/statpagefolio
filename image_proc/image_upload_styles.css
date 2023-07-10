@@ -77,3 +77,11 @@ body *{
 #download-button{
     display: none;
 }
+
+#blur-control-container{
+    display: flex; flex-direction: row;  /* Align slider with surrounding labels in a <div> container */
+}
+
+#brightness-control-container{
+    display: flex; flex-direction: row;  /* Align slider with surrounding labels in a <div> container */
+}

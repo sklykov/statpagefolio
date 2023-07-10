@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <h3 id="pageHeader"> Project: Processing of uploaded image (serverless) using Vanilla JS </h3>
+    <h3 id="pageHeader"> Project: Processing of the uploaded image (serverless, no storage except on a browser) using vanilla JS </h3>
     <div id="uploadImgContainer">
         <!-- Upload button, select image file-->
         <div id="uploadBtnContainer">
@@ -46,9 +46,16 @@
 
         <!-- Image manipulation controls for effects: blur, ... -->
         <div id="image-manipulation-controls-box">
-            <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
-            <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
-            <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+            <div id="blur-control-container">
+                <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
+                <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
+                <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+            </div>
+            <div id="brightness-control-container">
+                <label for="brightness-control" id="brightness-label"> Brightness in [%]: </label>
+                <input type="range" min="0" max="200" step="1" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
+                <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label> 
+            </div> 
         </div>
 
         <!-- Canvas element -->
