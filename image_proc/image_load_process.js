@@ -1,5 +1,8 @@
+"use strict";  
+// The modifier above always should be on the top of the script, but it's not needed for classes and modules composing
+
+// overall function guarantees that the page loaded before any script functions start working
 document.addEventListener("DOMContentLoaded", ()=>{
-    "use strict";
 
     // Elements selectors from DOM
     const uploadButton = document.getElementById("uploadButton");
@@ -15,17 +18,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
     const downloadBtn = document.getElementById("download-button");
     const pageHeader = document.getElementById("pageHeader");  // for changing its margin-top
-    const brightnessInput = document.getElementById("brightness-control"); 
+    const brightnessInput = document.getElementById("brightness-control"); const brightnessValue = document.getElementById("brightness-value");
+    const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
+    const info2images = document.getElementById("info-two-image-elements"); 
 
     // Default parameters and initialization of containers for image reading and storing
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
     let widthSet = "55%"; widthInput.value = 55; let defaultWidthPercentage = 55; // default width setting
     let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
+    brightnessInput.value = 100;  // default brightness setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight; 
     let loadedImgWidth = 0; let loadedImgHeight = 0; let imageFormat = ""; 
+    let imageRefreshed = false;  // flag preventing calling functions associated with the tracking of the uploaded image
     uploadButton.value = "";  // put default "No file selected" to the input button
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
@@ -40,7 +47,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             if (blurInput.value > 0.0){
                 zeroBlurInput();  // workaround for updating the blur filter value to the default == 0px
             }
-        }
+        };
 
         // Below - default values for the case that image not uploaded - before it will be confirmed that the image loaded
         imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; brightnessInput.disabled = true;
@@ -71,7 +78,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     // Below - recalculate width set in % of the window width
                     if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
                         widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
-                    }
+                    };
 
                     // Set the width % to the style of elements
                     imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
@@ -110,6 +117,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Blurring image if the blur control changed
     blurInput.addEventListener("change", ()=>{
         if (imageUploaded){
+            imageRefreshed = true;  // for preventing associated functions changeProps...() to run
             blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
             imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element
             blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
@@ -118,9 +126,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imageClass.src = readerImg.result;  // refresh image for applying again the filter
             contextCanvas.drawImage(imageClass, 0, 0);
             // !!!: below -  applying filter to contextCanvas changes the content of the image data, which could be downloaded later
-            contextCanvas.filter = `blur(${blurPixelValue})`; // according to https://www.bit-101.com/blog/2021/07/new-html-canvas-stuff-filters/
+            // according to https://www.bit-101.com/blog/2021/07/new-html-canvas-stuff-filters/
+            contextCanvas.filter = `blur(${blurPixelValue}) brightness(${brightnessInput.value}%)`;  // apply all implemented filters
             contextCanvas.drawImage(imageClass, 0, 0);  // update image shown on the canvas element
-        }
+        };
     });
 
     // Workaround for making blurInput zero after reloading of an image
@@ -129,29 +138,50 @@ document.addEventListener("DOMContentLoaded", ()=>{
         blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
         imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element
         blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
-    }
+    };
+
+    // Change brightness of an image
+    brightnessInput.addEventListener("change", () => {
+        if (imageUploaded){
+            imageRefreshed = true;  // for preventing associated functions changeProps...() to run
+            imageClass.src = readerImg.result; contextCanvas.drawImage(imageClass, 0, 0);  // refresh image for applying again the filter
+            brightnessValue.innerHTML = `<strong> ${brightnessInput.value}% </strong> - applied brightness`;
+            contextCanvas.filter = `brightness(${brightnessInput.value}%) blur(${blurPixelValue})`;  // apply all implemented filters
+            contextCanvas.drawImage(imageClass, 0, 0);  // update image shown on the canvas element
+        };
+    });
 
     // Change properties of page elements if the image was successfully uploaded to the browser
     function changePropsImgUploaded(){
-        imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
-        uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
-        uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
-        console.log("Image uploaded");
+        if (!imageRefreshed){
+            imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
+            uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
+            uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
+            console.log("Image uploaded");
+        };  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
     };
 
     // Change styling after uploading image on the page
     // TODO - better way to get all rules from an external file?
     function changePageStyleImgUploaded(){
-        // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
-        canvas.style.display = "block";  // Display the <canvas> element on the page
-        widthInputContainer.style.display = "flex"; infoTwoImagesStr.style.display = "block";
-        uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
-        uploadBtnContainer.style.marginTop = "0.1em"; uploadInfoStr.style.marginRight = "0.1em";
-        uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
-        uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
-        processingCtrlBox.style.display = "flex"; processingCtrlBox.style.flexDirection = "row";
-        downloadBtn.style.display = "block"; pageHeader.style.marginTop = "0.5em"; 
-    }
+        if (!imageRefreshed){
+            // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
+            canvas.style.display = "block";  // Display the <canvas> element on the page
+            widthInputContainer.style.display = "flex"; infoTwoImagesStr.style.display = "block";
+            uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
+            uploadBtnContainer.style.marginTop = "0.1em"; uploadInfoStr.style.marginRight = "0.1em";
+            uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
+            uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
+            processingCtrlBox.style.display = "flex"; processingCtrlBox.style.flexDirection = "row";
+            downloadBtn.style.display = "block"; pageHeader.style.marginTop = "0.5em";
+            if (!imageDebugFlag){
+                info2images.innerText = "The image is placed in the <canvas> HTML element below";
+            };
+            console.log("Page style changed after image upload");  
+        } else {
+            imageRefreshed = false;  // set again the flag to the default value, this flag preventing calling this and function above
+        }
+    };
 
     // Remove previously uploaded image from <img> and <canvas> elements, also handle if the image not uploaded
     function clearImagesFromElements(){
