@@ -41,7 +41,7 @@
             <label for="widthImageInput" id="width-label"> - Control image width as % of the page width </label> 
         </div>
 
-        <!-- Image container -->
+        <!-- Image container, used for comparison of the effect of applied filter with <canvas> element -->
         <img id="imageContainer" alt="No Image Uploaded if you see this :-)">
 
         <!-- Image manipulation controls for effects: blur, ... -->
@@ -55,6 +55,9 @@
                 <label for="brightness-control" id="brightness-label"> Brightness in [%]: </label>
                 <input type="range" min="10" max="250" step="2" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
                 <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label> 
+            </div>
+            <div id="reset-button-container">
+                <button id="reset-button"> Reset filters </button>
             </div> 
         </div>
 
@@ -64,7 +67,7 @@
         </p>
         <canvas id="imageAsCanvas"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
 
-        <!-- Download image button -->
+        <!-- Download image button, used for evoking JS code -->
         <button id="download-button"> Download Image </button>
     </div>
 </body>
