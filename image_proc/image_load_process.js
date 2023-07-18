@@ -4,10 +4,12 @@
 // overall function guarantees that the page loaded before any script functions start working
 document.addEventListener("DOMContentLoaded", ()=>{
 
-    // Check the browser family (compatibility issues)
+    // Check the browser family (compatibility issues - the canvas.filter property are not implemented in Safari)
     console.log(`Page opened in: ${navigator.userAgent}`);
-    if (navigator.userAgent.includes("Safari") || navigator.userAgent.includes("safari")){
-        window.alert("The utilized on this page image processing methods are not usable in Safari. Try to open the page in another browser");
+    // Apparently, it's difficult to detect the exact browser used for opening the page
+    if ((navigator.userAgent.includes("Safari") || navigator.userAgent.includes("safari")) && 
+    !navigator.userAgent.includes("Firefox") && !navigator.userAgent.includes("Chrome")){
+        window.alert("Possibly, this page is opened in Safari browser. In this case, it wouldn't work properly, try another browser");
         // Ref.: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter#browser_compatibility
     }
 
