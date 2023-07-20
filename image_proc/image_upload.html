@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="S.K.">
     <meta name="licensed" content="MIT">
+    <meta name="year" content="2023">
 
-    <title>Image manipulation</title>
+    <title>Image processing in JS</title>
 
     <!-- Load page logic from the external script file -->
     <script src="image_load_process.js"></script>
@@ -19,57 +20,86 @@
 </head>
 
 <body>
-    <h3 id="pageHeader"> Project: Processing of the uploaded image (serverless, no storage except on a browser) using vanilla JS </h3>
-    <div id="uploadImgContainer">
-        <!-- Upload button, select image file-->
-        <div id="uploadBtnContainer">
-            <div id="uploadInfoStr" for="uploadButton"> To proceed, upload image using button: </div>
-            <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg, image/.png, image/.bmp" title="Upload Image" />
-        </div>
+
+    <div class="flexbox-container"> 
+
+        <main id="main-container">
+
+            <header id="instructions-header-container">
+                <h3 id="project-header"> Project: Processing of the uploaded image (serverless, no storage except on a browser) using vanilla JS </h3>
+                <p id="usage-info">
+                    Short instruction for usage:
+                    <ol id="info-list">
+                        <li> Upload an image for processing, using button below; </li>
+                        <li> Note that the uploaded image is stored only in browser session memory, it will be discarded after page reload / close </li>
+                    </ol>
+                </p>
+            </header>
+
+            <section id="upload-image-container">
+
+                <!-- Upload button, select image file, visible all time -->
+                <div id="uploadBtnContainer">
+                    <div id="uploadInfoStr" for="uploadButton"> To proceed, upload image using button: </div>
+                    <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg, image/.png, image/.bmp" title="Upload Image" />
+                </div>
+
+            </section>
+
+            <section id="processing-controls">
+                
+                 <!-- Width of the images control, visible only after image upload -->
+                 <div id="widthInputContainer">
+                    <div id="input-ticks-container"> 
+                        <input type="range" min="10" max="100" id="widthImageInput" name="width-input" value="55" list="width-ticks" autocomplete="off" disabled>
+                        <datalist id="width-ticks">
+                            <option value="10" label="10"> </option>
+                            <option value="55" label="55"> </option>
+                            <option value="100" label="100"> </option>
+                        </datalist>
+                    </div>
+                    <label for="widthImageInput" id="width-label"> - Control image width as % of the page width </label> 
+                </div>
+
+                <!-- Image container, used for comparison of the effect of applied filter with <canvas> element, invisible now -->
+                <img id="img-element" alt="No Image Uploaded if you see this :-)">
+
+                <!-- Image manipulation controls for effects: blur, ... -->
+                <div id="image-manipulation-controls-box">
+                    <div id="blur-control-container">
+                        <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
+                        <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
+                        <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+                    </div>
+                    <div id="brightness-control-container">
+                        <label for="brightness-control" id="brightness-label"> Brightness in [%]: </label>
+                        <input type="range" min="10" max="250" step="2" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
+                        <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label> 
+                    </div>
+                    <div id="reset-button-container">
+                        <button id="reset-button"> Reset filters </button>
+                    </div>
+                </div> 
+
+            </section>
+
+            <div id="image-container">
+                <p id="info-two-image-elements"> 
+                    Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended for debugging.
+                </p>
+                <!-- Canvas element -->
+                <canvas id="canvas-element"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
+
+                <!-- Download image button, used for evoking JS code -->
+                <button id="download-button"> Download Image </button>
+            </div>
+                
+        </main>
+
+        <!-- Footer with the information about the author and license -->
+        <footer id="page-footer"> 2023 S.K., MIT licensed </footer>
         
-
-        <!-- Width of the images control -->
-        <div id="widthInputContainer">
-            <div id="input-ticks-container"> 
-                <input type="range" min="10" max="100" id="widthImageInput" name="width-input" value="55" list="width-ticks" autocomplete="off" disabled>
-                <datalist id="width-ticks">
-                    <option value="10" label="10"> </option>
-                    <option value="55" label="55"> </option>
-                    <option value="100" label="100"> </option>
-                </datalist>
-            </div>
-            <label for="widthImageInput" id="width-label"> - Control image width as % of the page width </label> 
-        </div>
-
-        <!-- Image container, used for comparison of the effect of applied filter with <canvas> element -->
-        <img id="imageContainer" alt="No Image Uploaded if you see this :-)">
-
-        <!-- Image manipulation controls for effects: blur, ... -->
-        <div id="image-manipulation-controls-box">
-            <div id="blur-control-container">
-                <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
-                <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
-                <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
-            </div>
-            <div id="brightness-control-container">
-                <label for="brightness-control" id="brightness-label"> Brightness in [%]: </label>
-                <input type="range" min="10" max="250" step="2" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
-                <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label> 
-            </div>
-            <div id="reset-button-container">
-                <button id="reset-button"> Reset filters </button>
-            </div> 
-        </div>
-
-        <!-- Canvas element -->
-        <p id="info-two-image-elements"> 
-            Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended for debugging.
-        </p>
-        <canvas id="imageAsCanvas"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
-
-        <!-- Download image button, used for evoking JS code -->
-        <button id="download-button"> Download Image </button>
     </div>
-</body>
 
+</body>
 </html>

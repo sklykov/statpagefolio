@@ -1,28 +1,68 @@
+body{
+    margin: 0; padding: 0;
+}
+/* Default settings for all elements in the body */
 body *{
-    /* Default settings for all elements, see the selector */
-    padding: 0.25em; margin: 0.15em;
-    font-size: 1.025em;
+    font-size: 1.025em; padding: 0.25em; margin: 0.25em;
 }
 
-/* Styling of common page elements */
-#imageContainer, #imageAsCanvas{
+/* This class corresponds to the overall flexbox container, in this project - body element of the page */
+.flexbox-container{
+    margin-top: 10vh;
+    display: flex; 
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between; 
+}
+
+/* #main-container{
+    height: 600px;
+} */
+
+#page-footer{
+    margin-top: 2.5em; margin-left: 1em;
+}
+
+
+/* Image container elements: <img> and <canvas> */
+#img-element, #canvas-element{
     /* display: block;  */   /* will be changed to this value by JS code, when the image uploaded */
-    display: none;
-}
-#pageHeader{
-    text-align: center; margin-top: 16%;  /* Note that % calculated from the element width, not height! */
-    font-size: 1.3em; color: rgb(39, 39, 219);
+    display: none;  /* default value, for the case if no image uploaded */
 }
 
-/* Upload section styling */
-#uploadBtnContainer{
-    display: block; 
-    text-align: center;  /* Put the content to the center of the webpage */
-    margin: auto; margin-top: 4%;
+
+/* Styling going after from top to bottom elements on the page, starting from <header> */
+header {
+    text-align: center;
+    margin-top: 2%;  /* Note that % calculated from the element width, not height! */
+}
+#project-header{ 
+    font-size: 1.25em; color: rgb(39, 39, 219);
+    margin-bottom: 2.5%; /* Separate the overall header and the brief instructions */
+}
+#usage-info{
+    padding-bottom: 0em; margin-bottom: 0em;  /* Shorten distance between ol header and points */
+}
+#info-list{
+    padding-top: 0em; margin-top: 0.25em; /* Shorten distance between ol header and points */
+    list-style-position: inside; list-style-type: square;   /* Makes different marker style and stick them to the element content */
+}
+#info-list > li{
+    padding: 0.25em; margin: 0;
+}
+
+
+/* Upload container styling */
+#upload-image-container{
+    text-align: center;
+    /* below - put the content to the center of the webpage by adjusting margins */
+    margin: auto;   
+    margin-top: 4%; margin-bottom: 1em;
     font-weight: bold;  /* make text bold in the container */
     border: solid 1px darkolivegreen;
-    width: fit-content;
+    width: fit-content;  /* regulates the size of the container itself, restricted to the content */
 }
+
 #uploadInfoStr, #uploadButton{
     display: inline-block; text-align: center; margin-top: 1.0em; margin-bottom: 1.0em; margin-left: 1.25em; margin-right: 1.25em;
 }
@@ -31,11 +71,10 @@ body *{
     border: 1px solid darkkhaki; 
 }
 
-/* Styling of the width input label, input and datalist elements */
+/* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
 #widthInputContainer{
     /* display: flex;  */  /* will be changed to this value by JS code, when the image uploaded */
     display: none;
-    padding-top: 0.65em; margin: 0px; padding-bottom: 0.1em;
 }
 #input-ticks-container{
     /* display: flex;  */   /* Inherited from the parent above */

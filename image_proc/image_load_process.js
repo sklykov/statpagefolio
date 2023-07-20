@@ -9,15 +9,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Apparently, it's difficult to detect the exact browser used for opening the page
     if ((navigator.userAgent.includes("Safari") || navigator.userAgent.includes("safari")) && 
     !navigator.userAgent.includes("Firefox") && !navigator.userAgent.includes("Chrome")){
-        window.alert("Possibly, this page is opened in Safari browser. In this case, it wouldn't work properly, try another browser");
+        window.alert("Possibly, this page is opened in Safari browser. In this case, the image processing wouldn't work properly, try another browser");
         // Ref.: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter#browser_compatibility
     }
 
     // Elements selectors from DOM
     const uploadButton = document.getElementById("uploadButton");
-    const imgElement = document.getElementById("imageContainer");  // it points to the <img> HTML element
+    const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
     const uploadInfoStr = document.getElementById("uploadInfoStr");
-    const canvas = document.getElementById("imageAsCanvas");  // HTML <canvas> element allows pixel manipulation in addition to operations
+    const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
     const widthInput = document.getElementById("widthImageInput"); 
     const blurInput = document.getElementById("blur-control"); const blurValue = document.getElementById("blur-value");
@@ -26,11 +26,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
     const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
     const downloadBtn = document.getElementById("download-button");
-    const pageHeader = document.getElementById("pageHeader");  // for changing its margin-top
+    const pageHeader = document.getElementById("project-header");  // for changing its margin-top
     const brightnessInput = document.getElementById("brightness-control"); const brightnessValue = document.getElementById("brightness-value");
     const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
     const info2images = document.getElementById("info-two-image-elements");
-    const resetButton = document.getElementById("reset-button");  
+    const resetButton = document.getElementById("reset-button");
+    const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
+    const infoContainer = document.getElementById("instructions-header-container");
+    const uploadImageContainer = document.getElementById("upload-image-container");
 
     // Default parameters and initialization of containers for image reading and storing
     const readerImg = new FileReader();  // IO API from JS
@@ -44,6 +47,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let loadedImgWidth = 0; let loadedImgHeight = 0; let imageFormat = ""; 
     let imageRefreshed = false;  // flag preventing calling functions associated with the tracking of the uploaded image
     uploadButton.value = "";  // put default "No file selected" to the input button
+    const topMargin = "0.25em";  // uniform top margin setting
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
     uploadButton.addEventListener("change", (event) => {
@@ -191,6 +195,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function changePageStyleImgUploaded(){
         if (!imageRefreshed){
             // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
+            pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; 
+            infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
             canvas.style.display = "block";  // Display the <canvas> element on the page
             widthInputContainer.style.display = "flex"; infoTwoImagesStr.style.display = "block";
             uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
@@ -198,7 +204,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
             uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
             processingCtrlBox.style.display = "flex"; processingCtrlBox.style.flexDirection = "row";
-            downloadBtn.style.display = "block"; pageHeader.style.marginTop = "0.5em";
+            downloadBtn.style.display = "block"; 
             if (!imageDebugFlag){
                 info2images.innerText = "The image is placed in the <canvas> HTML element below";
             }
