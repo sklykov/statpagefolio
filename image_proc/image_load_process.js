@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
     const infoContainer = document.getElementById("instructions-header-container");
     const uploadImageContainer = document.getElementById("upload-image-container");
+    const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
 
     // Default parameters and initialization of containers for image reading and storing
     const readerImg = new FileReader();  // IO API from JS
@@ -186,6 +187,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
             uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
             uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
+            infoPoint1.innerText = "Process image dragging the sliders below"; infoPoint2.innerText = "Download processed image if needed"; 
             console.log("Image uploaded");
         }  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
     };
