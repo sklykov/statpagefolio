@@ -1,9 +1,11 @@
 body{
     margin: 0; padding: 0;
+    background-image: radial-gradient(rgba(37, 174, 223, 0.296) 25%, rgba(156, 16, 232, 0.25) 75%);
 }
 /* Default settings for all elements in the body */
 body *{
-    font-size: 1.025em; padding: 0.25em; margin: 0.25em;
+    font-size: 1.15rem;  /* Recommended to use rem instead of em for better adaptivity to each browser settings */
+    padding: 0.25em; margin: 0.25em;  /* Recommended to em */
 }
 
 /* This class corresponds to the overall flexbox container, in this project - body element of the page */
@@ -37,7 +39,7 @@ header {
     margin-top: 2%;  /* Note that % calculated from the element width, not height! */
 }
 #project-header{ 
-    font-size: 1.25em; color: rgb(39, 39, 219);
+    font-size: 1.4rem; color: rgb(39, 39, 219);
     margin-bottom: 2.5%; /* Separate the overall header and the brief instructions */
 }
 #usage-info{
@@ -87,7 +89,7 @@ header {
     display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
     justify-content: space-between;   /* Spread elements on the whole length */
     width: 105%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
-    font-size: 0.95em;
+    font-size: 0.95rem;
 }
 #width-label{
     margin-left: 0.5em;
