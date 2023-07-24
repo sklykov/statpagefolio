@@ -14,34 +14,36 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
     // Elements selectors from DOM
-    const uploadButton = document.getElementById("uploadButton");
-    const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
-    const uploadInfoStr = document.getElementById("uploadInfoStr");
-    const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
-    const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
-    const widthInput = document.getElementById("widthImageInput"); 
+    // Buttons / sliders from the page
+    const uploadButton = document.getElementById("uploadButton"); const widthInput = document.getElementById("widthImageInput"); 
+    const downloadBtn = document.getElementById("download-button"); const resetButton = document.getElementById("reset-button");
     const blurInput = document.getElementById("blur-control"); const blurValue = document.getElementById("blur-value");
-    const widthInputContainer = document.getElementById("widthInputContainer");
-    const uploadBtnContainer = document.getElementById("uploadBtnContainer");
-    const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
-    const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
-    const downloadBtn = document.getElementById("download-button");
-    const pageHeader = document.getElementById("project-header");  // for changing its margin-top
     const brightnessInput = document.getElementById("brightness-control"); const brightnessValue = document.getElementById("brightness-value");
-    const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
-    const info2images = document.getElementById("info-two-image-elements");
-    const resetButton = document.getElementById("reset-button");
+    const contrastInput = document.getElementById("contrast-control"); const contrastValue = document.getElementById("contrast-value");
+    // Containers, html elements
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
-    const infoContainer = document.getElementById("instructions-header-container");
+    const pageHeader = document.getElementById("project-header");  // for changing its margin-top
+    const widthInputContainer = document.getElementById("widthInputContainer");
+    const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
+    const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
+    const uploadBtnContainer = document.getElementById("uploadBtnContainer");
     const uploadImageContainer = document.getElementById("upload-image-container");
+    const infoContainer = document.getElementById("instructions-header-container");
+    const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
+    // Strings with some text representation
+    const uploadInfoStr = document.getElementById("uploadInfoStr");
     const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
+    const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
+    const info2images = document.getElementById("info-two-image-elements");
 
-    // Default parameters and initialization of containers for image reading and storing
+    // Default parameters and initialization of classes for image reading and storing
+    const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
+    const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
     let widthSet = "55%"; widthInput.value = 55; let defaultWidthPercentage = 55; // default width setting
     let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
-    brightnessInput.value = 100;  // default brightness setting
+    brightnessInput.value = 100; contrastInput.value = 100;  // default brightness, contrast settings
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight; 
@@ -65,6 +67,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
             if (brightnessInput.value != 100){
                 makeDefaultBrightnessInput();
+            }
+            if (contrastInput.value != 100){
+                makeDefaultContrastInput();
             }
         }
 
@@ -125,7 +130,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     });
 
-    // Listen to a change on the page of the width input
+    // Listen to any change on the page of the width input (slider)
     widthInput.addEventListener("change", () => {
         if (imageUploaded){
             widthSet = `${widthInput.value}%`;
@@ -143,15 +148,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     });
 
-    // Workaround for making blurInput zero after reloading of an image, but it doesn't invoke the function for changing 
-    // actual filter property "contextCanvas.filter"
-    function zeroBlurInput(){
-        blurInput.value = 0.0; 
-        blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
-        imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element only!
-        blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
-    };
-
     // Change brightness of an image
     brightnessInput.addEventListener("change", () => {
         if (imageUploaded){
@@ -160,10 +156,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     });
 
-    // Make brightness input element zero
+    // Change contrast of an image
+    contrastInput.addEventListener("change", () => {
+        if (imageUploaded){
+            contrastValue.innerHTML = `<strong> ${contrastInput.value}% </strong> - applied contrast`;
+            applyAllFilters();  // applying all selected filters at once
+        }
+    });
+
+    // Assign only the default blur value = 0.0
+    function zeroBlurInput(){
+        blurInput.value = 0.0; blurPixelValue = `${blurInput.value}px`;
+        blurValue.innerHTML = `<strong> ${blurInput.value} px </strong> - applied blur`;
+    };
+
+    // Make brightness input element default = 100%
     function makeDefaultBrightnessInput(){
         brightnessInput.value = 100;
         brightnessValue.innerHTML = `<strong> ${brightnessInput.value}% </strong> - applied brightness`;
+    }
+
+    // Make contrast input element default = 100%
+    function makeDefaultContrastInput(){
+        contrastInput.value = 100;
+        contrastValue.innerHTML = `<strong> ${contrastInput.value}% </strong> - applied contrast`;
     }
 
     // Apply all implemented filters at once, and before it redraw the original image
@@ -177,7 +193,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // in comparison to applying them to the <image> element.
         // canvas.style.filter = `blur(${blurPixelValue})`;  // non-destructive applying of the filter, not changing the image content
         // Reference: https://www.bit-101.com/blog/2021/07/new-html-canvas-stuff-filters/
-        contextCanvas.filter = `brightness(${brightnessInput.value}%) blur(${blurPixelValue})`;  // apply all implemented filters
+        // Below - apply all implemented filters by specifying all them as the string for HTML element property
+        contextCanvas.filter = `brightness(${brightnessInput.value}%) contrast(${contrastInput.value}%) blur(${blurPixelValue})`;  
         contextCanvas.drawImage(imageClass, 0, 0);  // update image shown on the canvas element
     }
 
@@ -185,6 +202,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function changePropsImgUploaded(){
         if (!imageRefreshed){
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
+            contrastInput.disabled = false;
             uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
             uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
             infoPoint1.innerText = "Process image dragging the sliders below"; infoPoint2.innerText = "Download processed image if needed"; 
@@ -192,8 +210,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
     };
 
-    // Change styling after uploading image on the page
-    // TODO - better way to get all rules from an external file or not?
+    // Change styling after uploading image on the page, note that display: none -> display: ... - enough along with previously specified properties
     function changePageStyleImgUploaded(){
         if (!imageRefreshed){
             // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
@@ -205,7 +222,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             uploadBtnContainer.style.marginTop = "0.1em"; uploadInfoStr.style.marginRight = "0.1em";
             uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
             uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
-            processingCtrlBox.style.display = "flex"; processingCtrlBox.style.flexDirection = "row";
+            processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
             downloadBtn.style.display = "block"; 
             if (!imageDebugFlag){
                 info2images.innerText = "The image is placed in the <canvas> HTML element below";
@@ -245,7 +262,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Resetting all applied filters by clicking the button
     resetButton.addEventListener("click", () => {
-        zeroBlurInput(); makeDefaultBrightnessInput(); applyAllFilters(); 
+        zeroBlurInput(); makeDefaultBrightnessInput(); makeDefaultContrastInput(); applyAllFilters(); 
     });
     
 });

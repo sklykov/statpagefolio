@@ -17,21 +17,16 @@ body *{
     justify-content: space-between; 
 }
 
-/* #main-container{
-    height: 600px;
-} */
-
 #page-footer{
     margin-top: 2.5em; margin-left: 1em;
 }
 
 
-/* Image container elements: <img> and <canvas> */
+/* Image container elements: <img> and <canvas>, only <canvas> will be displayed from this version on */
 #img-element, #canvas-element{
     /* display: block;  */   /* will be changed to this value by JS code, when the image uploaded */
     display: none;  /* default value, for the case if no image uploaded */
 }
-
 
 /* Styling going after from top to bottom elements on the page, starting from <header> */
 header {
@@ -53,7 +48,6 @@ header {
     padding: 0.25em; margin: 0;
 }
 
-
 /* Upload container styling */
 #upload-image-container{
     text-align: center;
@@ -70,7 +64,7 @@ header {
 }
 #uploadButton{
     font-size: 1.0em; color: red;
-    border: 1px solid darkkhaki; 
+    border: 1px solid rgb(42, 12, 216); 
 }
 
 /* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
@@ -83,7 +77,7 @@ header {
     flex-direction: column;  margin: 0px;
 }
 #widthImageInput{
-    padding: 0px; width: 180px;
+    padding: 0px; width: 200px;
 }
 #width-ticks{
     display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
@@ -97,32 +91,27 @@ header {
 
 /* Styling of image manipulation controls */
 #image-manipulation-controls-box{
-    /* display: flex; flex-direction: row; */
-    display: none;
+    display: none;   /* By default, all controls are hidden due to this property */
+    /* display: flex;  */  /* Will be changed by the JS script after image upload */
+    flex-direction: row; flex-wrap: wrap;
+    align-items: stretch; justify-content: space-evenly;
     padding-left: 0px; 
 }
 #blur-label{
     padding-left: 0px;
 }
-#blur-control{
-    width: 200px;
+#blur-control, #brightness-control, #contrast-control{
+    width: 190px;
 }
-#blur-value{
-    color: darkslategray;
+#blur-value, #brightness-value, #contrast-value{
+    color: rgb(37, 65, 65);
 }
 
-#info-two-image-elements{
+#info-two-image-elements, #download-button{
     display: none;
 }
 
-#download-button{
-    display: none;
-}
-
-#blur-control-container{
-    display: flex; flex-direction: row;  /* Align slider with surrounding labels in a <div> container */
-}
-
-#brightness-control-container{
+/* Styling of each slider box for centering elements inside it */
+#blur-control-container, #brightness-control-container, #contrast-control-container{
     display: flex; flex-direction: row;  /* Align slider with surrounding labels in a <div> container */
 }
