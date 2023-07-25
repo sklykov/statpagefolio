@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Elements selectors from DOM
     // Buttons / sliders from the page
-    const uploadButton = document.getElementById("uploadButton"); const widthInput = document.getElementById("widthImageInput"); 
+    const uploadButton = document.getElementById("upload-button"); const widthInput = document.getElementById("width-image-input"); 
     const downloadBtn = document.getElementById("download-button"); const resetButton = document.getElementById("reset-button");
     const blurInput = document.getElementById("blur-control"); const blurValue = document.getElementById("blur-value");
     const brightnessInput = document.getElementById("brightness-control"); const brightnessValue = document.getElementById("brightness-value");
@@ -23,18 +23,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Containers, html elements
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
-    const widthInputContainer = document.getElementById("widthInputContainer");
     const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
     const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
-    const uploadBtnContainer = document.getElementById("uploadBtnContainer");
+    const uploadBtnContainer = document.getElementById("upload-button-container");
     const uploadImageContainer = document.getElementById("upload-image-container");
     const infoContainer = document.getElementById("instructions-header-container");
     const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
     // Strings with some text representation
-    const uploadInfoStr = document.getElementById("uploadInfoStr");
+    const uploadInfoStr = document.getElementById("upload-info");
     const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
-    const infoTwoImagesStr = document.getElementById("info-two-image-elements"); 
     const info2images = document.getElementById("info-two-image-elements");
+    const imageControlsBox = document.getElementById("image-associated-ctrls-box");
 
     // Default parameters and initialization of classes for image reading and storing
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
@@ -216,16 +215,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
             // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
             pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; 
             infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
-            canvas.style.display = "block";  // Display the <canvas> element on the page
-            widthInputContainer.style.display = "flex"; infoTwoImagesStr.style.display = "block";
+            imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
             uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
             uploadBtnContainer.style.marginTop = "0.1em"; uploadInfoStr.style.marginRight = "0.1em";
             uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
             uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
-            downloadBtn.style.display = "block"; 
             if (!imageDebugFlag){
-                info2images.innerText = "The image is placed in the <canvas> HTML element below";
+                info2images.innerText = "The image is placed in the <canvas> HTML element below.";
             }
             console.log("Page style changed after image upload");  
         } else {
@@ -237,11 +234,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function clearImagesFromElements(){
         if (!imageUploaded){
             contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = ""; 
-            // Specifying below default styling if the image haven't been uploaded
-            imgElement.style.display = "none"; canvas.style.display = "none";
-            widthInputContainer.style.display = "none"; infoTwoImagesStr.style.display = "none";
+            // Specifying below default styling if the image haven't been uploaded, hide buttons / elements
+            imageControlsBox.style.display = "none";  // automatically hide the uploaded image, width input, download button
             processingCtrlBox.style.display = "none"; uploadInfoStr.innerHTML = '<span style="color: red;">Image not uploaded!</span> Upload new image:';
-            downloadBtn.style.display = "none";
         }
     }
 

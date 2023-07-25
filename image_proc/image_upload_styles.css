@@ -21,10 +21,8 @@ body *{
     margin-top: 2.5em; margin-left: 1em;
 }
 
-
 /* Image container elements: <img> and <canvas>, only <canvas> will be displayed from this version on */
-#img-element, #canvas-element{
-    /* display: block;  */   /* will be changed to this value by JS code, when the image uploaded */
+#img-element{
     display: none;  /* default value, for the case if no image uploaded */
 }
 
@@ -48,6 +46,37 @@ header {
     padding: 0.25em; margin: 0;
 }
 
+/* Image and associated controls (download image, information string, width control) */
+#image-associated-ctrls-box{
+    /* display: flex;  */
+    display: none;
+    flex-direction: column; 
+}
+#associated-controls-container{
+    display: flex; flex-direction: row; flex-wrap: wrap;
+    align-items: baseline; justify-content: flex-start;
+}
+/* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
+#width-input-container{
+    display: flex;
+}
+#input-ticks-container{
+    /* display: flex;  */   /* Inherited from the parent above */
+    flex-direction: column;  margin: 0px;
+}
+#width-image-input{
+    padding: 0px; width: 200px;
+}
+#width-ticks{
+    display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
+    justify-content: space-between;   /* Spread elements on the whole length */
+    width: 104%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
+    font-size: 0.95rem;
+}
+#width-label{
+    margin-left: 0.25em;
+}
+
 /* Upload container styling */
 #upload-image-container{
     text-align: center;
@@ -59,34 +88,12 @@ header {
     width: fit-content;  /* regulates the size of the container itself, restricted to the content */
 }
 
-#uploadInfoStr, #uploadButton{
+#upload-info, #upload-button{
     display: inline-block; text-align: center; margin-top: 1.0em; margin-bottom: 1.0em; margin-left: 1.25em; margin-right: 1.25em;
 }
-#uploadButton{
+#upload-button{
     font-size: 1.0em; color: red;
     border: 1px solid rgb(42, 12, 216); 
-}
-
-/* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
-#widthInputContainer{
-    /* display: flex;  */  /* will be changed to this value by JS code, when the image uploaded */
-    display: none;
-}
-#input-ticks-container{
-    /* display: flex;  */   /* Inherited from the parent above */
-    flex-direction: column;  margin: 0px;
-}
-#widthImageInput{
-    padding: 0px; width: 200px;
-}
-#width-ticks{
-    display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
-    justify-content: space-between;   /* Spread elements on the whole length */
-    width: 105%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
-    font-size: 0.95rem;
-}
-#width-label{
-    margin-left: 0.5em;
 }
 
 /* Styling of image manipulation controls */
@@ -105,10 +112,6 @@ header {
 }
 #blur-value, #brightness-value, #contrast-value{
     color: rgb(37, 65, 65);
-}
-
-#info-two-image-elements, #download-button{
-    display: none;
 }
 
 /* Styling of each slider box for centering elements inside it */

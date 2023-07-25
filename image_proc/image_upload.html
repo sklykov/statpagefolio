@@ -39,27 +39,45 @@
             <section id="upload-image-container">
 
                 <!-- Upload button, select image file, visible all time -->
-                <div id="uploadBtnContainer">
-                    <div id="uploadInfoStr" for="uploadButton"> To proceed, upload image using button: </div>
-                    <input id="uploadButton" type="file" accept="image/.jpg, image/.jpeg, image/.png, image/.bmp" title="Upload Image" />
+                <div id="upload-button-container">
+                    <div id="upload-info" for="upload-button"> To proceed, upload image using button: </div>
+                    <input id="upload-button" type="file" accept="image/.jpg, image/.jpeg, image/.png, image/.bmp" title="Upload Image" />
+                </div>
+
+            </section>
+
+            <section id="image-associated-ctrls-box">
+
+                <div id="associated-controls-container">
+                    <p id="info-two-image-elements"> 
+                        Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended for debugging.
+                    </p>
+                    <!-- Width of the images control, visible only after image upload -->
+                    <div id="width-input-container">
+                        <div id="input-ticks-container"> 
+                            <input type="range" min="10" max="100" id="width-image-input" name="width-input" value="55" list="width-ticks" autocomplete="off" disabled>
+                            <datalist id="width-ticks">
+                                <option value="10" label="10"> </option>
+                                <option value="55" label="55"> </option>
+                                <option value="100" label="100"> </option>
+                            </datalist>
+                        </div>
+                        <label for="widthImageInput" id="width-label"> - Control image width as % of the page width </label> 
+                    </div>
+
+                    <!-- Download image button, used for evoking JS code -->
+                    <button id="download-button"> Download Image </button>
+
+                </div>
+
+                <div id="image-container">
+                    <!-- Canvas element -->
+                    <canvas id="canvas-element"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
                 </div>
 
             </section>
 
             <section id="processing-controls">
-                
-                 <!-- Width of the images control, visible only after image upload -->
-                 <div id="widthInputContainer">
-                    <div id="input-ticks-container"> 
-                        <input type="range" min="10" max="100" id="widthImageInput" name="width-input" value="55" list="width-ticks" autocomplete="off" disabled>
-                        <datalist id="width-ticks">
-                            <option value="10" label="10"> </option>
-                            <option value="55" label="55"> </option>
-                            <option value="100" label="100"> </option>
-                        </datalist>
-                    </div>
-                    <label for="widthImageInput" id="width-label"> - Control image width as % of the page width </label> 
-                </div>
 
                 <!-- Image container, used for comparison of the effect of applied filter with <canvas> element, invisible now -->
                 <img id="img-element" alt="No Image Uploaded if you see this :-)">
@@ -84,21 +102,9 @@
                     <div id="reset-button-container">
                         <button id="reset-button"> Reset filters </button>
                     </div>
-                </div> 
+                </div>
 
-            </section>
-
-            <div id="image-container">
-                <p id="info-two-image-elements"> 
-                    Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended for debugging.
-                </p>
-                <!-- Canvas element -->
-                <canvas id="canvas-element"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
-
-                <!-- Download image button, used for evoking JS code -->
-                <button id="download-button"> Download Image </button>
-            </div>
-                
+            </section>            
         </main>
 
         <!-- Footer with the information about the author and license -->
