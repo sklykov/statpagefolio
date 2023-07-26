@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
     const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
     const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
-    const uploadBtnContainer = document.getElementById("upload-button-container");
     const uploadImageContainer = document.getElementById("upload-image-container");
     const infoContainer = document.getElementById("instructions-header-container");
     const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
@@ -203,8 +202,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
             contrastInput.disabled = false;
             uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
-            uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em> Upload new image:`;
-            infoPoint1.innerText = "Process image dragging the sliders below"; infoPoint2.innerText = "Download processed image if needed"; 
+            uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>Upload new image:`;
+            infoPoint1.innerText = "Process image by dragging the sliders below"; infoPoint2.innerText = "Download processed image if needed"; 
             console.log("Image uploaded");
         }  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
     };
@@ -215,11 +214,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
             // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
             pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; 
             infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
+            uploadImageContainer.style.fontWeight = "normal"; 
+            uploadButton.style.width = "4.85em";  // cut out the file name string associated with the upload button
+            uploadButton.style.border = "none"  // removes the default blue 1px border
             imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
-            uploadBtnContainer.style.fontWeight = "normal"; uploadBtnContainer.style.border = "none";
-            uploadBtnContainer.style.marginTop = "0.1em"; uploadInfoStr.style.marginRight = "0.1em";
-            uploadButton.style.width = "5.25em"; uploadButton.style.border = "none"; uploadButton.style.marginLeft = "0.1em";
-            uploadInfoStr.style.marginTop = "0.5em"; uploadButton.style.marginTop = "0.5em";
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
             if (!imageDebugFlag){
                 info2images.innerText = "The image is placed in the <canvas> HTML element below.";
