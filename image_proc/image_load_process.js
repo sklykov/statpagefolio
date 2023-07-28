@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
     const info2images = document.getElementById("info-two-image-elements");
     const imageControlsBox = document.getElementById("image-associated-ctrls-box");
+    const footerElement = document.getElementById("page-footer");  // for changing margin of the footer if image uploaded
+    // Below - selectors for elements for changing their values if the page is opened on the mobile device
+    const minTick = document.getElementById("min-width-tick"); const midTick = document.getElementById("mid-width-tick");
 
     // Default parameters and initialization of classes for image reading and storing
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
@@ -44,7 +47,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     brightnessInput.value = 100; contrastInput.value = 100;  // default brightness, contrast settings
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
-    let windowWidth = window.innerWidth; let windowHeight = window.innerHeight; 
+    let windowWidth = window.innerWidth; let windowHeight = window.innerHeight;  // WxH of the page
     let loadedImgWidth = 0; let loadedImgHeight = 0; let imageFormat = ""; 
     let imageRefreshed = false;  // flag preventing calling functions associated with the tracking of the uploaded image
     uploadButton.value = "";  // put default "No file selected" to the input button
@@ -100,6 +103,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     // Below - recalculate width set in % of the window width
                     if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
                         widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
+                    } else if (loadedImgWidth > windowWidth){  // if image has width larger then the window size, just set it to the window size
+                        widthInput.value = 100; widthSet = `${widthInput.value}%`;
+                        // If the width of an image is larger than the available width of a page (device specific), set ticks and available width control to min 50%
+                        widthInput.min = "50"; minTick.value="50"; minTick.label="50"; midTick.value = "75"; midTick.label = "75"; 
+                        console.log(widthInput); console.log(minTick); 
                     }
 
                     // Set the width % to the style of elements
@@ -201,8 +209,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
         if (!imageRefreshed){
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
             contrastInput.disabled = false;
-            uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>';
-            uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>Upload new image:`;
+            // Providing information according to the size of page sizes
+            if (windowWidth > 1280){
+                uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>'; 
+                uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>`;
+                uploadInfoStr.innerHTML += 'Upload new image:';
+            } else {
+                uploadInfoStr.innerHTML = `File name:<em>${uploadButton.files[0].name}</em><br>`;
+                uploadInfoStr.innerHTML += '<span style="color: green;">Image uploaded.</span> Upload new image:'; 
+            }
             infoPoint1.innerText = "Process image by dragging the sliders below"; infoPoint2.innerText = "Download processed image if needed"; 
             console.log("Image uploaded");
         }  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
@@ -219,6 +234,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             uploadButton.style.border = "none"  // removes the default blue 1px border
             imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
+            footerElement.style.marginTop = "0.5em";  // shift footer closer to the image / content of a page
             if (!imageDebugFlag){
                 info2images.innerText = "The image is placed in the <canvas> HTML element below.";
             }
