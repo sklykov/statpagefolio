@@ -82,18 +82,24 @@
                 <div id="image-manipulation-controls-box">
                     <div id="blur-control-container">
                         <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
-                        <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
-                        <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+                        <div class="input-label-container"> 
+                            <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
+                            <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+                        </div>
                     </div>
                     <div id="brightness-control-container">
                         <label for="brightness-control" id="brightness-label"> Brightness in [%]: </label>
-                        <input type="range" min="10" max="250" step="2" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
-                        <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label> 
+                        <div class="input-label-container"> 
+                            <input type="range" min="10" max="250" step="2" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
+                            <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label>
+                        </div>
                     </div>
                     <div id="contrast-control-container">
                         <label for="contrast-control" id="contrast-label"> Contrast in [%]: </label>
-                        <input type="range" min="2" max="200" step="2" id="contrast-control" name="contrast-input" value="100" autocomplete="off" disabled>
-                        <label for="contrast-control" id="contrast-value"> <strong> 100% </strong> - applied contrast </label> 
+                        <div class="input-label-container">
+                            <input type="range" min="2" max="200" step="2" id="contrast-control" name="contrast-input" value="100" autocomplete="off" disabled>
+                            <label for="contrast-control" id="contrast-value"> <strong> 100% </strong> - applied contrast </label> 
+                        </div>
                     </div>
                     <div id="reset-button-container">
                         <button id="reset-button"> Reset filters </button>

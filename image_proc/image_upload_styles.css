@@ -101,14 +101,14 @@ body *{
     display: none;   /* By default, all controls are hidden due to this property */
     /* display: flex;  */  /* Will be changed by the JS script after image upload */
     flex-direction: row; flex-wrap: wrap;
-    align-items: stretch; justify-content: space-evenly;
+    align-items: center; justify-content: space-evenly;
     padding-left: 0px; 
 }
 #blur-label{
     padding-left: 0px;
 }
 #blur-control, #brightness-control, #contrast-control{
-    width: 190px;
+    width: 200px;
 }
 #blur-value, #brightness-value, #contrast-value{
     color: rgb(37, 65, 65);
@@ -116,7 +116,15 @@ body *{
 
 /* Styling of each slider box for centering elements inside it */
 #blur-control-container, #brightness-control-container, #contrast-control-container{
-    display: flex; flex-direction: row;  /* Align slider with surrounding labels in a <div> container */
+    /* Align slider with surrounding labels in a <div> container, this needed also for align label with info about element itself and input / label with value */
+    display: flex; flex-direction: row;  align-items: center; justify-content: space-between;
+}
+
+/* Additional styling for centering the inputs (sliders) and labels showing the selected values */
+/* It's needed for the responsive design (small width devices) to place info label above of the input (slider) and the label with selected value */
+.input-label-container{
+    display: flex; flex-direction: row;
+    align-items: center; justify-content: space-between;
 }
 
 /* Download, reset buttons */
@@ -174,6 +182,26 @@ body *{
         padding: 0.25em; margin: 0.125em;
     }
 
+    /* Width input elements styling, make it better fit to the page */
+    #width-input-container{
+        text-align: center; 
+        display: flex; flex-direction: row;
+        padding: 0.125em 0.25em; margin: 0.125em auto;
+    }
+    #width-ticks{
+        display: none;
+    }
+
+    /* Styling of image manipulations controls: blur, brightness and so on */
+    #image-manipulation-controls-box{
+        text-align: center; 
+    }
+    /* Align content of image processing controls differently than for the desktop displays */
+    #blur-control-container, #blur-label, #brightness-control-container, #brightness-label, #contrast-control-container, #contrast-label{
+        display: block;
+    }
+
+    /* Move footer relative to the page content */
     #page-footer{
         margin-top: 30vh;
     }
