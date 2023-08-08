@@ -54,7 +54,7 @@ body *{
 }
 #associated-controls-container{
     display: flex; flex-direction: row; flex-wrap: wrap;
-    align-items: baseline; justify-content: flex-start;
+    align-items: baseline; justify-content: center;
 }
 /* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
 #width-input-container{
@@ -62,10 +62,10 @@ body *{
 }
 #input-ticks-container{
     /* display: flex;  */   /* Inherited from the parent above */
-    flex-direction: column;  margin: 0px;
+    flex-direction: column;  margin: 0em; padding: 0em; margin-top: 0.55em;
 }
 #width-image-input{
-    padding: 0px; width: 200px;
+    padding: 0px; width: 200px; margin: 0em 0.25em;
 }
 #width-ticks{
     display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
@@ -87,13 +87,17 @@ body *{
     border: solid 1px darkolivegreen;
     width: fit-content;  /* regulates the size of the container itself, restricted to the content */
 }
-
 #upload-info, #upload-button{
-    display: inline-block; text-align: center; margin-top: 1.0em; margin-bottom: 1.0em; margin-left: 1.25em; margin-right: 1.25em;
+    display: inline-block; text-align: center; margin-top: 1.0em 0.5em; 
 }
 #upload-button{
     font-size: 1.0rem; color: red;
     border: 1px solid rgb(42, 12, 216); 
+}
+
+/* Styling of an image element */
+#canvas-element{
+    display: block; margin: 0.125em auto;  /* put the image on the center */
 }
 
 /* Styling of image manipulation controls */
@@ -128,8 +132,8 @@ body *{
 }
 
 /* Download, reset buttons */
-#download-button, #reset-button{
-    font-size: 0.95rem;
+#download-button, #reset-button, #clear-image-button{
+    font-size: 0.95rem; padding: 0.125em 0.5em; margin: 0em 0.5em;
 }
 
 /* Adapt styles to the small mobile screen, decrease all margins, font sizes to better fit content */
@@ -155,14 +159,14 @@ body *{
     #project-header{
         font-size: 1.15em; 
     }
-    #upload-image-container, #upload-button{
+    #upload-image-container{
         margin: 0.125em 0.25em; padding: 0.15em;
     }
     #upload-info{
         margin: 0.125em auto; padding: 0.15em;
     }
-    #upload-button{
-        font-size: 0.9rem; width: fit-content; margin: 0.2em auto;
+    #upload-button, #clear-image-button, #download-button{
+        font-size: 0.9rem; width: fit-content; margin: 0.125em auto; padding: 0.2em;
     }
 
     /* Styled after showing uploaded image */
@@ -173,6 +177,7 @@ body *{
     /* Below styling for Download button, text, width of an image control*/
     #associated-controls-container *{ 
         padding: 0.125em; margin: 0.125em auto; 
+        text-align: center;
     }
     /* Below - styling of an image itself, takes almost available width */
     #image-container{ 
