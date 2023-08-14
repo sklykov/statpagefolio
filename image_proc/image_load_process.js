@@ -20,7 +20,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const blurInput = document.getElementById("blur-control"); const blurValue = document.getElementById("blur-value");
     const brightnessInput = document.getElementById("brightness-control"); const brightnessValue = document.getElementById("brightness-value");
     const contrastInput = document.getElementById("contrast-control"); const contrastValue = document.getElementById("contrast-value");
-    const clearImageButton = document.getElementById("clear-image-button");
+    const saturateInput = document.getElementById("saturate-control"); const saturateValue = document.getElementById("saturate-value");
+    const grayscaleInput = document.getElementById("grayscale-control"); const grayscaleValue = document.getElementById("grayscale-value");
+    const saturateCtrlBox = document.getElementById("saturate-control-container"); const grayscaleCtrlBox = document.getElementById("grayscale-control-container");
+    const clearImageButton = document.getElementById("clear-image-button"); 
     // Containers, html elements
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
@@ -45,7 +48,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
     let widthSet = "55%"; widthInput.value = 55; let defaultWidthPercentage = 55; // default width setting
     let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
-    brightnessInput.value = 100; contrastInput.value = 100;  // default brightness, contrast settings
+    brightnessInput.value = 100; contrastInput.value = 100; saturateInput.value = 100; // default brightness, contrast, saturation settings
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight;  // WxH of the page
@@ -53,7 +56,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let imageRefreshed = false;  // flag preventing calling functions associated with the tracking of the uploaded image
     uploadButton.value = "";  // put default "No file selected" to the input button
     const topMargin = "0.25em";  // uniform top margin setting
-    let imageModified = false;
+    let imageModified = false;  // track that the image has been modified and activate Download button for the modified images only
+    let grayScaleImageLoaded = false;  // tracks that the gray-scaled or color image has been uploaded 
+    let defaultDisplayStyle;  // records initial display styling for input control boxes for restoring if color image has been uploaded
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
     uploadButton.addEventListener("change", () => {
@@ -62,21 +67,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Event listener that reacts to finished loaded event from above (readerImg.readAsDataURL(...))
     readerImg.addEventListener("load", () => {
-        // Set filters to default if the image re-uploaded
+        // Set filters to the default values if the image re-uploaded
         if (imageUploaded){
-            if (blurInput.value > 0.0){
-                zeroBlurInput();  // workaround for updating the blur filter value to the default == 0px
-            }
-            if (brightnessInput.value != 100){
-                makeDefaultBrightnessInput();
-            }
-            if (contrastInput.value != 100){
-                makeDefaultContrastInput();
-            }
+            makeAllFiltersDefault();
         }
 
-        // Below - default values for the case that image not uploaded - before it will be confirmed that the image loaded
+        // Below - default values for the case that image not uploaded - before it will be confirmed that actually the image has been uploaded
         imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; brightnessInput.disabled = true;
+        saturateInput.disabled = true; grayscaleInput.disable = true;
         // console.log(readerImg.result.slice(5, 10));  // will print out the type of the uploaded file - image or not
         fileType = readerImg.result.slice(5, 10); 
         // Simple uploaded type checker - if the FileReader reports that uploaded image, then proceed to drawing of its content
@@ -108,7 +106,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         widthInput.value = 100; widthSet = `${widthInput.value}%`;
                         // If the width of an image is larger than the available width of a page (device specific), set ticks and available width control to min 50%
                         widthInput.min = "50"; minTick.value="50"; minTick.label="50"; midTick.value = "75"; midTick.label = "75"; 
-                        console.log(widthInput); console.log(minTick); 
+                        // console.log(widthInput); console.log(minTick); 
                     }
 
                     // Set the width % to the style of elements
@@ -123,7 +121,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
                         // check that it was normal image (width and height more than 1 pixel)
                         if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
-                            changePropsImgUploaded();  // centrally changing of flags and elements content by 
+                            changePropsImgUploaded();  // centrally changing of flags and elements content by calling a function
+                            checkImageGray();  // check if the uploaded image is gray-scaled or color (different values in RGB channels)
                             changePageStyleImgUploaded();  // change style of elements to show loaded image
                         } else {
                             window.alert("The uploaded image width and / or height isn't more than 1 pixel, it will be ignored!");
@@ -191,6 +190,34 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     });
 
+    // Input with Saturation changed handle
+    saturateInput.addEventListener("change", () => {
+        if (imageUploaded){
+            saturateValue.innerHTML = `<strong> ${saturateInput.value}% </strong> - applied saturation`;
+            // track that the image modified for enabling download button
+            if (parseInt(saturateInput.value) !== 100){ 
+                imageModified = true;
+            } else {
+                imageModified = false;
+            }
+            applyAllFilters();  // applying all selected filters at once
+        }
+    });
+
+    // Input with Grayscale changed handle
+    grayscaleInput.addEventListener('change', () => {
+        if (imageUploaded){
+            grayscaleValue.innerHTML = `<strong> ${grayscaleInput.value}% </strong> - applied grayscale`;
+            // track that the image modified for enabling download button
+            if (parseInt(grayscaleInput.value) !== 0){ 
+                imageModified = true;
+            } else {
+                imageModified = false;
+            }
+            applyAllFilters();  // applying all selected filters at once
+        }
+    });
+
     // Assign only the default blur value = 0.0
     function zeroBlurInput(){
         blurInput.value = 0.0; blurPixelValue = `${blurInput.value}px`;
@@ -209,6 +236,36 @@ document.addEventListener("DOMContentLoaded", ()=>{
         contrastValue.innerHTML = `<strong> ${contrastInput.value}% </strong> - applied contrast`;
     }
 
+    // Make saturate input element default = 100%
+    function makeDefaultSaturateInput(){
+        saturateInput.value = 100;
+        saturateValue.innerHTML = `<strong> ${saturateInput.value}% </strong> - applied saturation`;
+    }
+
+    // Make grayscale input element default = 0%
+    function makeDefaultGrayscaleInput(){
+        grayscaleInput.value = 0;
+        grayscaleValue.innerHTML = `<strong> ${grayscaleInput.value}% </strong> - applied grayscale`;
+    }
+
+    function makeAllFiltersDefault(){
+        if (blurInput.value > 0.0){
+            zeroBlurInput();
+        }
+        if (brightnessInput.value != 100){
+            makeDefaultBrightnessInput();
+        }
+        if (contrastInput.value != 100){
+            makeDefaultContrastInput();
+        }
+        if (saturateInput.value != 100){
+            makeDefaultSaturateInput(); 
+        }
+        if (grayscaleInput.value != 0){
+            makeDefaultGrayscaleInput();
+        }
+    }
+
     // Apply all implemented filters at once, and before it redraw the original image
     function applyAllFilters(){
         // Refresh the image for applying all filters to the original image instead of the already modified one
@@ -221,7 +278,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // canvas.style.filter = `blur(${blurPixelValue})`;  // non-destructive applying of the filter, not changing the image content
         // Reference: https://www.bit-101.com/blog/2021/07/new-html-canvas-stuff-filters/
         // Below - apply all implemented filters by specifying all them as the string for HTML element property
-        contextCanvas.filter = `brightness(${brightnessInput.value}%) contrast(${contrastInput.value}%) blur(${blurPixelValue})`;  
+        contextCanvas.filter = `brightness(${brightnessInput.value}%) contrast(${contrastInput.value}%) saturate(${saturateInput.value}%)
+        grayscale(${grayscaleInput.value}%) blur(${blurPixelValue})`;  
         contextCanvas.drawImage(imageClass, 0, 0);  // update image shown on the canvas element
         if (imageModified){  // enable Download button
             downloadBtn.disabled = false; 
@@ -234,7 +292,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function changePropsImgUploaded(){
         if (!imageRefreshed){
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
-            contrastInput.disabled = false;
+            contrastInput.disabled = false; saturateInput.disabled = false; grayscaleInput.disabled = false;
             // Providing information according to the size of page sizes
             if (windowWidth > 1280){
                 uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>'; 
@@ -298,7 +356,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Resetting all applied filters by clicking the button
     resetButton.addEventListener("click", () => {
         imageModified = false; downloadBtn.disabled = true;
-        zeroBlurInput(); makeDefaultBrightnessInput(); makeDefaultContrastInput(); applyAllFilters(); 
+        makeAllFiltersDefault(); applyAllFilters(); 
     });
 
     // Clear the uploaded image and its container
@@ -310,5 +368,34 @@ document.addEventListener("DOMContentLoaded", ()=>{
             footerElement.style.marginTop = "30vh";  // shift footer again to the bottom
         }
     });
+
+    // Check that pixels in the uploaded image gray-scaled or colored
+    function checkImageGray(){
+        if (!imageRefreshed){
+            // hint from: https://www.qoncious.com/questions/how-load-image-html5-canvas-and-do-pixel-manipulation
+            let rawPixels = contextCanvas.getImageData(0, 0, imgElement.naturalWidth, imgElement.naturalHeight).data; 
+            grayScaleImageLoaded = true;  // if all pixels are equal in all 3 RGB channels, then the uploaded image is gray-scaled
+            for (let i = 0; i < rawPixels.length; i+=4){
+                // Store all channels from RGBA scheme below for checking if they correspond to gray-scale transform
+                let red = rawPixels[i]; let green = rawPixels[i+1]; let blue = rawPixels[i+2];
+                // For more equations about RGB to Gray image conversion: https://openaccess.thecvf.com/content_cvpr_2017/papers/Nguyen_Why_You_Should_CVPR_2017_paper.pdf
+                if ((red !== green) && (red !== blue) && (green !== blue)){
+                    // The uploaded image is not gray-scaled, since the RGB channel values not equal
+                    grayScaleImageLoaded = false; break;
+                }
+            }
+            // If the uploaded image already is already gray-scaled, some filters have no effect and will be deleted from the displaying
+            if (grayScaleImageLoaded){
+                defaultDisplayStyle = saturateCtrlBox.style.display;
+                saturateCtrlBox.style.display = "none"; grayscaleCtrlBox.style.display = "none";
+            } else {
+                // Recover controlling input boxes if the color image has been uploaded after gray-scaled one
+                if (!(defaultDisplayStyle === undefined)){
+                    saturateCtrlBox.style.display = defaultDisplayStyle; grayscaleCtrlBox.style.display = defaultDisplayStyle;
+                }
+            }
+            console.log(`Uploaded image is: ${grayScaleImageLoaded? "Gray-scaled" : "Color"}`);  // checking the result
+        }
+    } 
    
 });

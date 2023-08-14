@@ -111,15 +111,17 @@ body *{
 #blur-label{
     padding-left: 0px;
 }
-#blur-control, #brightness-control, #contrast-control{
+/* Settings for all inputs and their labels */
+#blur-control, #brightness-control, #contrast-control, #saturate-control, #grayscale-control{
     width: 200px;
 }
-#blur-value, #brightness-value, #contrast-value{
+#blur-value, #brightness-value, #contrast-value, #saturate-value, #grayscale-value{
     color: rgb(37, 65, 65);
 }
 
 /* Styling of each slider box for centering elements inside it */
-#blur-control-container, #brightness-control-container, #contrast-control-container{
+#blur-control-container, #brightness-control-container, #contrast-control-container, #saturate-control-container,
+#grayscale-control-container{
     /* Align slider with surrounding labels in a <div> container, this needed also for align label with info about element itself and input / label with value */
     display: flex; flex-direction: row;  align-items: center; justify-content: space-between;
 }
@@ -131,7 +133,7 @@ body *{
     align-items: center; justify-content: space-between;
 }
 
-/* Download, reset buttons */
+/* Download, reset, clear image buttons */
 #download-button, #reset-button, #clear-image-button{
     font-size: 0.95rem; padding: 0.125em 0.5em; margin: 0em 0.5em;
 }
@@ -202,7 +204,8 @@ body *{
         text-align: center; 
     }
     /* Align content of image processing controls differently than for the desktop displays */
-    #blur-control-container, #blur-label, #brightness-control-container, #brightness-label, #contrast-control-container, #contrast-label{
+    #blur-control-container, #blur-label, #brightness-control-container, #brightness-label, #contrast-control-container, #contrast-label,
+    #saturate-control-container, #saturate-label, #grayscale-control-container, #grayscale-label{
         display: block;
     }
 
