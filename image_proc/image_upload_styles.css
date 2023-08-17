@@ -112,16 +112,16 @@ body *{
     padding-left: 0px;
 }
 /* Settings for all inputs and their labels */
-#blur-control, #brightness-control, #contrast-control, #saturate-control, #grayscale-control{
+#blur-control, #brightness-control, #contrast-control, #saturate-control, #grayscale-control, #huerotate-control{
     width: 200px;
 }
-#blur-value, #brightness-value, #contrast-value, #saturate-value, #grayscale-value{
+#blur-value, #brightness-value, #contrast-value, #saturate-value, #grayscale-value, #huerotate-value{
     color: rgb(37, 65, 65);
 }
 
 /* Styling of each slider box for centering elements inside it */
 #blur-control-container, #brightness-control-container, #contrast-control-container, #saturate-control-container,
-#grayscale-control-container{
+#grayscale-control-container, #huerotate-control-container{
     /* Align slider with surrounding labels in a <div> container, this needed also for align label with info about element itself and input / label with value */
     display: flex; flex-direction: row;  align-items: center; justify-content: space-between;
 }
@@ -136,6 +136,19 @@ body *{
 /* Download, reset, clear image buttons */
 #download-button, #reset-button, #clear-image-button{
     font-size: 0.95rem; padding: 0.125em 0.5em; margin: 0em 0.5em;
+}
+
+/* Styling of radio button selector */
+#input-type-container{
+    display: flex; flex-direction: row; justify-content: space-between; align-items: center; text-align: center;
+}
+.radio-box{
+    display: flex; align-items: center;
+}
+
+/* Removing all horizontal padding and margins inside inline elements inherited from body* selector */
+.horizontal-element{
+    margin-left: 0em; margin-right: 0em; padding-left: 0em; padding-right: 0em;
 }
 
 /* Adapt styles to the small mobile screen, decrease all margins, font sizes to better fit content */
@@ -205,7 +218,7 @@ body *{
     }
     /* Align content of image processing controls differently than for the desktop displays */
     #blur-control-container, #blur-label, #brightness-control-container, #brightness-label, #contrast-control-container, #contrast-label,
-    #saturate-control-container, #saturate-label, #grayscale-control-container, #grayscale-label{
+    #saturate-control-container, #saturate-label, #grayscale-control-container, #grayscale-label, #huerotate-control-container, #huerotate-label{
         display: block;
     }
 

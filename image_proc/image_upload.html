@@ -88,7 +88,7 @@
                         <label for="blur-control" id="blur-label"> Blur by applying Gaussian kernel with width [px]: </label>
                         <div class="input-label-container"> 
                             <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" name="blur-input" value="0.0" autocomplete="off" disabled>
-                            <label for="blur-control" id="blur-value"> <strong> 0.0 px </strong> - applied blur </label>
+                            <label for="blur-control" id="blur-value"> <strong class="horizontal-element"> 0.0 px </strong> - applied blur </label>
                         </div>
                     </div>
                     <!-- Brightness -->
@@ -96,7 +96,7 @@
                         <label for="brightness-control" id="brightness-label"> Brightness in [%]: </label>
                         <div class="input-label-container"> 
                             <input type="range" min="10" max="250" step="2" id="brightness-control" name="brightness-input" value="100" autocomplete="off" disabled>
-                            <label for="brightness-control" id="brightness-value"> <strong> 100% </strong> - applied brightness </label>
+                            <label for="brightness-control" id="brightness-value"> <strong class="horizontal-element"> 100% </strong> - applied brightness </label>
                         </div>
                     </div>
                     <!-- Contrast -->
@@ -104,7 +104,7 @@
                         <label for="contrast-control" id="contrast-label"> Contrast in [%]: </label>
                         <div class="input-label-container">
                             <input type="range" min="2" max="200" step="2" id="contrast-control" name="contrast-input" value="100" autocomplete="off" disabled>
-                            <label for="contrast-control" id="contrast-value"> <strong> 100% </strong> - applied contrast </label> 
+                            <label for="contrast-control" id="contrast-value"> <strong class="horizontal-element"> 100% </strong> - applied contrast </label> 
                         </div>
                     </div>
                     <!-- Saturate -->
@@ -112,7 +112,7 @@
                         <label for="saturate-control" id="saturate-label"> Saturation in [%]: </label>
                         <div class="input-label-container">
                             <input type="range" min="0" max="200" step="2" id="saturate-control" value="100" autocomplete="off" disabled>
-                            <label for="saturate-control" id="saturate-value"> <strong> 100% </strong> - applied saturation </label> 
+                            <label for="saturate-control" id="saturate-value"> <strong class="horizontal-element"> 100% </strong> - applied saturation </label> 
                         </div>
                     </div>
                     <!-- Grayscale -->
@@ -120,15 +120,37 @@
                         <label for="grayscale-control" id="grayscale-label"> Grayscale in [%]: </label>
                         <div class="input-label-container">
                             <input type="range" min="0" max="100" step="2" id="grayscale-control" value="0" autocomplete="off" disabled>
-                            <label for="grayscale-control" id="grayscale-value"> <strong> 0% </strong> - applied grayscale </label> 
+                            <label for="grayscale-control" id="grayscale-value"> <strong class="horizontal-element"> 0% </strong> - applied grayscale </label> 
+                        </div>
+                    </div>
+                    <!-- Hue-rotate -->
+                    <div id="huerotate-control-container">
+                        <label for="huerotate-control" id="huerotate-label"> Hue-rotate in [deg]: </label>
+                        <div class="input-label-container">
+                            <input type="range" min="0" max="360" step="2" id="huerotate-control" value="0" autocomplete="off" disabled>
+                            <label for="huerotate-control" id="huerotate-value"> <strong class="horizontal-element"> 0deg </strong> - applied hue-rotate </label> 
                         </div>
                     </div>
                     <!-- Reset Button -->
                     <div id="reset-button-container">
                         <button id="reset-button"> Reset filters </button>
                     </div>
+                    <!-- Radio button selector -->
+                    <fieldset id="input-type-container" disabled>
+                        <legend> 
+                            Select the selector types:
+                        </legend>
+                        <div class="radio-box">
+                            <input type="radio" id="sliders-selector1" name="input-selector" checked="true">
+                            <label for="sliders-selector1"> Sliders </label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="sliders-selector2" name="input-selector">
+                            <label for="sliders-selector2"> Inputs </label>
+                        </div>
+                    </fieldset>
                 </div>
-
+            
             </section>            
         </main>
 
