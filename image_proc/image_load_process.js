@@ -13,8 +13,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Ref.: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter#browser_compatibility
     }
 
-    // Elements selectors from DOM
-    // Buttons / sliders from the page
+    // Elements selectors from DOM. Buttons / sliders from the page
     const uploadButton = document.getElementById("upload-button"); const widthInput = document.getElementById("width-image-input"); 
     const downloadBtn = document.getElementById("download-button"); const resetButton = document.getElementById("reset-button");
     const blurInput = document.getElementById("blur-control"); const blurValue = document.getElementById("blur-value");
@@ -30,14 +29,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
     const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
     const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
-    const uploadImageContainer = document.getElementById("upload-image-container");
-    const infoContainer = document.getElementById("instructions-header-container");
+    const uploadImageContainer = document.getElementById("upload-image-container"); const infoContainer = document.getElementById("instructions-header-container");
     const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
     // Strings with some text representation
     const uploadInfoStr = document.getElementById("upload-info");
     const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
-    const info2images = document.getElementById("info-two-image-elements");
-    const imageControlsBox = document.getElementById("image-associated-ctrls-box");
+    const info2images = document.getElementById("info-two-image-elements"); const imageControlsBox = document.getElementById("image-associated-ctrls-box");
     const footerElement = document.getElementById("page-footer");  // for changing margin of the footer if image uploaded
     // Below - selectors for elements for changing their values if the page is opened on the mobile device
     const minTick = document.getElementById("min-width-tick"); const midTick = document.getElementById("mid-width-tick");
@@ -60,19 +57,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let imageModified = false;  // track that the image has been modified and activate Download button for the modified images only
     let grayScaleImageLoaded = false;  // tracks that the gray-scaled or color image has been uploaded 
     let defaultDisplayStyle;  // records initial display styling for input control boxes for restoring if color image has been uploaded
+    let flagSwitchImages = false;  // for tracking the clicks on the image for switching original / processed
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
     uploadButton.addEventListener("change", () => {
-        readerImg.readAsDataURL(uploadButton.files[0]);
+        readerImg.readAsDataURL(uploadButton.files[0]); // will evoke in the end of loading file "load" event (function below)
     });
 
     // Event listener that reacts to finished loaded event from above (readerImg.readAsDataURL(...))
     readerImg.addEventListener("load", () => {
         // Set filters to the default values if the image re-uploaded
-        if (imageUploaded){
-            makeAllFiltersDefault();
-        }
-
+        if (imageUploaded) makeAllFiltersDefault();
         // Below - default values for the case that image not uploaded - before it will be confirmed that actually the image has been uploaded
         imageUploaded = false; widthInput.disabled = true; blurInput.disabled = true; brightnessInput.disabled = true;
         saturateInput.disabled = true; grayscaleInput.disable = true; huerotateInput.disable = true;
@@ -92,10 +87,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 imgElement.onload = () => {
                     windowWidth = window.innerWidth; windowHeight = window.innerHeight;  // update window sizes
                     canvas.width = imgElement.naturalWidth; canvas.height = imgElement.naturalHeight;  // make canvas to inherit geometrical properties of <img> element
-                    console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}`);  // note of usage of naturalWidth and naturalHeight - original image properties
-                    console.log(`Browser viewport / Document WxH: ${windowWidth}x${windowHeight}`);  // log the view port of the browser size
+                    // note of usage below of naturalWidth and naturalHeight - original image properties
+                    console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}. Document WxH: ${windowWidth}x${windowHeight}`);
                     loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
-
                     // If new image uploaded, change width control to the default one and compare with the default percentage of the page width = 55%
                     widthInput.value = defaultWidthPercentage;
 
@@ -113,7 +107,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     // Set the width % to the style of elements
                     imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
                     imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
-
                     imageModified = false; downloadBtn.disabled = true;  // allow only downloading of the modified image
 
                     // Draw image on the <canvas> element, !!!: evoked by the call imageClass.src = readerImg.result
@@ -147,18 +140,33 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     });
 
+    // Compose inner HTML for indicating selected value by inputs
+    function getInnerHTML(element){
+        let unit = ''; 
+        switch (element.name){
+            case "blur":
+                unit = 'px'; break;
+            case "brightness":
+            case "saturate":
+            case "contrast":
+            case "grayscale":
+                unit = '%'; break;
+            case "hue-rotate":
+                unit = 'deg'; break;
+            default:
+                unit = ''; break; 
+        }
+        return `<strong class="horizontal-element"> ${element.value} ${unit} </strong> - applied ${element.name}`;
+    }
+
     // Blurring image if the blur control changed
     blurInput.addEventListener("change", ()=>{
         if (imageUploaded){
-            blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
-            imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element
-            blurValue.innerHTML = `<strong class="horizontal-element"> ${blurInput.value} px </strong> - applied blur`;
-            // track that the image modified for enabling download button
-            if (parseFloat(blurInput.value) > 0.0){
-                imageModified = true;
-            } else {
-                imageModified = false;
-            }
+            // blurPixelValue = `${blurInput.value}px`;  // convert from pure number to the Number px value accepted by filters
+            // imgElement.style.filter = `blur(${blurPixelValue})`;  // apply blurring to the <img> element  - was used for tests, 
+            // where comparison of filter effect on <img> and <canvas> elements was performed
+            blurValue.innerHTML = getInnerHTML(blurInput);
+            imageModified = parseFloat(blurInput.value) > parseFloat(blurInput.dataset.default);  // track that the image modified for enabling download button
             applyAllFilters();  // applying all selected filters at once
         }
     });
@@ -166,13 +174,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Change brightness of an image
     brightnessInput.addEventListener("change", () => {
         if (imageUploaded){
-            brightnessValue.innerHTML = `<strong class="horizontal-element"> ${brightnessInput.value}% </strong> - applied brightness`;
-            // track that the image modified for enabling download button
-            if (parseInt(brightnessInput.value) !== 100){ 
-                imageModified = true;
-            } else {
-                imageModified = false;
-            }
+            brightnessValue.innerHTML = getInnerHTML(brightnessInput);  // show the selected value by modifying inner HTML
+            imageModified = parseInt(brightnessInput.value) !== parseInt(brightnessInput.dataset.default);  // track that the image modified for enabling download button
             applyAllFilters();  // applying all selected filters at once
         }
     });
@@ -180,13 +183,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Change contrast of an image
     contrastInput.addEventListener("change", () => {
         if (imageUploaded){
-            contrastValue.innerHTML = `<strong class="horizontal-element"> ${contrastInput.value}% </strong> - applied contrast`;
-            // track that the image modified for enabling download button
-            if (parseInt(contrastInput.value) !== 100){ 
-                imageModified = true;
-            } else {
-                imageModified = false;
-            }
+            contrastValue.innerHTML = getInnerHTML(contrastInput);  // show the selected value by modifying inner HTML
+            imageModified = parseInt(contrastInput.value) !== parseInt(contrastInput.dataset.default);  // track that the image modified for enabling download button
             applyAllFilters();  // applying all selected filters at once
         }
     });
@@ -194,13 +192,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Input with Saturation changed handle
     saturateInput.addEventListener("change", () => {
         if (imageUploaded){
-            saturateValue.innerHTML = `<strong class="horizontal-element"> ${saturateInput.value}% </strong> - applied saturation`;
-            // track that the image modified for enabling download button
-            if (parseInt(saturateInput.value) !== 100){ 
-                imageModified = true;
-            } else {
-                imageModified = false;
-            }
+            saturateValue.innerHTML = getInnerHTML(saturateInput);  // show the selected value by modifying inner HTML
+            imageModified = parseInt(saturateInput.value) !== parseInt(saturateInput.dataset.default);  // track that the image modified for enabling download button
             applyAllFilters();  // applying all selected filters at once
         }
     });
@@ -208,13 +201,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Input with Grayscale changed handle
     grayscaleInput.addEventListener('change', () => {
         if (imageUploaded){
-            grayscaleValue.innerHTML = `<strong class="horizontal-element"> ${grayscaleInput.value}% </strong> - applied grayscale`;
-            // track that the image modified for enabling download button
-            if (parseInt(grayscaleInput.value) !== 0){ 
-                imageModified = true;
-            } else {
-                imageModified = false;
-            }
+            grayscaleValue.innerHTML = getInnerHTML(grayscaleInput);  // show the selected value by modifying inner HTML
+            imageModified = parseInt(grayscaleInput.value) !== parseInt(grayscaleInput.dataset.default);  // track that the image modified for enabling download button
             applyAllFilters();  // applying all selected filters at once
         }
     });
@@ -222,72 +210,49 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Input with Hue-rotate changed handle
     huerotateInput.addEventListener('change', () => {
         if (imageUploaded){
-            huerotateValue.innerHTML = `<strong class="horizontal-element"> ${huerotateInput.value}deg </strong> - applied hue-rotate`;
-            // track that the image modified for enabling download button
-            if (parseInt(huerotateInput.value) !== 0){ 
-                imageModified = true;
-            } else {
-                imageModified = false;
-            }
+            huerotateValue.innerHTML = getInnerHTML(huerotateInput);  // show the selected value by modifying inner HTML
+            imageModified = parseInt(huerotateInput.value) !== parseInt(huerotateInput.dataset.default);  // track that the image modified for enabling download button
             applyAllFilters();  // applying all selected filters at once
         }
     });
 
     // Assign only the default blur value = 0.0
     function zeroBlurInput(){
-        blurInput.value = 0.0; blurPixelValue = `${blurInput.value}px`;
-        blurValue.innerHTML = `<strong class="horizontal-element"> ${blurInput.value} px </strong> - applied blur`;
+        blurInput.value = parseFloat(blurInput.dataset.default); blurValue.innerHTML = getInnerHTML(blurInput);
     }
 
     // Make brightness input element default = 100%
     function makeDefaultBrightnessInput(){
-        brightnessInput.value = 100;
-        brightnessValue.innerHTML = `<strong class="horizontal-element"> ${brightnessInput.value}% </strong> - applied brightness`;
+        brightnessInput.value = parseInt(brightnessInput.dataset.default); brightnessValue.innerHTML = getInnerHTML(brightnessInput);
     }
 
     // Make contrast input element default = 100%
     function makeDefaultContrastInput(){
-        contrastInput.value = 100;
-        contrastValue.innerHTML = `<strong class="horizontal-element"> ${contrastInput.value}% </strong> - applied contrast`;
+        contrastInput.value = parseInt(contrastInput.dataset.default); contrastValue.innerHTML = getInnerHTML(contrastInput);
     }
 
     // Make saturate input element default = 100%
     function makeDefaultSaturateInput(){
-        saturateInput.value = 100;
-        saturateValue.innerHTML = `<strong class="horizontal-element"> ${saturateInput.value}% </strong> - applied saturation`;
+        saturateInput.value = parseInt(saturateInput.dataset.default); saturateValue.innerHTML = getInnerHTML(saturateInput);
     }
 
     // Make grayscale input element default = 0%
     function makeDefaultGrayscaleInput(){
-        grayscaleInput.value = 0;
-        grayscaleValue.innerHTML = `<strong class="horizontal-element"> ${grayscaleInput.value}% </strong> - applied grayscale`;
+        grayscaleInput.value = parseInt(grayscaleInput.dataset.default); grayscaleValue.innerHTML = getInnerHTML(grayscaleInput);
     }
 
     // Make hue-rotate input element default = 0deg
     function makeDefaultHueRotateInput(){
-        huerotateInput.value = 0;
-        huerotateValue.innerHTML = `<strong class="horizontal-element"> ${huerotateInput.value}deg </strong> - applied hue-rotate`;
+        huerotateInput.value = parseInt(huerotateInput.dataset.default); huerotateValue.innerHTML = getInnerHTML(huerotateInput);
     }
 
     function makeAllFiltersDefault(){
-        if (blurInput.value > 0.0){
-            zeroBlurInput();
-        }
-        if (brightnessInput.value != 100){
-            makeDefaultBrightnessInput();
-        }
-        if (contrastInput.value != 100){
-            makeDefaultContrastInput();
-        }
-        if (saturateInput.value != 100){
-            makeDefaultSaturateInput(); 
-        }
-        if (grayscaleInput.value != 0){
-            makeDefaultGrayscaleInput();
-        }
-        if (huerotateInput.value != 0){
-            makeDefaultHueRotateInput(); 
-        }
+        if (blurInput.value > parseFloat(blurInput.dataset.default)) zeroBlurInput(); 
+        if (brightnessInput.value != parseInt(brightnessInput.dataset.default)) makeDefaultBrightnessInput();
+        if (contrastInput.value != parseInt(contrastInput.dataset.default)) makeDefaultContrastInput();
+        if (saturateInput.value != parseInt(saturateInput.dataset.default)) makeDefaultSaturateInput(); 
+        if (grayscaleInput.value != parseInt(grayscaleInput.dataset.default)) makeDefaultGrayscaleInput();
+        if (huerotateInput.value != parseInt(huerotateInput.dataset.default)) makeDefaultHueRotateInput(); 
     }
 
     // Apply all implemented filters at once, and before it redraw the original image
@@ -295,7 +260,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Refresh the image for applying all filters to the original image instead of the already modified one
         imageRefreshed = true;  // for preventing associated functions changeProps...() to run
         imageClass.src = readerImg.result; contextCanvas.drawImage(imageClass, 0, 0);  // refresh image for applying again the filter
-
         // Apply the filters by assigning it to the properties of the context of the canvas
         // Note that applying filter to contextCanvas changes the content of the image data, which could be downloaded later, 
         // in comparison to applying them to the <image> element.
@@ -303,13 +267,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
         // Reference: https://www.bit-101.com/blog/2021/07/new-html-canvas-stuff-filters/
         // Below - apply all implemented filters by specifying all them as the string for HTML element property
         contextCanvas.filter = `brightness(${brightnessInput.value}%) contrast(${contrastInput.value}%) saturate(${saturateInput.value}%)
-        grayscale(${grayscaleInput.value}%) hue-rotate(${huerotateInput.value}deg) blur(${blurPixelValue})`;  
+        grayscale(${grayscaleInput.value}%) hue-rotate(${huerotateInput.value}deg) blur(${blurInput.value}px)`;  
         contextCanvas.drawImage(imageClass, 0, 0);  // update image shown on the canvas element
-        if (imageModified){  // enable Download button
-            downloadBtn.disabled = false; 
-        } else {
-            downloadBtn.disabled = true; 
-        }
+        downloadBtn.disabled = !imageModified  // enable Download button
     }
 
     // Change properties of page elements if the image was successfully uploaded to the browser
@@ -327,8 +287,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 uploadInfoStr.innerHTML = `File name:<em>${uploadButton.files[0].name}</em><br>`;
                 uploadInfoStr.innerHTML += '<span style="color: green;">Image uploaded.</span> Upload new image:'; 
             }
-            infoPoint1.innerText = "Process image by dragging the sliders below"; infoPoint2.innerText = "Download processed image if needed"; 
-            console.log("Image uploaded");
+            infoPoint1.innerText = "Process image by dragging the sliders below + Adjust its width for checking any small details on it";
+            infoPoint2.innerText = "Download the processed image if it is useful. Click on the processed image to switch between it and original one"; 
         }  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
     }
 
@@ -346,14 +306,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
             footerElement.style.marginTop = "0.5em";  // shift footer closer to the image / content of a page
             if (!imageDebugFlag){
                 info2images.innerText = "The image is placed in the <canvas> HTML element below.";
-            }
-            console.log("Page style changed after image upload");  
+            } 
         } else {
             imageRefreshed = false;  // set again the flag to the default value, this flag preventing calling this and function above
         }
     }
 
-    // Remove previously uploaded image from <img> and <canvas> elements, also handle if the image not uploaded
+    // Remove previously uploaded image from еру <canvas> element, hide the image processing controls. This function is also invoked when no image uploaded.
     function clearImagesFromElements(){
         if (!imageUploaded){
             contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = ""; 
@@ -366,6 +325,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Function for downloading processed image
     downloadBtn.addEventListener("click", (event) => {
         if (imageUploaded){
+            // If the original image is shown, 1st - call back application of all selected filters for saving the processed image
+            if (flagSwitchImages) {
+                applyAllFilters(); flagSwitchImages = false;
+            }
             const temporary_link = document.createElement('a'); 
             let file_name_wt_ext = uploadButton.files[0].name.split(".")[0];  // split file name based on dot, excluding extension of the file
             temporary_link.download = `${file_name_wt_ext}_processed.${imageFormat}`;
@@ -380,13 +343,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // Resetting all applied filters by clicking the button
     resetButton.addEventListener("click", () => {
-        imageModified = false; downloadBtn.disabled = true;
-        makeAllFiltersDefault(); applyAllFilters(); 
+        imageModified = false; downloadBtn.disabled = true; makeAllFiltersDefault(); applyAllFilters(); 
     });
 
     // Clear the uploaded image and its container
     clearImageButton.addEventListener('click', () =>{
         if (imageUploaded){
+            makeAllFiltersDefault();  // return all inputs to the default values
             imageUploaded = false; uploadInfoStr.innerHTML = '<span style="color: darkorange;">Image has been cleared.</span> Upload new image:';
             contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = "";
             imageControlsBox.style.display = "none"; processingCtrlBox.style.display = "none";
@@ -420,8 +383,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     huerotateCtrlBox.style.display = defaultDisplayStyle;
                 }
             }
-            console.log(`Uploaded image is: ${grayScaleImageLoaded? "Gray-scaled" : "Color"}`);  // checking the result
+            console.log(`Image uploaded and it is : ${grayScaleImageLoaded? "Gray-scaled" : "Colorful"}`);  // checking the result
         }
-    } 
+    }
+
+    // Associate clicks on the image (<canvas> element) and swap original and processed images
+    canvas.addEventListener("click", () => {
+        flagSwitchImages = !flagSwitchImages;  // switch internal flag
+        if (flagSwitchImages){
+            imageRefreshed = true;  // for preventing associated functions changeProps...() to run
+            imageClass.src = readerImg.result; // contextCanvas.drawImage(imageClass, 0, 0);  // refresh image for applying again the filter
+            contextCanvas.filter = 'blur(0px)';  // show the original image
+            contextCanvas.drawImage(imageClass, 0, 0);  // refresh image for applying again the filter
+        } else {
+            applyAllFilters();  // show the processed image
+        }
+    });
    
 });
