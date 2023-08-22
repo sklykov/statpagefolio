@@ -15,8 +15,20 @@
 
 </head>
 
+<!-- Styling inside the HTML elements by using Bootstrap classes embedded above using CDN request-->
 <body class="bg-dark text-white">
-    <!-- Styling inside the HTML elements by using Bootstrap -->
+
+    <!-- Navigation bar -->
+    <nav class="navbar" style="background-color: midnightblue;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span style="font-size: 1.25em;"> Static pages portfolio </span>
+            </div>
+            <!-- <a class="text-blue" href="https://sklykov.github.io/statpagefolio/"> Static pages portfolio </a>  -->
+        </div>
+    </nav>
+
+    <!-- Page content container -->
     <div class="d-flex p-2 m-2 ms-4 me-4 flex-column justify-content-center"> 
         <!-- Styling: p - padding, m - margin, ms - margin-left, me - margin-right -->
         <h4 class="text-center m-2 "> 
@@ -31,7 +43,8 @@
         <h5 class="text-center m-2">
             Projects as the plain list:
         </h5>
-        <ul class="list-group list-group-horizontal mb-4">
+        <!-- Alignment of content: d-flex - creates the flexbox container with justify- rule -->
+        <ul class="d-flex justify-content-center list-group list-group-horizontal mb-4">
             <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white"> 
                 <a href="image_proc/image_upload.html"> Image processing with Vanilla JS </a> - using only pure HTML / CSS / JS  
             </li>
@@ -43,17 +56,31 @@
         <h5 class="text-center m-2">
             Cards-preview of the projects:
         </h5>
-
         <!-- Cards with the projects previews -->
-        <div class="card p-2 m-2 bg-dark bg-gradient text-white" style="width: 24em;" id="image-processing-card">
-            <img src="image_proc/Preview_ImageProcessing.png" class="card-img-top" alt="Image Processing Screenshot">
-            <div class="card-body">
-              <h5 class="card-title">Image processing using Vanilla JS</h5>
-              <p class="card-text">Check available built-in functions in the pure JS for image processing.</p>
-              <a href="image_proc/image_upload.html" class="btn btn-primary">Check the project</a>
+        <div class="d-flex justify-content-center m-2" id="cards-container">
+            <!-- Image processing project -->
+            <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="image-processing-card">
+                <img src="image_proc/Preview_ImageProcessing.png" class="card-img-top" alt="Image Processing Screenshot">
+                <div class="card-body">
+                    <h5 class="card-title mt-2 mb-2"> Image processing using Vanilla JS </h5>
+                    <p class="card-text mt-2 mb-2"> Check available built-in functions in the pure JS for image processing </p>
+                    <button class="btn btn-primary mt-2"> 
+                        <a href="image_proc/image_upload.html" class="text-white text-decoration-none"> Try it out! </a> 
+                    </button>
+                </div>
+            </div>
+            <!-- Next project -->
+            <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="next-project-card">
+                <img src="..." class="card-img-top" alt="Next Project Preview Image">
+                <div class="card-body">
+                    <h5 class="card-title mt-2 mb-2"> Next Project will be added here </h5>
+                    <p class="card-text mt-2 mb-2"> Description of the next project... </p>
+                    <button class="btn btn-primary mt-2" disabled> 
+                        <a href="..." class="text-white text-decoration-none"> Try it out! </a> 
+                    </button>
+                </div>
             </div>
         </div>
-
     </div>
 
 </body>
