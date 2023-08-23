@@ -44,9 +44,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
     const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
-    let widthSet = "55%"; widthInput.value = 55; let defaultWidthPercentage = 55; // default width setting
-    let blurPixelValue = "0.0"; blurInput.value = 0.0;  // default blur setting
-    brightnessInput.value = 100; contrastInput.value = 100; saturateInput.value = 100; // default brightness, contrast, saturation settings
+    widthInput.value = parseInt(widthInput.dataset.default); let widthSet = `${widthInput.value}%`;   // default width setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight;  // WxH of the page
@@ -91,7 +89,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}. Document WxH: ${windowWidth}x${windowHeight}`);
                     loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
                     // If new image uploaded, change width control to the default one and compare with the default percentage of the page width = 55%
-                    widthInput.value = defaultWidthPercentage;
+                    widthInput.value = parseInt(widthInput.dataset.default);
 
                     // Set now styling for restrict image sizes, taking into account the window properties
                     // Below - recalculate width set in % of the window width
