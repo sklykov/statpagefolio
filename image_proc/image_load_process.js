@@ -46,9 +46,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
     widthInput.value = parseInt(widthInput.dataset.default); let widthSet = `${widthInput.value}%`;   // default width setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
-    let fileType;  // store the uploaded type file provided in FileReader.result of method readAsDataURL
+    let fileType = ""; let imageFormat = "";  // store the uploaded type file / image provided in FileReader.result of method readAsDataURL
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight;  // WxH of the page
-    let loadedImgWidth = 0; let loadedImgHeight = 0; let imageFormat = ""; 
     let imageRefreshed = false;  // flag preventing calling functions associated with the tracking of the uploaded image
     uploadButton.value = "";  // put default "No file selected" to the input button
     const topMargin = "0.25em";  // uniform top margin setting
@@ -87,30 +86,26 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     canvas.width = imgElement.naturalWidth; canvas.height = imgElement.naturalHeight;  // make canvas to inherit geometrical properties of <img> element
                     // note of usage below of naturalWidth and naturalHeight - original image properties
                     console.log(`Image WxH: ${imgElement.naturalWidth}x${imgElement.naturalHeight}. Document WxH: ${windowWidth}x${windowHeight}`);
-                    loadedImgWidth = imgElement.naturalWidth; loadedImgHeight = imgElement.naturalHeight;  // store image WxH
                     // If new image uploaded, change width control to the default one and compare with the default percentage of the page width = 55%
-                    widthInput.value = parseInt(widthInput.dataset.default);
+                    widthInput.value = parseInt(widthInput.dataset.default); widthSet = `${widthInput.value}%`;
 
-                    // Set now styling for restrict image sizes, taking into account the window properties
-                    // Below - recalculate width set in % of the window width
-                    if (loadedImgWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
-                        widthInput.value = Math.round(100*(loadedImgWidth/windowWidth)); widthSet = `${widthInput.value}%`;
-                    } else if (loadedImgWidth > windowWidth){  // if image has width larger then the window size, just set it to the window size
+                    // Set now styling for restrict image sizes, taking into account the window properties. For it, recalculate width set in % of the window width
+                    if (imgElement.naturalWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
+                        widthInput.value = Math.round(100*(imgElement.naturalWidth/windowWidth)); widthSet = `${widthInput.value}%`;
+                    } else if (imgElement.naturalWidth > windowWidth){  // if image has width larger then the window size, just set it to the window size
                         widthInput.value = 100; widthSet = `${widthInput.value}%`;
                         // If the width of an image is larger than the available width of a page (device specific), set ticks and available width control to min 50%
                         widthInput.min = "50"; minTick.value="50"; minTick.label="50"; midTick.value = "75"; midTick.label = "75"; 
                         // console.log(widthInput); console.log(minTick); 
                     }
 
-                    // Set the width % to the style of elements
-                    imgElement.style.width = widthSet; imgElement.style.height = "auto";  // to prevent wrong transfer to the canvas element
                     imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
                     imageModified = false; downloadBtn.disabled = true;  // allow only downloading of the modified image
 
                     // Draw image on the <canvas> element, !!!: evoked by the call imageClass.src = readerImg.result
                     imageClass.onload = () => {
                         contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
-                        canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling as <img> element
+                        canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling of width / height as for <img> element
                         // check that it was normal image (width and height more than 1 pixel)
                         if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
                             changePropsImgUploaded();  // centrally changing of flags and elements content by calling a function
@@ -133,8 +128,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Listen to any change on the page of the width input (slider)
     widthInput.addEventListener("change", () => {
         if (imageUploaded){
-            widthSet = `${widthInput.value}%`;
-            canvas.style.width = widthSet; imgElement.style.width = widthSet; 
+            widthSet = `${widthInput.value}%`; canvas.style.width = widthSet;
         }
     });
 
