@@ -21,7 +21,27 @@ document.addEventListener("DOMContentLoaded", () => {
     getCapital("TBD4")
         .then((retrievedCapital) => console.log(retrievedCapital))
         .catch((error) => console.log(error));
+    
+    // States quiz
+    getState(); 
 }); 
+
+// Randomly select the state
+async function getState(){
+    let statesNumber = await getStatesNumber(); 
+    let randomIndex = Math.floor(Math.random()*statesNumber); 
+    console.log("Overall number of states: " + statesNumber + ". Selected state id: " + randomIndex); 
+}
+
+// Emulation of query to the back-end
+function getStatesNumber(){
+    let response = new Promise((resolve, reject) => {
+        setTimeout(resolve(data["states_table"].length), 45); 
+    });
+    return response;
+}
+
+// Retrieve the state by the ID
 
 // Emulation of requesting the back-end code to search for data (capital) of some country (input)
 function getCapital(country){
@@ -48,10 +68,19 @@ function searchCapital(country){
     return capital;
 }
 
-// Basic data storage
-let data = {
+// Basic data storage as the object data type. It's not efficient for search algorithm but it's 
+// possible represent the JSON response from the server. It's used because of the serverless implementation of the page.
+const data = {
     "countries_table": [{"country_id": 1, "country": "TBD1", "capital": "Cap1"},
                         {"country_id": 2, "country": "TBD2", "capital": "Cap2"},
                         {"country_id": 3, "country": "TBD3", "capital": "Cap3"},
                         {"country_id": 4, "country": "TBD4", "capital": "Cap4"}],
+    // Source - the Wikipedia website
+    "states_table": [{"state_id": 1, "state": "Alabama", "abbreviation": "AL", "capital_city": "Montgomery", "largest_city": "Huntsville"},
+                    {"state_id": 2, "state": "Alaska", "abbreviation": "AK", "capital_city": "Juneau", "largest_city": "Anchorage"},
+                    {"state_id": 3, "state": "Arizona", "abbreviation": "AZ", "capital_city": "Phoenix", "largest_city": "Phoenix"},
+                    {"state_id": 4, "state": "Arkansas", "abbreviation": "AR", "capital_city": "Little Rock", "largest_city": "Little Rock"},
+                    {"state_id": 5, "state": "California", "abbreviation": "CA", "capital_city": "Sacramento", "largest_city": "Los Angeles"},
+                    {"state_id": 6, "state": "Colorado", "abbreviation": "CO", "capital_city": "Denver", "largest_city": "Denver"},
+                    {"state_id": 7, "state": "Connecticut", "abbreviation": "CT", "capital_city": "Hartford", "largest_city": "Bridgeport"}]
 }
