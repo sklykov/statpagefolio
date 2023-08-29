@@ -14,7 +14,7 @@
 
 <body>
     <main class="flexbox-container">
-        <header>
+        <header id="project-header">
             <h3> 
                 Project: quiz about the U.S. states
             </h3>
@@ -23,8 +23,30 @@
             </p>
         </header>
 
-        <!-- Quiz area -->
-        <button> Start the Quiz! </button>
+        <section>
+            <button id="launch-control-button"> Start the Quiz! </button>
+            <div>
+                <label for="remaining-time-bar"> Remaining time: </label>
+                <progress id="remaining-time-bar" value="100" max="100"> 100% </progress>
+            </div>
+            <div id="lives-number" data-amount="3"> Lives: 3 </div>
+        </section>
+
+        <!-- Quiz section: question and answer variants -->
+        <section id="quiz-box">
+            <!-- Question -->
+            <p id="quiz-question">
+                Here is the quiz question
+            </p>
+            <!-- Answer variants -->
+            <div id="variants-grid-box">
+                <div id="answer-variant-1"> Variant 1 </div>
+                <div id="answer-variant-2"> Variant 2 </div>
+                <div id="answer-variant-3"> Variant 3 </div>
+                <div id="answer-variant-4"> Variant 4 </div>
+            </div> 
+        </section>
+        
     </main>
 
     <!-- Footer with the information about the author and license -->
