@@ -7,33 +7,64 @@
 //  3) Facilitate the HTML page functionality. 
 //  Thus, this script will be quite lengthy.
 
+// Script-wide variables
+let checkPrinciples = true;  // used for on / off logging into console some principles not related to the working logic of a page
+
+
+// All logic related to the moment then page is loaded
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Direct access to the stored data, for loop used for data object
-    for (let countryEntry of data["countries_table"]){
-        console.log(countryEntry); 
+    // Page elements handles
+    const startButton = document.getElementById("launch-control-button"); const initMarginRight = startButton.style.marginRight; 
+    const timeLivesBox = document.getElementById("time-lives-box"); 
+
+    // Variables for after page loaded logic below
+    let quizStarted = false;
+
+    // Start / stop the quiz by the button click
+    startButton.addEventListener("click", () => {
+        quizStarted = !(quizStarted); changeElementsQuiz(); 
+    });
+
+    // Change element info, appearance after starting / stopping the quiz
+    function changeElementsQuiz(){
+        if (quizStarted){
+            startButton.innerText = "Stop the Quiz!"; startButton.style.marginRight = "1.25em";
+            timeLivesBox.style.display = "flex";
+        } else{
+            startButton.innerText = "Start the Quiz!"; startButton.style.marginRight = initMarginRight; 
+            timeLivesBox.style.display = "none";
+        }
     }
-
-    // Simulation of a request
-    getCapital("Some Country")
-        .then((retrievedCapital) => console.log(retrievedCapital))
-        .catch((error) => console.log(error));
-    getCapital("TBD4")
-        .then((retrievedCapital) => console.log(retrievedCapital))
-        .catch((error) => console.log(error));
     
-    // States quiz
-    getState(); 
-}); 
+    // Check some principles, code parts
+    if (checkPrinciples){
+        // Direct access to the stored data, for loop used for data object
+        for (let countryEntry of data["countries_table"]){
+            console.log(countryEntry); 
+        }
 
-// Randomly select the state
+        // Simulation of a request and handling returned Promise
+        getCapital("Some Country")
+            .then((retrievedCapital) => console.log(retrievedCapital))
+            .catch((error) => console.log(error));
+        getCapital("TBD4")
+            .then((retrievedCapital) => console.log(retrievedCapital))
+            .catch((error) => console.log(error));
+        
+        // Check async function return
+        getState(); 
+    }
+});
+
+// Randomly select a State from available ones
 async function getState(){
     let statesNumber = await getStatesNumber(); 
     let randomIndex = Math.floor(Math.random()*statesNumber); 
     console.log("Overall number of states: " + statesNumber + ". Selected state id: " + randomIndex); 
 }
 
-// Emulation of query to the back-end
+// Emulation of query to the back-end for getting overall number of States
 function getStatesNumber(){
     let response = new Promise((resolve, reject) => {
         setTimeout(resolve(data["states_table"].length), 45); 

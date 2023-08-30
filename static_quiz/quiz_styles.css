@@ -1,0 +1,66 @@
+body {
+    margin: 0.25em;
+}
+
+/* All elements in <body> by default get margin and padding from below */
+body *{
+    padding: 0.2em; margin-left: 0.2em; margin-right: 0.2em;
+    margin-top: 0.4em; margin-bottom: 0.4em;
+    font-size: 1.055rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* Standard layout - flexbox with centered columns */
+.flexbox-container{
+    display: flex; margin-left: auto; margin-right: auto;
+    flex-direction: column; text-align: center;
+}
+/* Layout for flexbox with rows inside of it */
+.flexbox-container-rows{
+    display: flex; align-items: center;
+    flex-direction: row; text-align: center;
+    /* margin: 0.5em auto; */  /* centering the flexbox itself */
+    justify-content: center;  /* centering the content of the flexbox */
+}
+ 
+/* Control elements styling */
+#launch-control-button { width: 14em; height: 2.6em; }
+#remaining-time-box{ 
+    margin-right: 1em; margin-left: 1em; margin-top: 0em; margin-bottom: 0em; 
+    padding-top: 0em; padding-bottom: 0em; 
+}
+#lives-number{ 
+    margin-top: 0em; margin-bottom: 0em; margin-left: 1em; 
+    padding-top: 0em; padding-bottom: 0em; 
+}
+#remaining-time-bar{ margin-top: 0.52em; }
+
+/* Place question and answer variants in a grid */
+#quiz-question{
+    grid-area: Question;
+    text-align: center;
+}
+/* Naming for placing variants in a grid */
+#answer-variant-1{ grid-area: Answer1; }
+#answer-variant-2{ grid-area: Answer2; }
+#answer-variant-3{ grid-area: Answer3; }
+#answer-variant-4{ grid-area: Answer4; }
+/* Styling of all answers */
+.answer-variant{
+    text-align: center;
+    border: 2px solid darkblue;
+}
+/* Styling of the grid box with a question and answers */
+#quiz-grid-box{
+    display: grid;
+    width: max-content;
+    text-align: center; 
+    row-gap: 1em; column-gap: 4em;
+    grid-template-areas: 
+        "Question Question"
+        "Answer1 Answer2"
+        "Answer3 Answer4";
+}
+
+#page-footer{
+    margin-top: 18vh;  /* ... % of viewport width */
+}

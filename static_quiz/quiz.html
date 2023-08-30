@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Quiz </title>
+    
+    <!-- Script below used for testing, but result is unsuccessful, so commented out -->
+    <!-- <script src="./modules/quiz_static.js"> </script>   --> <!-- Test different ways how to simulate server response -->
+    <script src="./server_webpage_composed.js"></script>
+
+    <link rel="stylesheet" href="./quiz_styles.css"> 
+
+</head>
+
+<body>
+    <main class="flexbox-container">
+        <header id="project-header" class="flexbox-container">
+            <h3> 
+                Project: quiz about the U.S. states
+            </h3>
+            <p>
+                Check and improve your knowledge of the U.S. states' abbreviations and their capitals and largest cities.  
+            </p>
+        </header>
+
+        <section class="flexbox-container-rows">
+            <button id="launch-control-button"> Start the Quiz! </button>
+            <div id="time-lives-box" class="flexbox-container-rows" style="display: none;">
+                <div class="flexbox-container-rows" id="remaining-time-box">
+                    <label for="remaining-time-bar"> Remaining time: </label>
+                    <progress id="remaining-time-bar" value="100" max="100"> 100% </progress>
+                </div>
+                <div id="lives-number" data-amount="3"> Lives: 3 </div>
+            </div> 
+        </section>
+
+        <!-- Quiz section: question and answer variants -->
+        <section id="quiz-box" class="flexbox-container">
+            <div id="quiz-grid-box">
+                <!-- Question -->
+                <p id="quiz-question">
+                    Here is the really long quiz question. So it makes this placeholder long enough for tests.
+                    <!-- Short Q. -->
+                </p>
+                <!-- Answer variants -->
+                <div class="answer-variant" id="answer-variant-1"> Variant 1 </div>
+                <div class="answer-variant" id="answer-variant-2"> Longer Variant 2 </div>
+                <div class="answer-variant" id="answer-variant-3"> Variant 3 </div>
+                <div class="answer-variant" id="answer-variant-4"> Variant 4 </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer with the information about the author and license -->
+    <footer id="page-footer"> 2023 S.K., MIT licensed </footer>
+    
+</body>
+
+</html>
