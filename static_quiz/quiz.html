@@ -29,10 +29,11 @@
             <button id="launch-control-button"> Start the Quiz! </button>
             <div id="time-lives-box" class="flexbox-container-rows" style="display: none;">
                 <div class="flexbox-container-rows" id="remaining-time-box">
-                    <label for="remaining-time-bar"> Remaining time: </label>
+                    <label for="remaining-time-bar" id="remained-time-text"> Remaining time for answering: </label>
                     <progress id="remaining-time-bar" value="100" max="100"> 100% </progress>
                 </div>
                 <div id="lives-number" data-amount="3"> Lives: 3 </div>
+                <div id="right-answers"> Right answers: 0 </div>
             </div> 
         </section>
 
@@ -42,7 +43,6 @@
                 <!-- Question -->
                 <p id="quiz-question">
                     Here is the really long quiz question. So it makes this placeholder long enough for tests.
-                    <!-- Short Q. -->
                 </p>
                 <!-- Answer variants -->
                 <div class="answer-variant" id="answer-variant-1"> Variant 1 </div>
