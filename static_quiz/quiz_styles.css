@@ -41,14 +41,18 @@ body *{
 /* Place question and answer variants in a grid */
 #quiz-question{
     grid-area: Question;
-    text-align: center;
+    display: flex; align-items: center; justify-content: center;
+    background-color: black; color: palegoldenrod;
+    border: 4px solid darkslateblue; border-radius: 16px;
+    height: 2em; min-width: 18em;
+    padding: 0.5em;
 }
+
 /* Naming for placing variants in a grid */
 #answer-variant-1{ grid-area: Answer1;}
 #answer-variant-2{ grid-area: Answer2; }
 #answer-variant-3{ grid-area: Answer3; }
 #answer-variant-4{ grid-area: Answer4; }
-
 /* Styling of all answers */
 .answer-variant{
     background-color: navy; color: azure;  
@@ -71,5 +75,5 @@ body *{
 }
 
 #page-footer{
-    margin-top: 18vh;  /* ... % of viewport width */
+    margin-top: 30vh;  /* ... % of viewport width */
 }
