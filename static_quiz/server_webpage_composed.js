@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizBox = document.getElementById("quiz-box"); const footer = document.getElementById("page-footer");
     const answer1 = document.getElementById("answer-variant-1"); const answer2 = document.getElementById("answer-variant-2");
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
+    const pageHeader = document.getElementById("project-header"); 
 
     // Variables for after page loaded logic below
     const initMarginRight = startButton.style.marginRight;  const footerMarginTopDefault = footer.style.marginTop;
-    quizBox.style.display = "none"; 
+    quizBox.style.display = "none"; const headerMarginTopDefault = pageHeader.style.marginTop; 
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
     let quizStarted = false; let questionNumber = 1;  let rightAnswersTotal = 0;
     let maxTimeForAnswer = 11; let remainedTimerSeconds = maxTimeForAnswer; 
@@ -47,12 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
             questionNumber = 1; lives = startLives; remainedTimerSeconds = maxTimeForAnswer; lives = startLives; 
             rightAnswersTotal = 0;  livesNumberElement.innerText = ` Lives: ${lives} `; 
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
-            quizBox.style.display = "flex"; footer.style.marginTop = "5vh";
+            quizBox.style.display = "flex"; footer.style.marginTop = "5vh"; pageHeader.style.marginTop = "0.4em";
             prepareQuestion(); timerHandle = setTimeout(timer, 1000); 
         } else {
             startButton.innerText = "Start the Quiz!"; startButton.style.marginRight = initMarginRight; 
             timeLivesBox.style.display = "none";  quizBox.style.display = "none";
-            footer.style.marginTop = footerMarginTopDefault;
+            footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
         }
     }
     
@@ -301,5 +302,15 @@ const data = {
                     {"state_id": 7, "state_name": "Connecticut", "abbreviation": "CT", "capital_city": "Hartford", "largest_city": "Bridgeport"},
                     {"state_id": 8, "state_name": "Delaware", "abbreviation": "DE", "capital_city": "Dover", "largest_city": "Wilmington"},
                     {"state_id": 9, "state_name": "Florida", "abbreviation": "FL", "capital_city": "Tallahassee", "largest_city": "Jacksonville"},
-                    {"state_id": 10, "state_name": "Georgia", "abbreviation": "GA", "capital_city": "Atlanta", "largest_city": "Atlanta"}]
+                    {"state_id": 10, "state_name": "Georgia", "abbreviation": "GA", "capital_city": "Atlanta", "largest_city": "Atlanta"},
+                    {"state_id": 11, "state_name": "Hawaii", "abbreviation": "HI", "capital_city": "Honolulu", "largest_city": "Honolulu"},
+                    {"state_id": 12, "state_name": "Idaho", "abbreviation": "ID", "capital_city": "Boise", "largest_city": "Boise"},
+                    {"state_id": 13, "state_name": "Illinois", "abbreviation": "IL", "capital_city": "Springfield", "largest_city": "Chicago"},
+                    {"state_id": 14, "state_name": "Indiana", "abbreviation": "IN", "capital_city": "Indianapolis", "largest_city": "Indianapolis"},
+                    {"state_id": 15, "state_name": "Iowa", "abbreviation": "IA", "capital_city": "Des Moines", "largest_city": "Des Moines"},
+                    {"state_id": 16, "state_name": "Kansas", "abbreviation": "KS", "capital_city": "Topeka", "largest_city": "Wichita"},
+                    {"state_id": 17, "state_name": "Kentucky", "abbreviation": "KY", "capital_city": "Frankfort", "largest_city": "Louisville"},
+                    {"state_id": 18, "state_name": "Louisiana", "abbreviation": "LA", "capital_city": "Baton Rouge", "largest_city": "New Orleans"},
+                    {"state_id": 19, "state_name": "Maine", "abbreviation": "ME", "capital_city": "Augusta", "largest_city": "Portland"},
+                    {"state_id": 20, "state_name": "Maryland", "abbreviation": "MD", "capital_city": "Annapolis", "largest_city": "Baltimore"}]
 }

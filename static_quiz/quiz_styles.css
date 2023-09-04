@@ -21,6 +21,11 @@ body *{
     /* margin: 0.5em auto; */  /* centering the flexbox itself */
     justify-content: center;  /* centering the content of the flexbox */
 }
+
+/* Place header and button by default closer to page center */
+#project-header{
+    margin-top: 20vh;
+}
  
 /* Control elements styling */
 #launch-control-button { width: 14em; height: 2.6em; }
