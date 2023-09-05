@@ -1,0 +1,17 @@
+/* This particular style will be applied after starting the quiz */
+#launch-control-button {
+    box-shadow: 0px 10px rgb(170, 111, 105);
+    background-color: rgb(255, 84, 65);
+    border: 1px solid rgb(255, 59, 37);
+    border-radius: 14px;
+    color: seashell;
+}
+/* Make colors brighter then the button is hovered by the mouse */
+#launch-control-button:hover {
+    box-shadow: 0px 10px rgb(189, 101, 92);
+    background-color: rgb(255, 50, 28);
+    color: rgb(255, 251, 249);
+    box-shadow: none; transform: translateY(8px); transition: transform 0.4s;  /* Click effect made as hovering action*/
+}
+#launch-control-button:hover #hovered-start-arrows { display: none; }
+#launch-control-button:hover #hovered-stop-arrows { display: inline-block; }

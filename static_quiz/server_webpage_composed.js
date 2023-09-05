@@ -15,16 +15,21 @@ let checkPrinciples = false;  // used for on / off logging into console some pri
 document.addEventListener("DOMContentLoaded", () => {
 
     // Page elements handles
-    const startButton = document.getElementById("launch-control-button"); const rightAnswersIndicator = document.getElementById("right-answers"); 
+    const startButton = document.getElementById("launch-control-button"); const startButtonText = document.getElementById("launch-button-text");
     const timeLivesBox = document.getElementById("time-lives-box"); const livesNumberElement = document.getElementById("lives-number");
     const timeBar = document.getElementById("remaining-time-bar"); const questionElement = document.getElementById("quiz-question");
     const quizBox = document.getElementById("quiz-box"); const footer = document.getElementById("page-footer");
     const answer1 = document.getElementById("answer-variant-1"); const answer2 = document.getElementById("answer-variant-2");
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
-    const pageHeader = document.getElementById("project-header"); 
+    const pageHeader = document.getElementById("project-header");  const mainElement = document.querySelector("main");
+    const head = document.querySelector("head"); const rightAnswersIndicator = document.getElementById("right-answers"); 
 
     // Variables for after page loaded logic below
     const initMarginRight = startButton.style.marginRight;  const footerMarginTopDefault = footer.style.marginTop;
+    const initComputedStartButtonWidth = parseFloat(getComputedStyle(startButton).getPropertyValue("width"));  // getting computed button width
+    const initComputedStartButtonHeight = parseFloat(getComputedStyle(startButton).getPropertyValue("height"));
+    const initMarginTop = getComputedStyle(mainElement).getPropertyValue("margin-top");  // direct access through mainElement.style.marginTop is impossible
+    const heartSymbol = "&#10084"; 
     quizBox.style.display = "none"; const headerMarginTopDefault = pageHeader.style.marginTop; 
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
     let quizStarted = false; let questionNumber = 1;  let rightAnswersTotal = 0;
@@ -33,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let answerTypes = ["Capital", "Largest City"];
     const answerVariants = [answer1, answer2, answer3, answer4];  // store all 4 variants HTML elements
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
+    let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; 
 
     // Start / stop the quiz by the button click
     startButton.addEventListener("click", () => {
@@ -42,18 +48,36 @@ document.addEventListener("DOMContentLoaded", () => {
     // Change element info, appearance after starting / stopping the quiz
     function changeElementsQuiz(){
         if (quizStarted){
-            // set all values to the default values
-            startButton.innerText = "Stop the Quiz!"; startButton.style.marginRight = "1.25em";
+            // Quiz started, show the Quiz elements
+            startButtonText.innerText = "Stop the Quiz"; 
             timeLivesBox.style.display = "flex"; timeBar.max = maxTimeForAnswer; timeBar.value = maxTimeForAnswer;
             questionNumber = 1; lives = startLives; remainedTimerSeconds = maxTimeForAnswer; lives = startLives; 
-            rightAnswersTotal = 0;  livesNumberElement.innerText = ` Lives: ${lives} `; 
+            rightAnswersTotal = 0;  livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; 
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
-            quizBox.style.display = "flex"; footer.style.marginTop = "5vh"; pageHeader.style.marginTop = "0.4em";
+            // Change styling of elements after new appeared as the result of button click (quiz started)
+            quizBox.style.display = "flex"; footer.style.marginTop = "5vh"; pageHeader.style.marginTop = initMarginTop;
+            startButton.style.marginRight = "1.25em"; startButton.style.marginTop = initMarginTop;
+            startButton.style.width = `${Math.floor(0.7*initComputedStartButtonWidth)}px`;  // ...% of initial button width
+            startButton.style.height = `${Math.floor(0.7*initComputedStartButtonHeight)}px`;  // ...% of initial button height
             prepareQuestion(); timerHandle = setTimeout(timer, 1000); 
+            // Load special CSS file for handling colors of launch (start) button
+            if (!buttonStartedStyleElementCreated){
+                buttonStartedStyle = document.createElement("link"); 
+                buttonStartedStyle.href = "./launch_btn_started_quiz.css"; buttonStartedStyle.rel = "stylesheet"; 
+                buttonStartedStyleElementCreated = true;
+            }
+            head.appendChild(buttonStartedStyle);  // the style will be automatically loaded, the button appearance will be changed
         } else {
-            startButton.innerText = "Start the Quiz!"; startButton.style.marginRight = initMarginRight; 
+            // Quiz finished
+            startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = initMarginRight; 
             timeLivesBox.style.display = "none";  quizBox.style.display = "none";
+            // Return initial styling by the assigning stored in this script values
+            startButton.style.width = `${initComputedStartButtonWidth}px`;  // initial button width
+            startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
             footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
+            startButton.style.marginTop = headerMarginTopDefault;
+            // Remove styling of started button, keep default one by the removing the special external style
+            head.removeChild(buttonStartedStyle);  // default style will be returned
         }
     }
     
@@ -64,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 remainedTimerSeconds -= 1; timeBar.value = remainedTimerSeconds;
                 timerHandle = setTimeout(timer, 1000);  // call again this function after 1 second
             } else {
-                lives -= 1; livesNumberElement.innerText = ` Lives: ${lives} `;
+                lives -= 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
                 if (lives === 0){
                     quizStarted = !(quizStarted); changeElementsQuiz(); 
                 } else {
@@ -205,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
             prepareQuestion();  // prepare new question
             timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
         } else {
-            lives -= 1; livesNumberElement.innerText = ` Lives: ${lives}`;  // reduce number of lives
+            lives -= 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;  // reduce number of lives
             if (lives > 0) {
                 prepareQuestion();  // prepare new question
                 timerHandle = setTimeout(timer, 1000);  // start again the stopped timer

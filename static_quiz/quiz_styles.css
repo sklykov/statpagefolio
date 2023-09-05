@@ -27,8 +27,27 @@ body *{
     margin-top: 20vh;
 }
  
-/* Control elements styling */
-#launch-control-button { width: 14em; height: 2.6em; }
+/* Start (launch) the quiz button styling */
+#hovered-start-arrows { display: none; }   /* arrows are invisible if the button not hovered */
+#hovered-stop-arrows { display: none; }  /* these arrows will be visible if hovering the button for stop the quiz */
+#launch-control-button { 
+    width: 18em; height: 3.2em; margin-top: 2em;
+    cursor: pointer;   /* Regulates appearance of pointer when it's hovered over the button */
+    box-shadow: 0px 10px rgb(116, 175, 116);   /* shadow effect */
+    background-color: forestgreen;
+    border: 1px solid rgb(24, 161, 24); border-radius: 20px;
+    color: rgb(252, 232, 203);  /* Note: text color */
+    display: flex; align-items: center; justify-content: center;  /* Centering all spans inside the button with the text */
+} 
+#launch-control-button:hover{
+    background-color: rgb(27, 175, 27); 
+    color: rgb(250, 242, 230);
+    box-shadow: none; transform: translateY(8px); transition: transform 0.4s;  /* Click effect made as hovering action*/
+}
+/* Change style of the child element if the parent element get some CSS property */
+#launch-control-button:hover #hovered-start-arrows { display: inline-block; }
+
+/* Control elements styling: answers, lives counters, buttons */
 #remaining-time-box{ 
     margin-right: 1em; margin-left: 1em; margin-top: 0em; margin-bottom: 0em; 
     padding-top: 0em; padding-bottom: 0em; 
@@ -36,6 +55,7 @@ body *{
 #lives-number{ 
     margin-top: 0em; margin-bottom: 0em; margin-left: 1em; margin-right: 1em;
     padding-top: 0em; padding-bottom: 0em; 
+    color: red; font-size: 1.2em;
 }
 #right-answers{
     margin-top: 0em; margin-bottom: 0em; margin-left: 1em;
