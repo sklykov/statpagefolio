@@ -22,9 +22,32 @@ body *{
     justify-content: center;  /* centering the content of the flexbox */
 }
 
+#main-page-content{
+    max-height: 96vh; min-height: 60vh;
+}
+
+/* Setting all boxes to the bigger z-index than the background image */
+#main-page-content > *{
+    position: relative; z-index: 1; /* Allows to assign the z-index larger than for the background image */  
+}
+
+/* Set the background image for the entire page */
+#background-image-box{
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
+    opacity: 0.125;
+    background-size: contain;  /* Preserve initial image sizes */
+    background-repeat: no-repeat; 
+    position: absolute;  /* Place it on top of the parent element */
+    /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
+    width: calc(100% - 2*(0.5em + 0.4em));   /* Subtracted all margins, twice - because parent elements also have them */
+    height: calc(100% - 2*(0.5em + 0.8em));  /* Subtracted all margins, twice - because parent elements also have them */
+    z-index: 0;  /* place it behind all other elements */
+}
+
 /* Place header and button by default closer to page center */
 #project-header{
     margin-top: 20vh;
+    position: relative; z-index: 2; /* Allows to assign the z-index larger than for the background image */  
 }
  
 /* Start (launch) the quiz button styling */
@@ -55,11 +78,12 @@ body *{
 #lives-number{ 
     margin-top: 0em; margin-bottom: 0em; margin-left: 1em; margin-right: 1em;
     padding-top: 0em; padding-bottom: 0em; 
-    color: red; font-size: 1.2em;
+    color: red; font-size: 1.25em;
 }
 #right-answers{
     margin-top: 0em; margin-bottom: 0em; margin-left: 1em;
-    padding-top: 0em; padding-bottom: 0em; 
+    padding-top: 0em; padding-bottom: 0em;
+    color: green; text-decoration: underline overline seagreen;
 }
 #remaining-time-bar{ margin-top: 0.52em; }
 
@@ -100,5 +124,6 @@ body *{
 }
 
 #page-footer{
-    margin-top: 30vh;  /* ... % of viewport width */
+    margin-top: 24vh;  /* ... % of viewport height */
+    text-align: left; margin-left: 1.5em;  /* shifts the footer text to the left */
 }

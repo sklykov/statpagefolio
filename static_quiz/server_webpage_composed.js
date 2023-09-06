@@ -14,6 +14,17 @@ let checkPrinciples = false;  // used for on / off logging into console some pri
 // All logic related to the moment then page is loaded
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Set width and height for the background image element to represent it. There are the issue with getting actual height value of the main element
+    // The code below doesn't provide good way of setting the width and height
+    const mainElement = document.querySelector("main");  // get the main page content container
+    // const mainContainerWidth = getComputedStyle(mainElement).getPropertyValue("width"); 
+    // const mainContainerHeight = getComputedStyle(mainElement).getPropertyValue("height");  // Actually, return the number larger than actually calculated
+    // let mainSizes = mainElement.getBoundingClientRect(); console.log(mainSizes);  // returns the bounding sizes of the main element
+    // const mainContainerWidth = Math.floor(mainSizes["width"]); const mainContainerHeight = Math.floor(mainSizes["height"]);
+    // const mainContainerWidth = mainElement.scrollWidth; const mainContainerHeight = mainElement.scrollHeight; 
+    // const backgroundImageBox = document.getElementById("background-image-box");
+    // backgroundImageBox.style.width = `${mainContainerWidth}px`; backgroundImageBox.style.height = `${mainContainerHeight}px`; 
+
     // Page elements handles
     const startButton = document.getElementById("launch-control-button"); const startButtonText = document.getElementById("launch-button-text");
     const timeLivesBox = document.getElementById("time-lives-box"); const livesNumberElement = document.getElementById("lives-number");
@@ -21,15 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizBox = document.getElementById("quiz-box"); const footer = document.getElementById("page-footer");
     const answer1 = document.getElementById("answer-variant-1"); const answer2 = document.getElementById("answer-variant-2");
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
-    const pageHeader = document.getElementById("project-header");  const mainElement = document.querySelector("main");
-    const head = document.querySelector("head"); const rightAnswersIndicator = document.getElementById("right-answers"); 
+    const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head");
+    const rightAnswersIndicator = document.getElementById("right-answers"); 
 
     // Variables for after page loaded logic below
     const initMarginRight = startButton.style.marginRight;  const footerMarginTopDefault = footer.style.marginTop;
     const initComputedStartButtonWidth = parseFloat(getComputedStyle(startButton).getPropertyValue("width"));  // getting computed button width
     const initComputedStartButtonHeight = parseFloat(getComputedStyle(startButton).getPropertyValue("height"));
     const initMarginTop = getComputedStyle(mainElement).getPropertyValue("margin-top");  // direct access through mainElement.style.marginTop is impossible
-    const heartSymbol = "&#10084"; 
+    const initMarginTopStartButton = getComputedStyle(startButton).getPropertyValue("margin-top");
+    const heartSymbol = "&#10084"; const animationsDuration = 1800; 
     quizBox.style.display = "none"; const headerMarginTopDefault = pageHeader.style.marginTop; 
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
     let quizStarted = false; let questionNumber = 1;  let rightAnswersTotal = 0;
@@ -41,25 +53,33 @@ document.addEventListener("DOMContentLoaded", () => {
     let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; 
 
     // Start / stop the quiz by the button click
-    startButton.addEventListener("click", () => {
+    startButton.addEventListener("click", handleStartButtonClick);
+    function handleStartButtonClick() { 
         quizStarted = !(quizStarted); changeElementsQuiz(); 
-    });
+    }
 
     // Change element info, appearance after starting / stopping the quiz
     function changeElementsQuiz(){
         if (quizStarted){
-            // Quiz started, show the Quiz elements
-            startButtonText.innerText = "Stop the Quiz"; 
-            timeLivesBox.style.display = "flex"; timeBar.max = maxTimeForAnswer; timeBar.value = maxTimeForAnswer;
+            // Quiz started, show the Quiz associated elements
+            // Remove event listener for disable clicking on the button between transitions
+            startButton.removeEventListener("click", handleStartButtonClick); 
+            animateStartButton();  // visualize that the clicking is disabled
+            // below - re-assign handling of clicks after animation is done
+            setTimeout(()=>{startButton.addEventListener("click", handleStartButtonClick);}, animationsDuration*0.65);
+            // Set initial values for quiz starting
+            timeBar.max = maxTimeForAnswer; timeBar.value = maxTimeForAnswer;
             questionNumber = 1; lives = startLives; remainedTimerSeconds = maxTimeForAnswer; lives = startLives; 
             rightAnswersTotal = 0;  livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; 
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
-            // Change styling of elements after new appeared as the result of button click (quiz started)
-            quizBox.style.display = "flex"; footer.style.marginTop = "5vh"; pageHeader.style.marginTop = initMarginTop;
-            startButton.style.marginRight = "1.25em"; startButton.style.marginTop = initMarginTop;
+            startButtonText.innerText = "Stop the Quiz"; startButton.style.marginRight = "1.25em"; startButton.style.marginTop = initMarginTop;
+            animateTimeLivesBox(); timeLivesBox.style.display = "flex";  // Animate appearance of the box with remaining time, # of lives and right answers 
+            animateQuizBox(); quizBox.style.display = "flex";  // Animate appearance of the box with the quiz question and answer variants
+            // Change styling of elements around appeared elements
+            footer.style.marginTop = "5vh"; pageHeader.style.marginTop = initMarginTop;
             startButton.style.width = `${Math.floor(0.7*initComputedStartButtonWidth)}px`;  // ...% of initial button width
             startButton.style.height = `${Math.floor(0.7*initComputedStartButtonHeight)}px`;  // ...% of initial button height
-            prepareQuestion(); timerHandle = setTimeout(timer, 1000); 
+            prepareQuestion(); timerHandle = setTimeout(timer, animationsDuration + 1000); 
             // Load special CSS file for handling colors of launch (start) button
             if (!buttonStartedStyleElementCreated){
                 buttonStartedStyle = document.createElement("link"); 
@@ -69,15 +89,28 @@ document.addEventListener("DOMContentLoaded", () => {
             head.appendChild(buttonStartedStyle);  // the style will be automatically loaded, the button appearance will be changed
         } else {
             // Quiz finished
-            startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = initMarginRight; 
-            timeLivesBox.style.display = "none";  quizBox.style.display = "none";
-            // Return initial styling by the assigning stored in this script values
-            startButton.style.width = `${initComputedStartButtonWidth}px`;  // initial button width
-            startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
-            footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
-            startButton.style.marginTop = headerMarginTopDefault;
-            // Remove styling of started button, keep default one by the removing the special external style
-            head.removeChild(buttonStartedStyle);  // default style will be returned
+            // Remove event listener for disable clicking on the button between transitions
+            startButton.removeEventListener("click", handleStartButtonClick); 
+            // Remove quiz area + make disappearance of the start button
+            disappearStartButton();  // fade out the start button, duration = quiz area disappearance
+            animateTimeLivesBox(true); animateQuizBox(true); // animation of fading out of boxes
+            // Below - disappearance of the quiz, the time / lives box box
+            setTimeout(()=> {quizBox.style.display = "none"; timeLivesBox.style.display = "none"}, 0.98*animationsDuration);
+            // Re-assign handling of clicks after animation of disappearance is done
+            setTimeout(()=>{
+                animateStartButton(true);  // animate Start button appearance
+                startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = initMarginRight; 
+                // Remove styling of started button, keep default one by the removing the special external style
+                head.removeChild(buttonStartedStyle);  // default style will be returned back to "Start Button"
+                // Return initial styling by the assigning stored in this script values
+                startButton.style.width = `${initComputedStartButtonWidth}px`;  // initial button width
+                startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
+                startButton.style.marginTop = initMarginTopStartButton;  // initial margin top
+                footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
+            }, 
+                animationsDuration);  // visualize appearance of the Start button with the initial style
+            // Below - returning back handle to clicking of the Start button
+            setTimeout(()=>{startButton.addEventListener("click", handleStartButtonClick); startButton.style.opacity = 1;}, 1.25*animationsDuration);
         }
     }
     
@@ -104,6 +137,43 @@ document.addEventListener("DOMContentLoaded", () => {
         if (timerHandle !== undefined){
             clearTimeout(timerHandle); 
             remainedTimerSeconds = maxTimeForAnswer; timeBar.value = maxTimeForAnswer;
+        }
+    }
+
+    // Animate box with the remaining time and number of lives appearance, the simple "Fade In" effect
+    const timeLivesBoxEffect = [{opacity: 0}, {opacity: 1}]; const timeLivesBoxRevEffect = [{opacity: 1}, {opacity: 0}];
+    const timeLivesBoxEffectTiming = {duration: animationsDuration, iterations: 1}; 
+    function animateTimeLivesBox(reverse=false){
+        if (!reverse){
+            timeLivesBox.animate(timeLivesBoxEffect, timeLivesBoxEffectTiming);
+        } else {
+            timeLivesBox.animate(timeLivesBoxRevEffect, timeLivesBoxEffectTiming);
+        }
+    }
+
+    // Animate start button to show that it's disabled during appearance / disappearance of the quiz section
+    const startButtonEffect = [{opacity: 0.25}, {opacity: 1}]; const startButtonRevEffect = [{opacity: 0}, {opacity: 1}]; 
+    const startButtonTiming = {duration: 0.75*animationsDuration, iterations: 1}; 
+    const startButtonRevTiming = {duration: 0.25*animationsDuration, iterations: 1};
+    function animateStartButton(reverse=false){
+        if (!reverse){
+            startButton.animate(startButtonEffect, startButtonTiming);
+        } else {
+            startButton.animate(startButtonRevEffect, startButtonRevTiming);
+        }
+    }
+    const startButtonDisappearEffect = [{opacity: 1}, {opacity: 0}]; 
+    function disappearStartButton(){
+        startButton.animate(startButtonDisappearEffect, timeLivesBoxEffectTiming);
+    }
+
+    // Animate the quiz box (questions and answer variants)
+    const quizBoxEffect = [{opacity: 0}, {opacity: 1}]; const quizBoxReverseEffect = [{opacity: 1}, {opacity: 0}];
+    function animateQuizBox(reverse=false){
+        if (!reverse){
+            quizBox.animate(quizBoxEffect, timeLivesBoxEffectTiming);
+        } else {
+            quizBox.animate(quizBoxReverseEffect, timeLivesBoxEffectTiming);
         }
     }
 

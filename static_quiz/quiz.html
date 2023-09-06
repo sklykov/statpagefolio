@@ -10,12 +10,13 @@
 
     <!-- Script below used for testing, but result is unsuccessful, so commented out -->
     <!-- <script src="./modules/quiz_static.js"> </script>   --> <!-- Test different ways how to simulate server response -->
-    <script src="./server_webpage_composed.js"></script>
+    <script defer src="./server_webpage_composed.js"></script>
 
 </head>
 
 <body>
     <main class="flexbox-container" id="main-page-content">
+        <!-- Header of the project itself, general info -->
         <header id="project-header" class="flexbox-container">
             <h3> 
                 Project: quiz about the U.S. states
@@ -25,10 +26,11 @@
             </p>
         </header>
 
-        <section class="flexbox-container-rows">
+        <!-- Section with the start quiz button and the container for lives # and right answers -->
+        <section class="flexbox-container-rows" id="launch-quiz-properties-box">
             <button id="launch-control-button"> 
                 <span id="hovered-stop-arrows"> &lt&lt&lt </span> 
-                <span id="launch-button-text"> Start Quiz </span>
+                <span id="launch-button-text"> Start the Quiz </span>
                 <span id="hovered-start-arrows"> >>> </span> 
             </button>
             <div id="time-lives-box" class="flexbox-container-rows" style="display: none;">
@@ -56,11 +58,12 @@
             </div>
         </section>
         
-    </main>
+        <!-- Footer with the information about the author and license -->
+        <footer id="page-footer"> 2023 S.K., MIT licensed </footer>
 
-    <!-- Footer with the information about the author and license -->
-    <footer id="page-footer"> 2023 S.K., MIT licensed </footer>
+        <!-- Element for the background image placing -->
+        <div id="background-image-box"> </div>
+    </main>
     
 </body>
-
 </html>
