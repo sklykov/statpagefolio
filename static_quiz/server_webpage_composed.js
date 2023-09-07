@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
     const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head");
     const rightAnswersIndicator = document.getElementById("right-answers"); 
+    const statisticsTableBox = document.getElementById("statistics-table-box"); 
 
     // Variables for after page loaded logic below
     const initMarginRight = startButton.style.marginRight;  const footerMarginTopDefault = footer.style.marginTop;
@@ -50,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let answerTypes = ["Capital", "Largest City"];
     const answerVariants = [answer1, answer2, answer3, answer4];  // store all 4 variants HTML elements
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
-    let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; 
+    let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; let playedGames = 0; 
 
     // Start / stop the quiz by the button click
     startButton.addEventListener("click", handleStartButtonClick);
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 buttonStartedStyleElementCreated = true;
             }
             head.appendChild(buttonStartedStyle);  // the style will be automatically loaded, the button appearance will be changed
+            statisticsTableBox.style.display = "none";  // remove the table with games statistics
         } else {
             // Quiz finished
             // Remove event listener for disable clicking on the button between transitions
@@ -107,10 +109,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
                 startButton.style.marginTop = initMarginTopStartButton;  // initial margin top
                 footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
+                statisticsTableBox.style.display = "flex";
             }, 
                 animationsDuration);  // visualize appearance of the Start button with the initial style
             // Below - returning back handle to clicking of the Start button
             setTimeout(()=>{startButton.addEventListener("click", handleStartButtonClick); startButton.style.opacity = 1;}, 1.25*animationsDuration);
+            playedGames += 1;  // count how many games were played
         }
     }
     

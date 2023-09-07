@@ -23,7 +23,8 @@ body *{
 }
 
 #main-page-content{
-    max-height: 96vh; min-height: 60vh;
+    max-height: 96vh; min-height: 60vh; 
+    /* position: relative; */   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
 }
 
 /* Setting all boxes to the bigger z-index than the background image */
@@ -34,19 +35,21 @@ body *{
 /* Set the background image for the entire page */
 #background-image-box{
     background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
-    opacity: 0.125;
-    background-size: contain;  /* Preserve initial image sizes */
+    opacity: 0.12;
+    /* background-size: contain; */  /* Preserve initial image sizes */
+    background-size: cover;  /* Stretch the image to cover background */
     background-repeat: no-repeat; 
-    position: absolute;  /* Place it on top of the parent element */
+    position: absolute; top: 0.25em; /* Place it on top of the parent element */
     /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
-    width: calc(100% - 2*(0.5em + 0.4em));   /* Subtracted all margins, twice - because parent elements also have them */
-    height: calc(100% - 2*(0.5em + 0.8em));  /* Subtracted all margins, twice - because parent elements also have them */
+    /* width: calc(100% - (0.5em + 0.4em + 0.25em)); */  /* Subtracted all margins, twice - because parent elements also have them */
+    width: 96%; height: 94%;   /* Calculated relative to the body or first relatively placed parent element */
+    left: 2%; top: 2%; /* Offsets for placing an image */
     z-index: 0;  /* place it behind all other elements */
 }
 
 /* Place header and button by default closer to page center */
 #project-header{
-    margin-top: 20vh;
+    margin-top: 18vh;
     position: relative; z-index: 2; /* Allows to assign the z-index larger than for the background image */  
 }
  
@@ -123,7 +126,22 @@ body *{
         "Answer3 Answer4";
 }
 
+/* Styling of the report section */
+#report {
+    margin-top: 2em;
+}
+#statistics-table-box {
+    /* display: none;  */
+    font-weight: bold; margin-top: 2em;
+}
+#statistics-table{
+    border-collapse: collapse;
+}
+#statistics-table th {
+    padding: 1em;
+}
+
 #page-footer{
-    margin-top: 24vh;  /* ... % of viewport height */
-    text-align: left; margin-left: 1.5em;  /* shifts the footer text to the left */
+    margin-top: 18vh; margin-left: 2%;  /* ... % of viewport height */
+    text-align: left;  /* prevent footer text to be centrally aligned */
 }
