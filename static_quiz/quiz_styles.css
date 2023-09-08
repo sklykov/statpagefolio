@@ -7,6 +7,7 @@ body *{
     padding: 0.2em; margin-left: 0.2em; margin-right: 0.2em;
     margin-top: 0.4em; margin-bottom: 0.4em;
     font-size: 1.055rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    line-height: 1.25em;  /* add additional vertical gaps between lines */
 }
 
 /* Standard layout - flexbox with centered columns */
@@ -23,7 +24,7 @@ body *{
 }
 
 #main-page-content{
-    max-height: 96vh; min-height: 60vh; 
+    max-height: 96vh; min-height: 50vh; 
     /* position: relative; */   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
 }
 
@@ -49,7 +50,7 @@ body *{
 
 /* Place header and button by default closer to page center */
 #project-header{
-    margin-top: 18vh;
+    margin-top: 16vh;
     position: relative; z-index: 2; /* Allows to assign the z-index larger than for the background image */  
 }
  
@@ -131,7 +132,7 @@ body *{
     margin-top: 2em;
 }
 #statistics-table-box {
-    /* display: none;  */
+    display: none;   /* will be shown after 1 played quiz game */
     font-weight: bold; margin-top: 2em;
 }
 #statistics-table{
@@ -142,6 +143,6 @@ body *{
 }
 
 #page-footer{
-    margin-top: 18vh; margin-left: 2%;  /* ... % of viewport height */
+    margin-top: 16vh; margin-left: 2%;  /* ... % of viewport height */
     text-align: left;  /* prevent footer text to be centrally aligned */
 }

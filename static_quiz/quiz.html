@@ -60,16 +60,23 @@
 
         <!-- Report after quiz finished -->
         <section class="flexbox-container" id="report">
-            <p>
+            <p id="initial-statistics-string">
                 Start the Quiz, check your knowledge and get the short report here
             </p>
             <div id="statistics-table-box" class="flexbox-container">
                 <table id="statistics-table">
                     <thead> The last game statistics </thead>
                     <tbody>
-                        <th> Right answers </th>
-                        <th> Remained lives </th>
-                        <th> Passed time </th>
+                        <tr>
+                            <th> Right answers </th>
+                            <th> Remained lives </th>
+                            <th> Passed time, seconds </th>
+                        </tr>
+                        <tr>
+                            <td id="table-right-answers"> 0 </td>
+                            <td id="remained-lives-answers"> 0 </td>
+                            <td id="passed-time-answers"> 0 </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

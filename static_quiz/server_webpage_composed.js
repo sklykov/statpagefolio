@@ -33,8 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer1 = document.getElementById("answer-variant-1"); const answer2 = document.getElementById("answer-variant-2");
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
     const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head");
-    const rightAnswersIndicator = document.getElementById("right-answers"); 
-    const statisticsTableBox = document.getElementById("statistics-table-box"); 
+    const rightAnswersIndicator = document.getElementById("right-answers"); const statisticsTableBox = document.getElementById("statistics-table-box"); 
+    const initialStringStatistics = document.getElementById("initial-statistics-string"); 
+    const rightAnswersTable = document.getElementById("table-right-answers");  const passedSecondsTable = document.getElementById("passed-time-answers");
+    const remainedLivesTable = document.getElementById("remained-lives-answers");
 
     // Variables for after page loaded logic below
     const initMarginRight = startButton.style.marginRight;  const footerMarginTopDefault = footer.style.marginTop;
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
     let quizStarted = false; let questionNumber = 1;  let rightAnswersTotal = 0;
     let maxTimeForAnswer = 11; let remainedTimerSeconds = maxTimeForAnswer; 
-    let rightAnswerIndex = 0; let givenAnswerIndex = -1;
+    let rightAnswerIndex = 0; let givenAnswerIndex = -1; let passedSeconds = 0;
     let answerTypes = ["Capital", "Largest City"];
     const answerVariants = [answer1, answer2, answer3, answer4];  // store all 4 variants HTML elements
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
@@ -62,7 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Change element info, appearance after starting / stopping the quiz
     function changeElementsQuiz(){
         if (quizStarted){
-            // Quiz started, show the Quiz associated elements
+            // Quiz started, show the Quiz associated elements and set default values
+            passedSeconds = 0; 
+            if (playedGames === 0){
+                initialStringStatistics.style.display = "none";  // remove the initial informational string
+            }
             // Remove event listener for disable clicking on the button between transitions
             startButton.removeEventListener("click", handleStartButtonClick); 
             animateStartButton();  // visualize that the clicking is disabled
@@ -77,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
             animateTimeLivesBox(); timeLivesBox.style.display = "flex";  // Animate appearance of the box with remaining time, # of lives and right answers 
             animateQuizBox(); quizBox.style.display = "flex";  // Animate appearance of the box with the quiz question and answer variants
             // Change styling of elements around appeared elements
-            footer.style.marginTop = "5vh"; pageHeader.style.marginTop = initMarginTop;
+            footer.style.marginTop = "10vh"; pageHeader.style.marginTop = initMarginTop;
             startButton.style.width = `${Math.floor(0.7*initComputedStartButtonWidth)}px`;  // ...% of initial button width
             startButton.style.height = `${Math.floor(0.7*initComputedStartButtonHeight)}px`;  // ...% of initial button height
             prepareQuestion(); timerHandle = setTimeout(timer, animationsDuration + 1000); 
@@ -91,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             statisticsTableBox.style.display = "none";  // remove the table with games statistics
         } else {
             // Quiz finished
+            footer.style.display = "none";  // remove footer for preventing blink appearance it before animation
             // Remove event listener for disable clicking on the button between transitions
             startButton.removeEventListener("click", handleStartButtonClick); 
             // Remove quiz area + make disappearance of the start button
@@ -101,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Re-assign handling of clicks after animation of disappearance is done
             setTimeout(()=>{
                 animateStartButton(true);  // animate Start button appearance
+                animateStatisticsTable();  statisticsTableBox.style.display = "flex";  // animate the appearance of the table with statistics
                 startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = initMarginRight; 
                 // Remove styling of started button, keep default one by the removing the special external style
                 head.removeChild(buttonStartedStyle);  // default style will be returned back to "Start Button"
@@ -108,12 +116,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 startButton.style.width = `${initComputedStartButtonWidth}px`;  // initial button width
                 startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
                 startButton.style.marginTop = initMarginTopStartButton;  // initial margin top
+                footer.style.display = "flex";  // footer will appear in the end of animation
                 footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
-                statisticsTableBox.style.display = "flex";
             }, 
                 animationsDuration);  // visualize appearance of the Start button with the initial style
             // Below - returning back handle to clicking of the Start button
             setTimeout(()=>{startButton.addEventListener("click", handleStartButtonClick); startButton.style.opacity = 1;}, 1.25*animationsDuration);
+            // Put statistics in the table
+            rightAnswersTable.innerText = `${rightAnswersTotal}`; passedSecondsTable.innerText = `${passedSeconds}`; 
+            remainedLivesTable.innerText = `${lives}`; 
             playedGames += 1;  // count how many games were played
         }
     }
@@ -122,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function timer(){
         if ((quizStarted) && (lives > 0)){
             if (remainedTimerSeconds > 0){
+                passedSeconds += 1;  // just count for statistics
                 remainedTimerSeconds -= 1; timeBar.value = remainedTimerSeconds;
                 timerHandle = setTimeout(timer, 1000);  // call again this function after 1 second
             } else {
@@ -180,6 +192,13 @@ document.addEventListener("DOMContentLoaded", () => {
             quizBox.animate(quizBoxReverseEffect, timeLivesBoxEffectTiming);
         }
     }
+
+    // Animate the statistics table appearance, rotate and appear from the center effect
+    const statisticsTableBoxEffect = [{transform: "rotate(0) scale(0, 0)"}, {transform: "rotate(360deg) scale(1, 1)"}];
+    const statisticsTableBoxTiming = {duration: 0.5*animationsDuration, iterations: 1};
+    function animateStatisticsTable(){
+        statisticsTableBox.animate(statisticsTableBoxEffect, statisticsTableBoxTiming); 
+    } 
 
     // Prepare the quiz question and answer variants
     async function prepareQuestion(){
