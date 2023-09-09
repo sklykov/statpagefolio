@@ -146,3 +146,44 @@ body *{
     margin-top: 16vh; margin-left: 2%;  /* ... % of viewport height */
     text-align: left;  /* prevent footer text to be centrally aligned */
 }
+
+/* Adjusting styles based on the device width */
+@media screen and (max-width: 1780px) {
+    /* Keep initial image sizes, do not stretch to the page size */
+    #background-image-box{ background-size: contain; }
+}
+
+@media screen and (max-width: 1280px) {
+    #project-header { margin-top: 15vh; }
+    #page-footer { margin-top: 15vh; }
+    #statistics-table-box { margin-top: 1.5em; }
+}
+@media screen and (max-width: 1240px) {
+    #project-header { margin-top: 14vh; }
+    #page-footer { margin-top: 14vh; }
+}
+@media screen and (max-width: 1200px) {
+    #project-header { margin-top: 12vh; }
+    #page-footer { margin-top: 12vh; }
+    #statistics-table-box { margin-top: 1em; }
+}
+@media screen and (max-width: 1120px) {
+    #project-header { margin-top: 10vh; }
+    #page-footer { margin-top: 10vh; }
+}
+@media screen and (max-width: 1040px) {
+    #project-header { margin-top: 6vh; }
+    #page-footer { margin-top: 6vh; }
+}
+/* Screen smaller than 1000px, reduce some sizes for better fitting elements */
+@media screen and (max-width: 1000px) {
+    body {
+        margin: 0.15em;
+    }
+    body *{
+        font-size: 1rem;
+        padding: 0.15em; margin: 0.2em 0.15em;
+        line-height: 1.1em;  
+    }
+    #page-footer { margin-top: 8vh; }
+}

@@ -38,14 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightAnswersTable = document.getElementById("table-right-answers");  const passedSecondsTable = document.getElementById("passed-time-answers");
     const remainedLivesTable = document.getElementById("remained-lives-answers");
 
-    // Variables for after page loaded logic below
-    const initMarginRight = startButton.style.marginRight;  const footerMarginTopDefault = footer.style.marginTop;
+    // Variables and constants for the function within the DOMContentLoaded event handler
+    const initMarginRight = parseFloat(getComputedStyle(startButton).getPropertyValue("margin-top"));
+    const footerMarginTopDefault = parseFloat(getComputedStyle(footer).getPropertyValue("margin-top"));
+    const headerMarginTopDefault = parseFloat(getComputedStyle(pageHeader).getPropertyValue("margin-top"));
     const initComputedStartButtonWidth = parseFloat(getComputedStyle(startButton).getPropertyValue("width"));  // getting computed button width
     const initComputedStartButtonHeight = parseFloat(getComputedStyle(startButton).getPropertyValue("height"));
     const initMarginTop = getComputedStyle(mainElement).getPropertyValue("margin-top");  // direct access through mainElement.style.marginTop is impossible
     const initMarginTopStartButton = getComputedStyle(startButton).getPropertyValue("margin-top");
-    const heartSymbol = "&#10084"; const animationsDuration = 1800; 
-    quizBox.style.display = "none"; const headerMarginTopDefault = pageHeader.style.marginTop; 
+    const heartSymbol = "&#10084"; const animationsDuration = 1800; quizBox.style.display = "none"; 
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
     let quizStarted = false; let questionNumber = 1;  let rightAnswersTotal = 0;
     let maxTimeForAnswer = 11; let remainedTimerSeconds = maxTimeForAnswer; 
@@ -54,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const answerVariants = [answer1, answer2, answer3, answer4];  // store all 4 variants HTML elements
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
     let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; let playedGames = 0; 
+
+    console.log(initMarginRight, footerMarginTopDefault, initMarginTop, headerMarginTopDefault); 
 
     // Start / stop the quiz by the button click
     startButton.addEventListener("click", handleStartButtonClick);
@@ -83,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             animateTimeLivesBox(); timeLivesBox.style.display = "flex";  // Animate appearance of the box with remaining time, # of lives and right answers 
             animateQuizBox(); quizBox.style.display = "flex";  // Animate appearance of the box with the quiz question and answer variants
             // Change styling of elements around appeared elements
-            footer.style.marginTop = "10vh"; pageHeader.style.marginTop = initMarginTop;
+            footer.style.marginTop = `${Math.floor(0.4*footerMarginTopDefault)}px`; pageHeader.style.marginTop = initMarginTop;
             startButton.style.width = `${Math.floor(0.7*initComputedStartButtonWidth)}px`;  // ...% of initial button width
             startButton.style.height = `${Math.floor(0.7*initComputedStartButtonHeight)}px`;  // ...% of initial button height
             prepareQuestion(); timerHandle = setTimeout(timer, animationsDuration + 1000); 
@@ -109,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(()=>{
                 animateStartButton(true);  // animate Start button appearance
                 animateStatisticsTable();  statisticsTableBox.style.display = "flex";  // animate the appearance of the table with statistics
-                startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = initMarginRight; 
+                startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = `${initMarginRight}px`; 
                 // Remove styling of started button, keep default one by the removing the special external style
                 head.removeChild(buttonStartedStyle);  // default style will be returned back to "Start Button"
                 // Return initial styling by the assigning stored in this script values
@@ -117,7 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
                 startButton.style.marginTop = initMarginTopStartButton;  // initial margin top
                 footer.style.display = "flex";  // footer will appear in the end of animation
-                footer.style.marginTop = footerMarginTopDefault; pageHeader.style.marginTop = headerMarginTopDefault;
+                footer.style.marginTop = `${Math.floor(0.35*footerMarginTopDefault)}px`;  // decrease margin top because the statistics table appeared
+                pageHeader.style.marginTop = `${Math.floor(0.55*headerMarginTopDefault)}px`;
             }, 
                 animationsDuration);  // visualize appearance of the Start button with the initial style
             // Below - returning back handle to clicking of the Start button
