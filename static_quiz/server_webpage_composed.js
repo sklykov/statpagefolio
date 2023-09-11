@@ -333,20 +333,24 @@ document.addEventListener("DOMContentLoaded", () => {
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
             let prepareNextQuestion = true; 
             // Assign some ranking depending on the # of right answers
-            if (rightAnswersTotal >= 3) {
+            if (rightAnswersTotal === 3) {
                 rank.innerText = "Trainee"; rank.style.color = "rgb(118, 161, 118)";
-            } else if (rightAnswersTotal >= 5) {
+            } else if (rightAnswersTotal === 5) {
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                maxTimeForAnswer += 2;
                 rank.innerText = "Junior"; rank.style.color = "rgb(95, 187, 95)"; 
-            } else if (rightAnswersTotal >= 10) {
+            } else if (rightAnswersTotal === 10) {
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                maxTimeForAnswer += 1;
                 rank.innerText = "Intermediate"; rank.style.color = "rgb(73, 206, 73)"; 
-            } else if (rightAnswersTotal >= 20) {
+            } else if (rightAnswersTotal === 20) {
+                maxTimeForAnswer -= 4;
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
-                rank.innerText = "Excellent"; rank.style.color = "rgb(48, 219, 48)";
-            } else if (rightAnswersTotal >= 35) {
+                rank.innerText = "Advanced"; rank.style.color = "rgb(48, 219, 48)";
+            } else if (rightAnswersTotal === 35) {
                 rank.innerText = "Expert"; rank.style.color = "rgb(0, 255, 0)";
                 prepareNextQuestion = false;  // automatically stop the game
+                window.alert("Super! You answered correctly to 35 questions! CONGRATULATIONS!")
                 quizStarted = !(quizStarted); changeElementsQuiz(); 
             }
             if (prepareNextQuestion) {
@@ -461,5 +465,10 @@ const data = {
                     {"state_id": 17, "state_name": "Kentucky", "abbreviation": "KY", "capital_city": "Frankfort", "largest_city": "Louisville"},
                     {"state_id": 18, "state_name": "Louisiana", "abbreviation": "LA", "capital_city": "Baton Rouge", "largest_city": "New Orleans"},
                     {"state_id": 19, "state_name": "Maine", "abbreviation": "ME", "capital_city": "Augusta", "largest_city": "Portland"},
-                    {"state_id": 20, "state_name": "Maryland", "abbreviation": "MD", "capital_city": "Annapolis", "largest_city": "Baltimore"}]
+                    {"state_id": 20, "state_name": "Maryland", "abbreviation": "MD", "capital_city": "Annapolis", "largest_city": "Baltimore"},
+                    {"state_id": 21, "state_name": "Massachusetts", "abbreviation": "MA", "capital_city": "Boston", "largest_city": "Boston"},
+                    {"state_id": 22, "state_name": "Michigan", "abbreviation": "MI", "capital_city": "Lansing", "largest_city": "Detroit"},
+                    {"state_id": 23, "state_name": "Minnesota", "abbreviation": "MN", "capital_city": "Saint Paul", "largest_city": "Minneapolis"},
+                    {"state_id": 24, "state_name": "Mississippi", "abbreviation": "MS", "capital_city": "Jackson", "largest_city": "Jackson"},
+                    {"state_id": 25, "state_name": "Missouri", "abbreviation": "MO", "capital_city": "Jefferson City", "largest_city": "Kansas City"}]
 }
