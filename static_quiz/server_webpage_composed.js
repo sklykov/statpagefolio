@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightAnswersIndicator = document.getElementById("right-answers"); const statisticsTableBox = document.getElementById("statistics-table-box"); 
     const initialStringStatistics = document.getElementById("initial-statistics-string"); 
     const rightAnswersTable = document.getElementById("table-right-answers");  const passedSecondsTable = document.getElementById("passed-time-answers");
-    const remainedLivesTable = document.getElementById("remained-lives-answers");
+    const remainedLivesTable = document.getElementById("remained-lives-answers"); const projectShortInfo = document.getElementById("project-short-description"); 
+    const rank = document.getElementById("rank"); const initialRank = rank.innerText; 
 
     // Variables and constants for the function within the DOMContentLoaded event handler
     const initMarginRight = parseFloat(getComputedStyle(startButton).getPropertyValue("margin-top"));
@@ -56,8 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
     let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; let playedGames = 0; 
 
-    console.log(initMarginRight, footerMarginTopDefault, initMarginTop, headerMarginTopDefault); 
-
     // Start / stop the quiz by the button click
     startButton.addEventListener("click", handleStartButtonClick);
     function handleStartButtonClick() { 
@@ -66,12 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Change element info, appearance after starting / stopping the quiz
     function changeElementsQuiz(){
-        if (quizStarted){
+        if (quizStarted) {
             // Quiz started, show the Quiz associated elements and set default values
             passedSeconds = 0; 
             if (playedGames === 0){
                 initialStringStatistics.style.display = "none";  // remove the initial informational string
             }
+            // For the small screen width devices - remove the project short description
+            if (window.screen.width <= 925) { projectShortInfo.style.display = "none"; }
+            // Preserve initial margin for the medium- and large-length devices
+            if (window.screen.width <= 1280) { pageHeader.style.marginTop = initMarginTop; }
             // Remove event listener for disable clicking on the button between transitions
             startButton.removeEventListener("click", handleStartButtonClick); 
             animateStartButton();  // visualize that the clicking is disabled
@@ -81,12 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
             timeBar.max = maxTimeForAnswer; timeBar.value = maxTimeForAnswer;
             questionNumber = 1; lives = startLives; remainedTimerSeconds = maxTimeForAnswer; lives = startLives; 
             rightAnswersTotal = 0;  livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; 
-            rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
-            startButtonText.innerText = "Stop the Quiz"; startButton.style.marginRight = "1.25em"; startButton.style.marginTop = initMarginTop;
-            animateTimeLivesBox(); timeLivesBox.style.display = "flex";  // Animate appearance of the box with remaining time, # of lives and right answers 
+            rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `; rank.innerText = initialRank; rank.style.color = "black";
+            startButtonText.innerText = "Stop the Quiz"; startButton.style.marginTop = initMarginTop;
+            animateTimeLivesBox(); timeLivesBox.style.display = "flex";   // Animate appearance of the box with remaining time, # of lives and right answers 
             animateQuizBox(); quizBox.style.display = "flex";  // Animate appearance of the box with the quiz question and answer variants
             // Change styling of elements around appeared elements
-            footer.style.marginTop = `${Math.floor(0.4*footerMarginTopDefault)}px`; pageHeader.style.marginTop = initMarginTop;
+            footer.style.marginTop = `${Math.floor(0.4*footerMarginTopDefault)}px`;
             startButton.style.width = `${Math.floor(0.7*initComputedStartButtonWidth)}px`;  // ...% of initial button width
             startButton.style.height = `${Math.floor(0.7*initComputedStartButtonHeight)}px`;  // ...% of initial button height
             prepareQuestion(); timerHandle = setTimeout(timer, animationsDuration + 1000); 
@@ -119,8 +122,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 startButton.style.width = `${initComputedStartButtonWidth}px`;  // initial button width
                 startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
                 startButton.style.marginTop = initMarginTopStartButton;  // initial margin top
-                footer.style.display = "flex";  // footer will appear in the end of animation
-                footer.style.marginTop = `${Math.floor(0.35*footerMarginTopDefault)}px`;  // decrease margin top because the statistics table appeared
+                footer.style.display = "block";  // footer will appear in the end of animation
+                // tune some margins for small device width
+                if (window.screen.width > 925) { 
+                    footer.style.marginTop = `${Math.floor(0.35*footerMarginTopDefault)}px`;  // decrease margin top because the statistics table appeared
+                } else {
+                    footer.style.marginTop = `${Math.floor(1.45*footerMarginTopDefault)}px`;  // increase margin top for moving footer to the page bottom
+                }
                 pageHeader.style.marginTop = `${Math.floor(0.55*headerMarginTopDefault)}px`;
             }, 
                 animationsDuration);  // visualize appearance of the Start button with the initial style
@@ -322,9 +330,29 @@ document.addEventListener("DOMContentLoaded", () => {
         // Check if the question is right or not
         if (givenAnswerIndex === (rightAnswerIndex + 1)){
             rightAnswersTotal += 1; 
-            rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `; 
-            prepareQuestion();  // prepare new question
-            timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
+            rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
+            let prepareNextQuestion = true; 
+            // Assign some ranking depending on the # of right answers
+            if (rightAnswersTotal >= 3) {
+                rank.innerText = "Trainee"; rank.style.color = "rgb(118, 161, 118)";
+            } else if (rightAnswersTotal >= 5) {
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                rank.innerText = "Junior"; rank.style.color = "rgb(95, 187, 95)"; 
+            } else if (rightAnswersTotal >= 10) {
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                rank.innerText = "Intermediate"; rank.style.color = "rgb(73, 206, 73)"; 
+            } else if (rightAnswersTotal >= 20) {
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                rank.innerText = "Excellent"; rank.style.color = "rgb(48, 219, 48)";
+            } else if (rightAnswersTotal >= 35) {
+                rank.innerText = "Expert"; rank.style.color = "rgb(0, 255, 0)";
+                prepareNextQuestion = false;  // automatically stop the game
+                quizStarted = !(quizStarted); changeElementsQuiz(); 
+            }
+            if (prepareNextQuestion) {
+                prepareQuestion();  // prepare new question
+                timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
+            }
         } else {
             lives -= 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;  // reduce number of lives
             if (lives > 0) {

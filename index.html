@@ -49,6 +49,7 @@
                         </a>
                         <ul class="dropdown-menu" style="background-color: midnightblue;">
                             <li> <a class="dropdown-item" href="./image_proc/image_upload.html"> Image processing using Vanilla JS </a> </li>
+                            <li> <a class="dropdown-item" href="./static_quiz/quiz.html"> Serverless Quiz about the U.S. states </a> </li>
                             <li> <a class="dropdown-item" href="#"> Next project ... </a> </li>
                         </ul>
                     </li>
@@ -75,8 +76,22 @@
         </h5>
         <!-- Alignment of content: d-flex - creates the flexbox container with justify- rule -->
         <ul class="d-flex justify-content-center list-group list-group-horizontal mb-4">
-            <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white"> 
-                <a href="./image_proc/image_upload.html"> Image processing with Vanilla JS </a> - using only pure HTML / CSS / JS  
+            <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white w-25">
+                <p class="mb-2"> 
+                    <a href="./image_proc/image_upload.html"> Image processing with Vanilla JS</a>
+                </p> 
+                <p>
+                    Project has been implemented using only pure stack HTML / CSS / JS for composing the static webpage. 
+                    It is the show-case of pure JS functions for image processing, data reading, saving and visualizing.  
+                </p>
+            </li>
+            <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white w-25"> 
+                <p class="mb-2">
+                    <a href="./static_quiz/quiz.html"> Serverless Quiz</a>
+                </p>
+                Project has been implemented using again only pure Front-end stack. 
+                It is the show-case of emulating asynchronous requests to the back-end code and interact with users
+                by processing their input. 
             </li>
             <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white">
                 More will be listed...
@@ -90,20 +105,36 @@
         <div class="d-flex justify-content-center m-2" id="cards-container">
             <!-- Image processing project -->
             <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="image-processing-card">
-                <img src="image_proc/Preview_ImageProcessing.png" class="card-img-top" alt="Image Processing Screenshot">
+                <img src="./image_proc/Preview_ImageProcessing.png" class="card-img-top" alt="Image Processing Screenshot">
                 <div class="card-body">
-                    <h5 class="card-title mt-2 mb-2"> Image processing using Vanilla JS </h5>
-                    <p class="card-text mt-2 mb-2"> Check available built-in functions in the pure JS for image processing </p>
+                    <h5 class="card-title mt-2 mb-3 text-center"> Image processing using Vanilla JS </h5>
+                    <p class="card-text mt-2 mb-2"> 
+                        Show-case of the available built-in functions in the pure (vanilla) JS for serverless image processing  
+                    </p>
                     <button class="btn btn-primary mt-2" onclick="window.location.href='./image_proc/image_upload.html';"> 
                         <a href="./image_proc/image_upload.html" class="text-white text-decoration-none"> Try it out! </a> 
                     </button>
                 </div>
             </div>
-            <!-- Next project -->
+            <!-- Quiz project -->
+            <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="quiz-card">
+                <img src="./static_quiz/preview_quiz_page.png" class="card-img-top" alt="Quiz Screenshot">
+                <div class="card-body">
+                    <h5 class="card-title mt-2 mb-3 text-center"> Serverless Quiz about the U.S. states </h5>
+                    <p class="card-text mt-2 mb-2"> 
+                        Show-case of asynchronous programming using vanilla JS and show-case of styling with pure CSS for 
+                        various screen sizes (devices)
+                    </p>
+                    <button class="btn btn-primary mt-2" onclick="window.location.href='./static_quiz/quiz.html';"> 
+                        <a href="./static_quiz/quiz.html" class="text-white text-decoration-none"> Play it! </a> 
+                    </button>
+                </div>
+            </div>
+            <!-- Next empty project -->
             <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="next-project-card">
                 <img src="..." class="card-img-top" alt="Next Project Preview Image">
                 <div class="card-body">
-                    <h5 class="card-title mt-2 mb-2"> Next Project will be added here </h5>
+                    <h5 class="card-title mt-2 mb-3 text-center"> Next Project will be added here </h5>
                     <p class="card-text mt-2 mb-2"> Description of the next project... </p>
                     <button class="btn btn-primary mt-2" disabled> 
                         <a href="..." class="text-white text-decoration-none"> Try it out! </a> 

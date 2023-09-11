@@ -1,5 +1,5 @@
 body {
-    margin: 0.25em;
+    margin: 0.25em; width: auto; height: fit-content;
 }
 
 /* All elements in <body> by default get margin and padding from below */
@@ -23,9 +23,9 @@ body *{
     justify-content: center;  /* centering the content of the flexbox */
 }
 
-#main-page-content{
-    max-height: 96vh; min-height: 50vh; 
-    /* position: relative; */   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
+#main-page-content {
+    position: relative;   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
+    /* overflow: hidden;  */ /* if content is larger then the window size, it shall be hidden */ 
 }
 
 /* Setting all boxes to the bigger z-index than the background image */
@@ -33,26 +33,8 @@ body *{
     position: relative; z-index: 1; /* Allows to assign the z-index larger than for the background image */  
 }
 
-/* Set the background image for the entire page */
-#background-image-box{
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
-    opacity: 0.12;
-    /* background-size: contain; */  /* Preserve initial image sizes */
-    background-size: cover;  /* Stretch the image to cover background */
-    background-repeat: no-repeat; 
-    position: absolute; top: 0.25em; /* Place it on top of the parent element */
-    /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
-    /* width: calc(100% - (0.5em + 0.4em + 0.25em)); */  /* Subtracted all margins, twice - because parent elements also have them */
-    width: 96%; height: 94%;   /* Calculated relative to the body or first relatively placed parent element */
-    left: 2%; top: 2%; /* Offsets for placing an image */
-    z-index: 0;  /* place it behind all other elements */
-}
-
 /* Place header and button by default closer to page center */
-#project-header{
-    margin-top: 16vh;
-    position: relative; z-index: 2; /* Allows to assign the z-index larger than for the background image */  
-}
+#project-header{ margin-top: 16vh; }
  
 /* Start (launch) the quiz button styling */
 #hovered-start-arrows { display: none; }   /* arrows are invisible if the button not hovered */
@@ -129,30 +111,45 @@ body *{
 
 /* Styling of the report section */
 #report {
-    margin-top: 2em;
+    margin-top: 2em; 
+    overflow-x: auto;  /* enabling scrollbar if the table is not fit, but the scrollbar appears in the bottom of a page (Firefox) */
+    overflow-y: hidden; 
 }
 #statistics-table-box {
     display: none;   /* will be shown after 1 played quiz game */
     font-weight: bold; margin-top: 2em;
+    /* white-space: nowrap; */  /* disallow to use whitespace for wrapping content */ 
 }
-#statistics-table{
-    border-collapse: collapse;
-}
+#statistics-table {
+    border-collapse: collapse;  /* makes border collapse for th ('table headers') and td ('table data') */
+}  
 #statistics-table th {
-    padding: 1em;
+    padding-left: 1em; padding-right: 1em; padding-bottom: 0.5em;
 }
+#statistics-table th, td { border: 1px solid brown; }
 
 #page-footer{
     margin-top: 16vh; margin-left: 2%;  /* ... % of viewport height */
     text-align: left;  /* prevent footer text to be centrally aligned */
 }
 
-/* Adjusting styles based on the device width */
-@media screen and (max-width: 1780px) {
-    /* Keep initial image sizes, do not stretch to the page size */
-    #background-image-box{ background-size: contain; }
+/* Set the background image for the entire page using external resource */
+#background-image-box {
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
+    opacity: 0.125;
+    /* Preserve initial image sizes */
+    background-size: contain;
+    /* Stretch the image to cover background */
+    /* background-size: cover;   */
+    background-repeat: repeat;   /* allows smoother behavior for different page sizes */
+    position: absolute;
+    /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
+    width: calc(100% - 2*(0.25em + 0.2em));  /* width reduced for accounting all default margins */
+    height: 100%;   /* Calculated relative to the first relatively placed parent element (<main> element) */
+    z-index: 0;  /* place it behind all other elements */
 }
 
+/* Adjusting styles based on the device width */
 @media screen and (max-width: 1280px) {
     #project-header { margin-top: 15vh; }
     #page-footer { margin-top: 15vh; }
@@ -187,3 +184,47 @@ body *{
     }
     #page-footer { margin-top: 8vh; }
 }
+/* Mobile and small screen design */
+@media screen and (max-width: 925px) {
+    #page-footer { text-align: center; }
+    #lives-number { font-size: 1em;}
+
+    #launch-quiz-properties-box > * {
+        margin-left: 0.4em; margin-left: 0.4em;
+        margin-top: 0.5em; margin-bottom: 0.5em;
+    }
+    #launch-quiz-properties-box {
+        display: flex; flex-direction: column; flex-wrap: wrap;
+        align-items: center; justify-content: center;
+    }
+    #time-lives-box > *{
+        margin-top: 0.4em; margin-bottom: 0.4em;
+        margin-left: 0.4em; margin-left: 0.4em;
+    }
+    #time-lives-box{
+        display: flex; flex-direction: row; flex-wrap: wrap; 
+        align-items: center; justify-content: center;
+    }
+}
+@media screen and (max-width: 700px) {
+    body *{ font-size: 0.95rem; } 
+    #remaining-time-bar { width: 125px;}
+    #quiz-grid-box { row-gap: 1em; column-gap: 1.5em; }
+    #quiz-question { height: 1.25em; min-width: fit-content; padding-left: 12\vw; padding-right: 12vw;} 
+    .answer-variant { height: 1.25em; min-width: fit-content; } 
+    #page-footer { margin-top: 3vh; }
+}
+/* Screens with width smaller than small iPhones */
+@media screen and (max-width: 370px) {
+    /* Below - squeeze the table */
+    #statistics-table th { padding-left: 0.25em; padding-right: 0.25em; padding-bottom: 0.5em; }
+    #statistics-table th, td { font-size: 0.92rem };
+    body *{ overflow-wrap: break-word; }  /* Force all elements to break into lines */
+    /* NOTE: for adjusting elements width for breaking into words, one needed to fix width property */
+    #quiz-grid-box { width: fit-content; }
+}
+@media screen and (max-width: 320px) {
+    #remaining-time-bar { width: 110px;}
+    #quiz-grid-box { display: flex; flex-direction: column; }
+}
+@media screen and (max-width: 300px) { #launch-control-button { width: 12em; } }
