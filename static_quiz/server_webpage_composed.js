@@ -46,10 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const initComputedStartButtonWidth = parseFloat(getComputedStyle(startButton).getPropertyValue("width"));  // getting computed button width
     const initComputedStartButtonHeight = parseFloat(getComputedStyle(startButton).getPropertyValue("height"));
     const initMarginTop = getComputedStyle(mainElement).getPropertyValue("margin-top");  // direct access through mainElement.style.marginTop is impossible
+    const initialBackground = getComputedStyle(answer1).getPropertyValue("background-color");  // direct access return the empty string, so this way works
     const initMarginTopStartButton = getComputedStyle(startButton).getPropertyValue("margin-top");
-    const heartSymbol = "&#10084"; const animationsDuration = 1800; quizBox.style.display = "none"; 
+    const initialFontSizeLives = parseFloat(getComputedStyle(livesNumberElement).getPropertyValue("font-size"));  
+    const heartSymbol = "&#10084"; const animationsDuration = 2000; quizBox.style.display = "none"; 
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
-    let quizStarted = false; let questionNumber = 1;  let rightAnswersTotal = 0;
+    let quizStarted = false; let questionNumber = 0; let rightAnswersTotal = 0;
     let maxTimeForAnswer = 11; let remainedTimerSeconds = maxTimeForAnswer; 
     let rightAnswerIndex = 0; let givenAnswerIndex = -1; let passedSeconds = 0;
     let answerTypes = ["Capital", "Largest City"];
@@ -82,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(()=>{startButton.addEventListener("click", handleStartButtonClick);}, animationsDuration*0.65);
             // Set initial values for quiz starting
             timeBar.max = maxTimeForAnswer; timeBar.value = maxTimeForAnswer;
-            questionNumber = 1; lives = startLives; remainedTimerSeconds = maxTimeForAnswer; lives = startLives; 
+            questionNumber = 1; lives = startLives; remainedTimerSeconds = maxTimeForAnswer;
             rightAnswersTotal = 0;  livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; 
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `; rank.innerText = initialRank; rank.style.color = "black";
             startButtonText.innerText = "Stop the Quiz"; startButton.style.marginTop = initMarginTop;
@@ -92,7 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
             footer.style.marginTop = `${Math.floor(0.4*footerMarginTopDefault)}px`;
             startButton.style.width = `${Math.floor(0.7*initComputedStartButtonWidth)}px`;  // ...% of initial button width
             startButton.style.height = `${Math.floor(0.7*initComputedStartButtonHeight)}px`;  // ...% of initial button height
-            prepareQuestion(); timerHandle = setTimeout(timer, animationsDuration + 1000); 
+            // Prepare quiz: prepare question and answer variants, bind handlers
+            setTimeout(()=>{ trackClickedVariants(); }, 50);
+            prepareQuestion(); timerHandle = setTimeout(timer, 1.5*animationsDuration); 
             // Load special CSS file for handling colors of launch (start) button
             if (!buttonStartedStyleElementCreated){
                 buttonStartedStyle = document.createElement("link"); 
@@ -106,6 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
             footer.style.display = "none";  // remove footer for preventing blink appearance it before animation
             // Remove event listener for disable clicking on the button between transitions
             startButton.removeEventListener("click", handleStartButtonClick); 
+            // Remove listeners from the answer variants
+            setTimeout(()=>{ trackClickedVariants(false); }, 10);
             // Remove quiz area + make disappearance of the start button
             disappearStartButton();  // fade out the start button, duration = quiz area disappearance
             animateTimeLivesBox(true); animateQuizBox(true); // animation of fading out of boxes
@@ -210,7 +216,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const statisticsTableBoxTiming = {duration: 0.5*animationsDuration, iterations: 1};
     function animateStatisticsTable(){
         statisticsTableBox.animate(statisticsTableBoxEffect, statisticsTableBoxTiming); 
+    }
+    
+    // Animate right answer - highlight it with green background
+    const rightAnswerEffect = [{backgroundColor: `${initialBackground}`}, {backgroundColor: "rgb(8, 180, 8)"}]; 
+    const rightAnswerTiming = {duration: 0.2*animationsDuration, iterations: 4};
+    function animateRightAnswer(){
+        answerVariants[rightAnswerIndex].animate(rightAnswerEffect, rightAnswerTiming);
     } 
+
+    // Animate that the lives number changed
+    const livesNumberEffect = [{fontSize: `${initialFontSizeLives}px`}, {fontSize: `${1.5*initialFontSizeLives}px`},
+                               {fontSize: `${initialFontSizeLives}px`}]; 
+    const livesNumberTiming = {duration: 0.8*animationsDuration, iterations: 1};
+    function animateLivesNumber(){
+        livesNumberElement.animate(livesNumberEffect, livesNumberTiming);
+    }
 
     // Prepare the quiz question and answer variants
     async function prepareQuestion(){
@@ -308,14 +329,43 @@ document.addEventListener("DOMContentLoaded", () => {
         return wrongAnswers; 
     }
 
-    // Bind click events to the single handling function
-    answer1.addEventListener('click', (e) => { getClickedElement(e); }); answer2.addEventListener('click', (e) => { getClickedElement(e); });
-    answer3.addEventListener('click', (e) => { getClickedElement(e); }); answer4.addEventListener('click', (e) => { getClickedElement(e); });
+    // Bind click events on answer variants to the event handler
+    function trackClickedVariants(add=true) {
+        if (add) {
+            // Assign handling of clicking functions
+            answer1.addEventListener('click', getClickedElement); answer2.addEventListener('click', getClickedElement);
+            answer3.addEventListener('click', getClickedElement); answer4.addEventListener('click', getClickedElement);
+            // Recover hovering on the answer variants effect of changing background
+            answer1.addEventListener('mouseenter', assignHoverBackground); answer1.addEventListener('mouseleave', assignNormalBackground); 
+            answer2.addEventListener('mouseenter', assignHoverBackground); answer2.addEventListener('mouseleave', assignNormalBackground); 
+            answer3.addEventListener('mouseenter', assignHoverBackground); answer3.addEventListener('mouseleave', assignNormalBackground); 
+            answer4.addEventListener('mouseenter', assignHoverBackground); answer4.addEventListener('mouseleave', assignNormalBackground); 
+        } else {
+            // Remove handlers of clicks
+            answer1.removeEventListener('click', getClickedElement); answer2.removeEventListener('click', getClickedElement); 
+            answer3.removeEventListener('click', getClickedElement); answer4.removeEventListener('click', getClickedElement);
+            // Remove tracking of hovering on the variants
+            answer1.removeEventListener('mouseenter', assignHoverBackground); answer1.removeEventListener('mouseleave', assignNormalBackground); 
+            answer2.removeEventListener('mouseenter', assignHoverBackground); answer2.removeEventListener('mouseleave', assignNormalBackground); 
+            answer3.removeEventListener('mouseenter', assignHoverBackground); answer3.removeEventListener('mouseleave', assignNormalBackground); 
+            answer4.removeEventListener('mouseenter', assignHoverBackground); answer4.removeEventListener('mouseleave', assignNormalBackground);   
+        }
+    }
 
+    // After animation of wrong answer, hovering effect removed. The functions below recover it again.
+    function assignHoverBackground(event){
+        event.target.style.backgroundColor = "darkslategray";  // directly access to it from CSS is difficult, just copied from the css file
+    }
+    function assignNormalBackground(event){
+        event.target.style.backgroundColor = `${initialBackground}`;
+    }
+    
     // Get the clicked element - get the answer and check it
     function getClickedElement(event){
         // cancel the current Timer counting down the remained time for the giving an answer
-        cancelTimer();  
+        cancelTimer();
+        // remove Event listeners for prevent wrong processing of clicks during animations
+        setTimeout(()=>{trackClickedVariants(false);}, 10); 
         // get the number of the answer
         switch (event.target.id){
             case answer1.id:
@@ -327,6 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
             case answer4.id:
                 givenAnswerIndex = 4; break;
         }
+        animateRightAnswer();  // animate right answer variant
         // Check if the question is right or not
         if (givenAnswerIndex === (rightAnswerIndex + 1)){
             rightAnswersTotal += 1; 
@@ -334,36 +385,54 @@ document.addEventListener("DOMContentLoaded", () => {
             let prepareNextQuestion = true; 
             // Assign some ranking depending on the # of right answers
             if (rightAnswersTotal === 3) {
+                maxTimeForAnswer += 1;
                 rank.innerText = "Trainee"; rank.style.color = "rgb(118, 161, 118)";
             } else if (rightAnswersTotal === 5) {
-                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber(); 
                 maxTimeForAnswer += 2;
                 rank.innerText = "Junior"; rank.style.color = "rgb(95, 187, 95)"; 
             } else if (rightAnswersTotal === 10) {
-                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
                 maxTimeForAnswer += 1;
                 rank.innerText = "Intermediate"; rank.style.color = "rgb(73, 206, 73)"; 
+            } else if (rightAnswersTotal === 15) {
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
+                maxTimeForAnswer += 1;
+                rank.innerText = "Upper Intermediate"; rank.style.color = "rgb(58, 218, 58)"; 
             } else if (rightAnswersTotal === 20) {
                 maxTimeForAnswer -= 4;
-                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
-                rank.innerText = "Advanced"; rank.style.color = "rgb(48, 219, 48)";
+                lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
+                rank.innerText = "Advanced"; rank.style.color = "rgb(48, 230, 48)";
             } else if (rightAnswersTotal === 35) {
                 rank.innerText = "Expert"; rank.style.color = "rgb(0, 255, 0)";
                 prepareNextQuestion = false;  // automatically stop the game
-                window.alert("Super! You answered correctly to 35 questions! CONGRATULATIONS!")
-                quizStarted = !(quizStarted); changeElementsQuiz(); 
+                window.alert("You are Expert of U.S. states! You answered correctly to the 35 questions! CONGRATULATIONS!")
+                setTimeout(()=>{quizStarted = !(quizStarted); changeElementsQuiz(); }, animationsDuration);  // stop quiz
             }
             if (prepareNextQuestion) {
-                prepareQuestion();  // prepare new question
-                timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
+                // postpone switching to the next question because of animations above (right answer)
+                setTimeout(()=> {
+                    prepareQuestion();  // prepare new question
+                    timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
+                    setTimeout(()=>{trackClickedVariants();}, 200);  // bind clicking on answer variants again
+                }, animationsDuration);  
             }
         } else {
+            animateLivesNumber();
             lives -= 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;  // reduce number of lives
+            // highlight wrong answer and set timer for returning it back
+            answerVariants[givenAnswerIndex-1].style.backgroundColor = "rgb(212, 8, 8)"; 
+             // return back the original background
+            setTimeout(()=>{answerVariants[givenAnswerIndex-1].style.backgroundColor = initialBackground;}, animationsDuration);
             if (lives > 0) {
-                prepareQuestion();  // prepare new question
-                timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
+                // postpone switching to the next question because of animations above (right answer)
+                setTimeout(()=> {
+                    prepareQuestion();  // prepare new question
+                    timerHandle = setTimeout(timer, 1000);  // start again the stopped timer
+                    setTimeout(()=>{trackClickedVariants();}, 200);  // bind clicking on answer variants again
+                }, animationsDuration);  
             } else {
-                quizStarted = !(quizStarted); changeElementsQuiz(); 
+                setTimeout(()=>{quizStarted = !(quizStarted); changeElementsQuiz(); }, animationsDuration);  // stop quiz
             }
         }
         
@@ -445,7 +514,8 @@ const data = {
                         {"country_id": 2, "country": "TBD2", "capital": "Cap2"},
                         {"country_id": 3, "country": "TBD3", "capital": "Cap3"},
                         {"country_id": 4, "country": "TBD4", "capital": "Cap4"}],
-    // Source - the Wikipedia website
+    
+    // Source - the Wikipedia website, list of U.S. states
     "states_table": [{"state_id": 1, "state_name": "Alabama", "abbreviation": "AL", "capital_city": "Montgomery", "largest_city": "Huntsville"},
                     {"state_id": 2, "state_name": "Alaska", "abbreviation": "AK", "capital_city": "Juneau", "largest_city": "Anchorage"},
                     {"state_id": 3, "state_name": "Arizona", "abbreviation": "AZ", "capital_city": "Phoenix", "largest_city": "Phoenix"},
@@ -470,5 +540,30 @@ const data = {
                     {"state_id": 22, "state_name": "Michigan", "abbreviation": "MI", "capital_city": "Lansing", "largest_city": "Detroit"},
                     {"state_id": 23, "state_name": "Minnesota", "abbreviation": "MN", "capital_city": "Saint Paul", "largest_city": "Minneapolis"},
                     {"state_id": 24, "state_name": "Mississippi", "abbreviation": "MS", "capital_city": "Jackson", "largest_city": "Jackson"},
-                    {"state_id": 25, "state_name": "Missouri", "abbreviation": "MO", "capital_city": "Jefferson City", "largest_city": "Kansas City"}]
+                    {"state_id": 25, "state_name": "Missouri", "abbreviation": "MO", "capital_city": "Jefferson City", "largest_city": "Kansas City"},
+                    {"state_id": 26, "state_name": "Montana", "abbreviation": "MT", "capital_city": "Helena", "largest_city": "Billings"},
+                    {"state_id": 27, "state_name": "Nebraska", "abbreviation": "NE", "capital_city": "Lincoln", "largest_city": "Omaha"},
+                    {"state_id": 28, "state_name": "Nevada", "abbreviation": "NV", "capital_city": "Carson City", "largest_city": "Las Vegas"},
+                    {"state_id": 29, "state_name": "New Hampshire", "abbreviation": "NH", "capital_city": "Concord", "largest_city": "Manchester"},
+                    {"state_id": 30, "state_name": "New Jersey", "abbreviation": "NJ", "capital_city": "Trenton", "largest_city": "Newark"},
+                    {"state_id": 31, "state_name": "New Mexico", "abbreviation": "NM", "capital_city": "Santa Fe", "largest_city": "Albuquerque"},
+                    {"state_id": 32, "state_name": "New York", "abbreviation": "NY", "capital_city": "Albany", "largest_city": "New York City"},
+                    {"state_id": 33, "state_name": "North Carolina", "abbreviation": "NC", "capital_city": "Raleigh", "largest_city": "Charlotte"}, 
+                    {"state_id": 34, "state_name": "North Dakota", "abbreviation": "ND", "capital_city": "Bismark", "largest_city": "Fargo"},
+                    {"state_id": 35, "state_name": "Ohio", "abbreviation": "OH", "capital_city": "Columbus", "largest_city": "Columbus"},
+                    {"state_id": 36, "state_name": "Oklahoma", "abbreviation": "OK", "capital_city": "Oklahoma City", "largest_city": "Oklahoma City"},
+                    {"state_id": 37, "state_name": "Oregon", "abbreviation": "OR", "capital_city": "Salem", "largest_city": "Portland"},
+                    {"state_id": 38, "state_name": "Pennsylvania", "abbreviation": "PA", "capital_city": "Harrisburg", "largest_city": "Philadelphia"},
+                    {"state_id": 39, "state_name": "Rhode Island", "abbreviation": "RI", "capital_city": "Providence", "largest_city": "Providence"},
+                    {"state_id": 40, "state_name": "South Carolina", "abbreviation": "SC", "capital_city": "Columbia", "largest_city": "Charleston"},
+                    {"state_id": 41, "state_name": "South Dakota", "abbreviation": "SD", "capital_city": "Pierre", "largest_city": "Sioux Falls"},
+                    {"state_id": 42, "state_name": "Tennessee", "abbreviation": "TN", "capital_city": "Nashville", "largest_city": "Nashville"},
+                    {"state_id": 43, "state_name": "Texas", "abbreviation": "TX", "capital_city": "Austin", "largest_city": "Houston"},
+                    {"state_id": 44, "state_name": "Utah", "abbreviation": "UT", "capital_city": "Salt Lake City", "largest_city": "Salt Lake City"},
+                    {"state_id": 45, "state_name": "Vermont", "abbreviation": "VT", "capital_city": "Montpelier", "largest_city": "Burlington"},
+                    {"state_id": 46, "state_name": "Virginia", "abbreviation": "VA", "capital_city": "Richmond", "largest_city": "Virginia Beach"},
+                    {"state_id": 47, "state_name": "Washington", "abbreviation": "WA", "capital_city": "Olympia", "largest_city": "Seattle"}, 
+                    {"state_id": 48, "state_name": "West Virginia", "abbreviation": "WV", "capital_city": "Charleston (WV)", "largest_city": "Charleston (WV)"},
+                    {"state_id": 49, "state_name": "Wisconsin", "abbreviation": "WI", "capital_city": "Madison", "largest_city": "Milwaukee"},
+                    {"state_id": 50, "state_name": "Wyoming", "abbreviation": "WY", "capital_city": "Cheyenne", "largest_city": "Cheyenne"}]
 }

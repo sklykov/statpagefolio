@@ -84,18 +84,18 @@ body *{
 }
 
 /* Naming for placing variants in a grid */
-#answer-variant-1{ grid-area: Answer1;}
-#answer-variant-2{ grid-area: Answer2; }
-#answer-variant-3{ grid-area: Answer3; }
-#answer-variant-4{ grid-area: Answer4; }
+#answer-variant-1 { grid-area: Answer1;}
+#answer-variant-2 { grid-area: Answer2; }
+#answer-variant-3 { grid-area: Answer3; }
+#answer-variant-4 { grid-area: Answer4; }
 /* Styling of all answers */
-.answer-variant{
+.answer-variant {
     background-color: navy; color: azure;  
     height: 1.85em; min-width: 16em;
     border: 4px solid teal; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
 }
-.answer-variant:hover{background-color: darkslategray;}
+.answer-variant:hover { background-color: darkslategray; }
 
 /* Styling of the grid box with a question and answers */
 #quiz-grid-box{
@@ -213,6 +213,10 @@ body *{
     #quiz-question { height: 1.25em; min-width: fit-content; padding-left: 12\vw; padding-right: 12vw;} 
     .answer-variant { height: 1.25em; min-width: fit-content; } 
     #page-footer { margin-top: 3vh; }
+}
+/* Remove hovering effect for devices with small widths (mobile devices) */
+@media screen and (max-width: 600px) {
+    .answer-variant:hover { background-color: inherit; }
 }
 /* Screens with width smaller than small iPhones */
 @media screen and (max-width: 370px) {
