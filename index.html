@@ -16,10 +16,13 @@
 
 </head>
 
-<!-- Styling inside the HTML elements by using Bootstrap classes embedded above using CDN request-->
-<body class="bg-dark text-white">
+<!-- Some hints for remembering Bootstrap classes: -->
+<!-- Styling: p - padding, m - margin, ms - margin-left, me - margin-right, mt - margin-top, etc. Same combinations for padding -->
+<!-- Some elements: lh = line height -->
 
-    <!-- Navigation bar -->
+<!-- Styling inside the HTML elements by using Bootstrap classes embedded by using CDN request above -->
+<body class="bg-dark text-white">
+    <!-- Navigation bar on top of the page. Adaptivity by squeezing to the button with 3 lines -->
     <nav class="navbar navbar-expand-md" data-bs-theme="dark" style="background-color: midnightblue;">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -58,53 +61,69 @@
         </div>
     </nav>
 
-    <!-- Page content container -->
-    <div class="d-flex p-2 m-2 ms-4 me-4 flex-column justify-content-center"> 
-        <!-- Styling: p - padding, m - margin, ms - margin-left, me - margin-right -->
-        <h4 class="text-center m-2 "> 
-            Welcome!
-        </h4>
+    <!-- Another way of the page layout: using Bootstrap grid system for creating rows, cols in the containers -->
+    <div class="container text-center">  <!-- NOTE: if any margins are specified, container not centrally aligned anymore! -->
+        <!-- Page header -->
+        <div class="row m-1 p-1 mt-4">
+            <h4 class="col">  <!-- Specify the sizing if needed only -->
+                Welcome to the main page of my portfolio!
+            </h4>
+        </div>
+        <!-- Some info splitted in two columns only starting from medium sized screens -->
+        <div class="row m-1 mb-2 align-items-md-center lh-sm">
+            <p class="col-md-8">   <!-- Breakpoint md used only starting from  --> 
+                My projects are listed across this page, which are intended for training Front-end technologies 
+                and developing some interesting / useful functionality.
+            </p>
+            <p class="col-md-4 lh-sm">
+                I hope that these projects clearly reflect the show-cases of my programming skills in the Front-end area.
+            </p>
+        </div>
+    </div>
 
-        <p class="text-center m-2 mb-4">
-            <!-- mb- margin-bottom -->
-            Below is the list of my own projects for training Front-end technologies and developing some interesting / useful functionality. <br>
-            I hope that the listed projects provide showcases of my programming skills.
-        </p>
+    <!-- Page content container: the simplest way to align the content - to use flex container ("d-flex") for it -->
+    <div class="d-flex p-2 m-2 ms-4 me-4 flex-column justify-content-center">
 
+        <!-- List with projects -->
         <h5 class="text-center m-2">
-            Projects as the plain list:
+            List with projects along with the short notes about their peculiarities:
         </h5>
         <!-- Alignment of content: d-flex - creates the flexbox container with justify- rule -->
-        <ul class="d-flex justify-content-center list-group list-group-horizontal mb-4">
-            <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white w-25">
-                <p class="mb-2"> 
+        <ul class="d-flex justify-content-center list-group list-group-horizontal-lg mb-lg-4">
+            <li class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white">
+                <p class="mb-lg-2"> 
                     <a href="./image_proc/image_upload.html"> Image processing with Vanilla JS</a>
                 </p> 
-                <p>
+                <p class="lh-sm">
                     Project has been implemented using only pure stack HTML / CSS / JS for composing the static webpage. 
                     It is the show-case of pure JS functions for image processing, data reading, saving and visualizing.  
                 </p>
             </li>
-            <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white w-25"> 
-                <p class="mb-2">
+            <li class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"> 
+                <p class="mb-lg-2">
                     <a href="./static_quiz/quiz.html"> Serverless Quiz</a>
                 </p>
-                Project has been implemented using again only pure Front-end stack. 
-                It is the show-case of emulating asynchronous requests to the back-end code and interact with users
-                by processing their input. 
+                <p class="lh-sm"> 
+                    Project has been implemented using again only pure Front-end stack. 
+                    It is the show-case of emulating asynchronous requests to the back-end code and interact with users
+                    by processing their input. 
+                </p>
             </li>
-            <li class="list-group-item text-center p-2 m-2 border-0 bg-dark bg-gradient text-white">
-                More will be listed...
+            <li class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white">
+                <p class="lh-sm">
+                    More will be added, including React and other CCS libraries based. 
+                </p>
             </li>
         </ul>
 
+        <!-- Projects preview stored in the cards -->
         <h5 class="text-center m-2">
             Cards-preview of the projects:
         </h5>
-        <!-- Cards with the projects previews -->
-        <div class="d-flex justify-content-center m-2" id="cards-container">
+        <!-- Cards with the projects previews. The class flex-wrap dynamically shifts cards in column if its size not fit in a row -->
+        <div class="d-flex flex-row justify-content-evenly flex-wrap m-2 align-items-start" id="cards-container">
             <!-- Image processing project -->
-            <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="image-processing-card">
+            <div class="p-3 m-1 bg-dark bg-gradient text-white" style="width: 25em;" id="image-processing-card">
                 <img src="./image_proc/Preview_ImageProcessing.png" class="card-img-top" alt="Image Processing Screenshot">
                 <div class="card-body">
                     <h5 class="card-title mt-2 mb-3 text-center"> Image processing using Vanilla JS </h5>
@@ -116,8 +135,9 @@
                     </button>
                 </div>
             </div>
+
             <!-- Quiz project -->
-            <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="quiz-card">
+            <div class="p-3 m-1 bg-dark bg-gradient text-white" style="width: 25em;" id="quiz-card">
                 <img src="./static_quiz/preview_quiz_page.png" class="card-img-top" alt="Quiz Screenshot">
                 <div class="card-body">
                     <h5 class="card-title mt-2 mb-3 text-center"> Serverless Quiz about the U.S. states </h5>
@@ -130,8 +150,9 @@
                     </button>
                 </div>
             </div>
+
             <!-- Next empty project -->
-            <div class="p-3 m-2 ms-4 me-4 bg-dark bg-gradient text-white" style="width: 24em;" id="next-project-card">
+            <div class="p-3 m-1 bg-dark bg-gradient text-white" style="width: 25em;" id="next-project-card">
                 <img src="..." class="card-img-top" alt="Next Project Preview Image">
                 <div class="card-body">
                     <h5 class="card-title mt-2 mb-3 text-center"> Next Project will be added here </h5>
@@ -141,7 +162,9 @@
                     </button>
                 </div>
             </div>
+
         </div>
+        
     </div>
 
 </body>
