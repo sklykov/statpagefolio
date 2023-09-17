@@ -215,8 +215,8 @@ body *{
     #page-footer { margin-top: 3vh; }
 }
 
-/* Screens with width smaller than small iPhones */
-@media screen and (max-width: 370px) {
+/* After few tests, it's better to apply shrinking of the answers starting from the width of recent iPhones */
+@media screen and (max-width: 392px) {
     /* Below - squeeze the table */
     #statistics-table th { padding-left: 0.25em; padding-right: 0.25em; padding-bottom: 0.5em; }
     #statistics-table th, td { font-size: 0.92rem };
