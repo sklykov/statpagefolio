@@ -1,0 +1,7 @@
+/* Background and text color settings */
+.App {
+    background-color: rgb(36, 38, 36);
+}
+.App > * {
+    color: whitesmoke; 
+}

@@ -1,0 +1,38 @@
+/* Overall style for the main element */
+.App {
+  text-align: center;
+  display: flex; flex-direction: column;
+  margin: 0; padding: 0;
+  height: 100vh;  /* Making height equal to the entire page */
+}
+/* All direct children of App class, add some default margins, padding, line-height */
+.App > * {
+  margin: 0.25em; padding: 0.2em; line-height: 1.2em;
+}
+
+/* Navbar - the elements on the top of the page - styling */
+.navbar {
+  display: flex; flex-direction: row; align-items: center; 
+  margin-top: 1.25em;
+}
+.navbar > * {
+  margin-left: 1em; margin-right: 1em;
+}
+/* About button styling (non default) and animation on hover */
+.about-button {
+  height: 2em; width: 8em; background-color: blueviolet; color: aliceblue; border: 2px blueviolet; border-radius: 12px;
+  box-shadow: 1em 0px rgb(104, 46, 158);
+}
+.about-button:hover {
+  background-color: rgb(160, 58, 255); transform: translateX(1em); box-shadow: none; transition: transform 0.2s;
+}
+
+/* Mode selector styling */
+.mode-button {
+  height: 1.5em; width: 5em; background-color: aliceblue; border: 2px antiquewhite; border-radius: 50%; color: darkgreen; 
+  margin-left: auto;  /* shift this button to most left within the flexbox */
+}
+
+.App-header {
+  font-size: 1.05rem;
+}

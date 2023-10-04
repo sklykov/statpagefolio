@@ -1,0 +1,7 @@
+/* Background and text color settings */
+.App {
+    background-color: white;
+}
+.App > * {
+    color: rgb(42, 70, 70); 
+}
