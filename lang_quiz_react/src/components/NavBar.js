@@ -7,15 +7,16 @@ function DisplayInfo(){
 }
 
 // The stateless component
-function Bar() {
-    const [mode, setMode] = useState("Quiz");
+function NavBar(props) {
+    const [mode, setMode] = useState("\u27F3 Light Theme");   // state from this component
+    const pickedStyle = props.pickedStyle; const setStyle = props.setStyle;  // passing state from parent
     return (
         <nav className="navbar"> 
             <div> Quiz implemented in ReactJS </div>
             <button type="button" className="about-button" onClick={DisplayInfo}> About </button> 
-            <ModeSwitch mode={mode} setMode={setMode}/>
+            <ModeSwitch mode={mode} setMode={setMode} pickedStyle={pickedStyle} setStyle={setStyle} />
         </nav>
         );
 }
 
-export default Bar;
+export default NavBar;

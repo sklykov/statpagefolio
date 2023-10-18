@@ -1,7 +1,11 @@
-/* Background and text color settings */
-.App {
+/* Background and text color settings for the Dark theme */
+.Default {
     background-color: rgb(36, 38, 36);
 }
-.App > * {
+.Default > * {
     color: whitesmoke; 
+}
+
+.mode-button-Default {
+    background-color: whitesmoke; color: rgb(36, 38, 36); 
 }

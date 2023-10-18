@@ -20,16 +20,19 @@
 }
 /* About button styling (non default) and animation on hover */
 .about-button {
-  height: 2em; width: 8em; background-color: blueviolet; color: aliceblue; border: 2px blueviolet; border-radius: 12px;
+  height: 2em; width: 8em; background-color: blueviolet; color: aliceblue; 
+  border: 2px blueviolet; border-radius: 12px;
   box-shadow: 1em 0px rgb(104, 46, 158);
 }
 .about-button:hover {
-  background-color: rgb(160, 58, 255); transform: translateX(1em); box-shadow: none; transition: transform 0.2s;
+  background-color: rgb(160, 58, 255); transform: translateX(1em); box-shadow: none; 
+  transition: transform 0.2s;
 }
 
 /* Mode selector styling */
 .mode-button {
-  height: 1.5em; width: 5em; background-color: aliceblue; border: 2px antiquewhite; border-radius: 50%; color: darkgreen; 
+  height: max-content; width: max-content; padding: 1em; 
+  font-weight: bold; border-radius: 50%;
   margin-left: auto;  /* shift this button to most left within the flexbox */
 }
 
