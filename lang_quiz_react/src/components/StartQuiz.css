@@ -1,0 +1,23 @@
+.start-quiz-button {
+    font-size: 0.98em;
+    width: max-content; min-width: 12em; height: 3.25em;
+    margin: 2em; padding: auto; text-align: center; 
+    background-color: blueviolet; color: aliceblue; 
+    border: solid 4px greenyellow; border-radius: 35%; 
+}
+@keyframes startButtonHovered {
+    from { border: solid 4px greenyellow; background-color: blueviolet; color: aliceblue; }
+    to { border: solid 4px blueviolet; background-color: greenyellow; color: rgb(45, 70, 70); }
+}
+.start-quiz-button:hover{
+    /* Making an animation if the started button is hovered */
+    animation-name: startButtonHovered; animation-duration: 2.85s; animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.end-quiz-button {
+    font-size: 1em;
+    width: max-content; min-width: 12em; height: 3em;
+    margin: 2em; padding: auto; text-align: center; 
+    background-color: whitesmoke; color: darkred;
+}
