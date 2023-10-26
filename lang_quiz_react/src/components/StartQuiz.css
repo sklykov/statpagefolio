@@ -1,17 +1,33 @@
 .start-quiz-button {
-    font-size: 0.98em;
+    font-size: 0.98em; font-weight: 650;
     width: max-content; min-width: 12em; height: 3.25em;
     margin: 2em; padding: auto; text-align: center; 
-    background-color: blueviolet; color: aliceblue; 
-    border: solid 4px greenyellow; border-radius: 35%; 
+    border: solid 4px; border-radius: 35%; 
 }
-@keyframes startButtonHovered {
+/* Specific styling for the Dark theme */
+.start-quiz-button-Dark {
+    background-color: blueviolet; color: aliceblue; border-color: greenyellow;
+}
+@keyframes startButtonDarkHovered {
     from { border: solid 4px greenyellow; background-color: blueviolet; color: aliceblue; }
     to { border: solid 4px blueviolet; background-color: greenyellow; color: rgb(45, 70, 70); }
 }
-.start-quiz-button:hover{
+.start-quiz-button-Dark:hover{
     /* Making an animation if the started button is hovered */
-    animation-name: startButtonHovered; animation-duration: 2.85s; animation-iteration-count: infinite;
+    animation-name: startButtonDarkHovered; animation-duration: 2.85s; animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+/* Specific styling for the Light theme */
+.start-quiz-button-Light {
+    background-color: rgb(198, 188, 190); color: rgb(52, 60, 60); border-color: rgb(146, 202, 220);
+}
+@keyframes startButtonLightHovered {
+    from { border: solid 4px rgb(146, 202, 220); background-color: rgb(198, 188, 190); }
+    to { border: solid 4px rgb(198, 188, 190); background-color: rgb(146, 202, 220); }
+}
+.start-quiz-button-Light:hover{
+    /* Making an animation if the started button is hovered */
+    animation-name: startButtonLightHovered; animation-duration: 2.85s; animation-iteration-count: infinite;
     animation-direction: alternate;
 }
 

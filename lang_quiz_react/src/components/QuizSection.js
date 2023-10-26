@@ -13,10 +13,14 @@ function QuizSection(props) {
         // Returning couple of buttons to start different quiz types
         return (
             <section>
-                <StartQuiz quizType="Flipping Cards" quizStarted={quizStarted} setQuizStart={setQuizStart} 
-                chosenQuizType={chosenQuizType} setQuizType={setQuizType} pickedStyle={pickedStyle} />
-                <StartQuiz quizType="Variants" quizStarted={quizStarted} setQuizStart={setQuizStart} 
-                chosenQuizType={chosenQuizType} setQuizType={setQuizType} pickedStyle={pickedStyle} />
+                <StartQuiz quizStarted={quizStarted} setQuizStart={setQuizStart} chosenQuizType={chosenQuizType} 
+                setQuizType={setQuizType} pickedStyle={pickedStyle}>
+                    Flipping Cards 
+                </StartQuiz>
+                <StartQuiz quizStarted={quizStarted} setQuizStart={setQuizStart} chosenQuizType={chosenQuizType} 
+                setQuizType={setQuizType} pickedStyle={pickedStyle}>
+                    Variants
+                </StartQuiz>
             </section>
             );
     } else {

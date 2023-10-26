@@ -21,5 +21,5 @@
 }
 
 .style-string {
-    margin-top: 0.2em;  /* centering by flexbox not shifted everything properly */
+    margin-top: 0.15em;  /* centering by flexbox not shifted everything properly */
 }
