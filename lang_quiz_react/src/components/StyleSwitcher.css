@@ -1,0 +1,25 @@
+.style-switcher {
+    height: max-content; width: max-content; padding: 1em; 
+    font-weight: bold; border-radius: 50%; border: 0px;
+    margin-left: auto;  /* shift this button to most left within the flexbox */
+    display: flex; flex-direction: row; align-items: center;
+}
+.style-switcher-Dark {
+    background-color: whitesmoke; color: rgb(36, 38, 36); 
+}
+.style-switcher-Light {
+    background-color: rgb(36, 38, 36); color: whitesmoke; 
+}
+.style-symbol {
+    font-size: 1.85em; margin-right: 0.25em; font-weight: 1000;
+}
+.style-symbol-Light {
+    color: orange; 
+}
+.style-symbol-Dark {
+    color: mistyrose;
+}
+
+.style-string {
+    margin-top: 0.2em;  /* centering by flexbox not shifted everything properly */
+}

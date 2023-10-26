@@ -1,5 +1,6 @@
+import "./NavBar.css"; 
 import { useState } from "react";
-import ModeSwitch from "./ModeSwitch"; 
+import StyleSwitcher from "./StyleSwitcher"; 
 
 // Display info after clicking the button in the component below
 function DisplayInfo(){
@@ -7,16 +8,16 @@ function DisplayInfo(){
 }
 
 // The stateless component
-function NavBar(props) {
-    const [mode, setMode] = useState("\u27F3 Light Theme");   // state from this component
+export default function NavBar(props) {
+    const [switchStyle, setSwitchStyle] = useState("Light");  // style text for the button
+    const [styleSymbol, setStyleSymbol] = useState('\u263C');
     const pickedStyle = props.pickedStyle; const setStyle = props.setStyle;  // passing state from parent
     return (
-        <nav className="navbar"> 
+        <nav className="navbar">
             <div> Quiz implemented in ReactJS </div>
             <button type="button" className="about-button" onClick={DisplayInfo}> About </button> 
-            <ModeSwitch mode={mode} setMode={setMode} pickedStyle={pickedStyle} setStyle={setStyle} />
+            <StyleSwitcher switchStyle={switchStyle} setSwitchStyle={setSwitchStyle} pickedStyle={pickedStyle}
+            setStyle={setStyle} styleSymbol={styleSymbol} setStyleSymbol={setStyleSymbol} />
         </nav>
         );
 }
-
-export default NavBar;

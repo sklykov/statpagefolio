@@ -1,24 +1,22 @@
 import './styles/App.css';
-import './styles/AppDark.css';
-import './styles/AppLight.css';
 
 // Components and React stuff importing
 import NavBar from './components/NavBar'; 
 import QuizSection from './components/QuizSection';
 import { useState } from "react";  // access some changes in the state
 
-// Main component - App
-function App() {
+// Main component of the webpage - App
+export default function App() {
   // handling switching of the dark / light styling
-  const [pickedStyle, setStyle] = useState('Default');  // state passed to the components
-  let classDefApp = `App ${pickedStyle}`;  // CSS classes for switching the styles 
+  const [pickedStyle, setStyle] = useState('Dark');  // state passed to the components
+  let cssClasses = `App ${pickedStyle}`;  // CSS classes for switching the styles 
 
-  // Page elements specification as JSX
+  // Page elements specification in the JSX syntax
   return (
-    <main className={classDefApp}>
+    <main className={cssClasses}>
 
-      <NavBar pickedStyle={pickedStyle} setStyle={setStyle} />
       <header className="App-header"> 
+        <NavBar pickedStyle={pickedStyle} setStyle={setStyle} />
         <h3> Quiz for training new words / learn them better </h3>
         <p> The goal is to compose the web app that helps to learn new words </p>
       </header>
@@ -28,5 +26,3 @@ function App() {
     </main>
   );
 }
-
-export default App;
