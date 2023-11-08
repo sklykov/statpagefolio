@@ -4,7 +4,6 @@ import { useState } from "react";
 
 // Component specification
 function QuizSection(props) {
-    const pickedStyle = props.pickedStyle;  // passed from the root element picked style
     const [quizStarted, setQuizStart] = useState(props.quizStarted);  // will be set by the buttons below
     const [chosenQuizType, setQuizType] = useState("NONE");  // selected type of quiz
 
@@ -14,11 +13,11 @@ function QuizSection(props) {
         return (
             <section>
                 <StartQuiz quizStarted={quizStarted} setQuizStart={setQuizStart} chosenQuizType={chosenQuizType} 
-                setQuizType={setQuizType} pickedStyle={pickedStyle}>
+                setQuizType={setQuizType}>
                     Flipping Cards 
                 </StartQuiz>
                 <StartQuiz quizStarted={quizStarted} setQuizStart={setQuizStart} chosenQuizType={chosenQuizType} 
-                setQuizType={setQuizType} pickedStyle={pickedStyle}>
+                setQuizType={setQuizType}>
                     Variants
                 </StartQuiz>
             </section>
@@ -29,7 +28,9 @@ function QuizSection(props) {
             <section>
                 <div> Placeholder for the started Quiz. Here is the game! </div>
                 <StartQuiz quizStarted={quizStarted} setQuizStart={setQuizStart} chosenQuizType={chosenQuizType} 
-                setQuizType={setQuizType} pickedStyle={pickedStyle} />
+                setQuizType={setQuizType}>
+                    Actual Quiz
+                </StartQuiz>
             </section>
             );
     }

@@ -6,7 +6,7 @@
   height: 100vh;  /* Making height equal to the entire page */
 }
 /* All direct children of App class, add some default margins, padding, line-height */
-.App > * {
+.App * {
   margin: 0.25em; padding: 0.2em; line-height: 1.2em;
 }
 
@@ -16,16 +16,16 @@
 
 /* Dark and Bright(Light) themes styling */
 /* Background and text color settings for the Dark theme */
-.Dark {
+.dark {
   background-color: rgb(36, 38, 36);
 }
-.Dark > * {
+.dark > * {
   color: whitesmoke; 
 }
 /* Background and text color settings for the Light Theme */
-.Light {
+.light {
   background-color: white;
 }
-.Light > * {
+.light > * {
   color: rgb(42, 70, 70); 
 }

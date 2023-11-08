@@ -1,25 +1,32 @@
+/* Styling of the button and its elements that switches themes */
 .style-switcher {
-    height: max-content; width: max-content; padding: 1em; 
+    height: max-content; width: max-content; padding: 0.5em; 
     font-weight: bold; border-radius: 50%; border: 0px;
     margin-left: auto;  /* shift this button to most left within the flexbox */
     display: flex; flex-direction: row; align-items: center;
 }
-.style-switcher-Dark {
-    background-color: whitesmoke; color: rgb(36, 38, 36); 
+.style-switcher *{
+    margin: 0.125em; padding: 0.125em;
 }
-.style-switcher-Light {
-    background-color: rgb(36, 38, 36); color: whitesmoke; 
+.style-string {
+    margin-top: 0.45em;   /* centering by flexbox not shifted everything properly */
+    margin-left: 0em;
 }
 .style-symbol {
-    font-size: 1.85em; margin-right: 0.25em; font-weight: 1000;
-}
-.style-symbol-Light {
-    color: orange; 
-}
-.style-symbol-Dark {
-    color: mistyrose;
+    font-size: 1.85em; font-weight: 1000;
 }
 
-.style-string {
-    margin-top: 0.15em;  /* centering by flexbox not shifted everything properly */
+/* Styles for two selected themes: dark and light */
+.style-switcher-dark {
+    background-color: whitesmoke; color: rgb(36, 38, 36); 
+    margin-top: 0.35em;
+}
+.style-switcher-light {
+    background-color: rgb(36, 38, 36); color: whitesmoke; 
+}
+.style-symbol-light {
+    color: silver; 
+}
+.style-symbol-dark {
+    color: orange;
 }

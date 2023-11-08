@@ -1,10 +1,13 @@
+import { useContext } from 'react';
+import { ThemeContext } from '../store/ThemeContextProvider'; 
 import './StartQuiz.css';
 
 // Component specification, automatically make it importable by the root components
 export default function StartQuiz(props){
+    const {theme} = useContext(ThemeContext); 
     let quizStarted = props.quizStarted; const setQuizStart = props.setQuizStart;
     const chosenQuizType = props.chosenQuizType; const setQuizType = props.setQuizType;
-    const cssClass = `start-quiz-button start-quiz-button-${props.pickedStyle}`; 
+    const cssClass = `start-quiz-button start-quiz-button-${theme}`; 
 
     const changeQuizState = () => {
         if (!quizStarted){

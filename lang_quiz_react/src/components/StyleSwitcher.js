@@ -1,27 +1,33 @@
+import { useContext } from 'react';
 import './StyleSwitcher.css'; 
+import { ThemeContext } from '../store/ThemeContextProvider';
 
 // Style switcher made as the component based on the standard button
 export default function StyleSwitcher(props) { 
+    const context = useContext(ThemeContext);  // centrally managed theme switcher
+    let themeName = context.theme === "light" ? "Dark" : "Light";
+
     // Passing inside the states from the parent Components
     const styleSymbol = props.styleSymbol; const setStyleSymbol = props.setStyleSymbol;
-    const switchStyle = props.switchStyle;  const setSwitchStyle = props.setSwitchStyle;
-    const pickedStyle = props.pickedStyle; const setStyle = props.setStyle;
-    const cssStyleSymbol = `style-symbol style-symbol-${switchStyle}`; 
-    // Style class specification for switching after clicking  
-    let buttonClassName = `style-switcher style-switcher-${pickedStyle}`;  // name of the class will be updated
+
+    // Style class specification for switching after clicking on button between CSS classes with postfixes  
+    let cssStyleSymbol = `style-symbol style-symbol-${context.theme}`; 
+    let buttonClassName = `style-switcher style-switcher-${context.theme}`;
+
     // Actual function handling clicking of the button
     const handleSwitch = () => {
-        if (switchStyle === "Light") {
-            setSwitchStyle("Dark"); setStyleSymbol('\u263D');
-            setStyle("Light");  // setting new style will cause re-rendering of the parent App
+        context.changeTheme();  // call of the function that changing the theme
+        if (context.theme === "light") { 
+            setStyleSymbol('\u263C'); 
         } else {
-            setStyleSymbol('\u263C'); setSwitchStyle("Light"); setStyle("Dark");
+            setStyleSymbol('\u263D');
         }
     }
+
     return (
         <button className={buttonClassName} onClick={handleSwitch}>
             <span className={cssStyleSymbol}> {styleSymbol} </span> 
-            <span className="style-string"> {switchStyle + " Theme"} </span>  
+            <span className="style-string"> {themeName + " Theme"} </span>  
         </button>
     );  
 }
