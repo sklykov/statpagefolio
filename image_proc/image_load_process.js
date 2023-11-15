@@ -270,17 +270,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
             // Enable all inputs if only the uploaded file acknowledged as an image
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
             contrastInput.disabled = false; saturateInput.disabled = false; grayscaleInput.disabled = false; huerotateInput.disabled = false;
-            // Providing information according to the size of page sizes
-            if (windowWidth > 1280){
-                uploadInfoStr.innerHTML = '<span style="color: green;">Image uploaded.</span>'; 
-                uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>`;
-                uploadInfoStr.innerHTML += 'Upload new image:';
-            } else {
-                uploadInfoStr.innerHTML = `File name:<em>${uploadButton.files[0].name}</em><br>`;
-                uploadInfoStr.innerHTML += '<span style="color: green;">Image uploaded.</span> Upload new image:'; 
-            }
             infoPoint1.innerText = "Process image by dragging the sliders below + Adjust its width for checking any small details on it";
-            infoPoint2.innerText = "Download the processed image if it is useful. Click on the processed image to switch between it and original one"; 
+            infoPoint2.innerText = "Download the processed image if it is useful. Click on the processed image to switch between it and original one";
+            // Composing the information with the file name and the successful status of uploading
+            uploadInfoStr.innerHTML = ""; uploadInfoStr.innerHTML += '<span style="color: green;"> Image uploaded. </span>'; 
+            if (windowWidth > 640) {
+                uploadInfoStr.innerHTML +=  `File name:<em>${uploadButton.files[0].name}.</em>`;  // Add the file name only for wide screens
+            }
+            uploadInfoStr.innerHTML += ' Upload new image:';
         }  // change the "imageRefreshed" flag shifted to the function 'changePageStyleImgUploaded', because it's called after this function
     }
 
@@ -291,7 +288,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; 
             infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
             uploadImageContainer.style.fontWeight = "normal"; uploadImageContainer.style.marginBottom = topMargin; 
-            uploadButton.style.width = "4.85em";  // cut out the file name string associated with the upload button
+            uploadButton.style.width = "8em";  // cut out the file name string associated with the upload button
             uploadButton.style.border = "none"  // removes the default blue 1px border
             imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
@@ -390,6 +387,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
         } else {
             applyAllFilters();  // show the processed image
         }
-    });
-   
+    });   
 });

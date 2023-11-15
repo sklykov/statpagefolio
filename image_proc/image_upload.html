@@ -23,11 +23,10 @@
 </head>
 
 <body>
-
+    <!-- Overall container of the page - div element with flex display property and  -->
     <div class="flexbox-container"> 
-
-        <main id="main-container">
-
+        <main id="main-container" class="flexbox-container">
+            <!-- Page header with the tips -->
             <header id="instructions-header-container">
                 <h3 id="project-header"> Project: Processing of the uploaded image (serverless, no storage except on a browser) using vanilla JS </h3>
                 <p id="usage-info">
@@ -41,12 +40,12 @@
 
             <!-- Upload button, select image file, visible all time -->
             <section id="upload-image-container">
-                <div id="upload-info" for="upload-button"> To proceed, upload image using button: </div>
+                <label id="upload-info" for="upload-button"> To proceed, upload image using button: </label>
                 <input id="upload-button" type="file" accept="image/.jpg, image/.jpeg, image/.png, image/.bmp" title="Upload Image" />
             </section>
 
             <section id="image-associated-ctrls-box">
-
+                <!-- Controlling of  image width -->
                 <div id="associated-controls-container">
                     <p id="info-two-image-elements"> 
                         Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended for debugging.
@@ -54,7 +53,8 @@
                     <!-- Width of the images control, visible only after image upload -->
                     <div id="width-input-container">
                         <div id="input-ticks-container"> 
-                            <input type="range" min="10" max="100" id="width-image-input" name="width-input" value="55" data-default="55" list="width-ticks" autocomplete="off" disabled>
+                            <input type="range" min="10" max="100" id="width-image-input" name="width-input" value="55" data-default="55" list="width-ticks"
+                            autocomplete="off" disabled>
                             <datalist id="width-ticks">
                                 <option id="min-width-tick" value="10" label="10"> </option>
                                 <option id="mid-width-tick" value="55" label="55"> </option>
@@ -69,21 +69,17 @@
 
                     <!-- Clear image from the <canvas> element -->
                     <button id="clear-image-button"> Clear Image </button>
-
                 </div>
 
                 <div id="image-container">
-                    <!-- Canvas element -->
+                    <!-- Canvas element - the container for upload image representation -->
                     <canvas id="canvas-element"> This text is displayed if JavaScript is switched off or the browser doesn't support canvas element. </canvas>
                 </div>
-
             </section>
 
             <section id="processing-controls">
-
                 <!-- Image container, used for comparison of the effect of applied filter with <canvas> element, invisible now -->
                 <img id="img-element" alt="No Image Uploaded if you see this :-)">
-
                 <!-- Image manipulation controls for effects: blur, ... -->
                 <div id="image-manipulation-controls-box">
                     <!-- Blur -->
@@ -153,14 +149,12 @@
                         </div>
                     </fieldset>
                 </div>
-            
             </section>            
         </main>
 
         <!-- Footer with the information about the author and license -->
         <footer id="page-footer"> 2023 S.K., MIT licensed </footer>
-        
     </div>
-
+    
 </body>
 </html>
