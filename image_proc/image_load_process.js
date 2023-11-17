@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const huerotateInput = document.getElementById("huerotate-control"); const huerotateValue = document.getElementById("huerotate-value");
     const saturateCtrlBox = document.getElementById("saturate-control-container"); const grayscaleCtrlBox = document.getElementById("grayscale-control-container");
     const huerotateCtrlBox = document.getElementById("huerotate-control-container"); const clearImageButton = document.getElementById("clear-image-button"); 
+    const instructionsHeaderBox = document.getElementById("instructions-header-container");
     // Containers, html elements
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
@@ -50,7 +51,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let windowWidth = window.innerWidth; let windowHeight = window.innerHeight;  // WxH of the page
     let imageRefreshed = false;  // flag preventing calling functions associated with the tracking of the uploaded image
     uploadButton.value = "";  // put default "No file selected" to the input button
+    // Styling constants, needed for setting them after uploading / clearing the image
+    const contentTopMarginInit = pageContent.style.marginTop; const instructionsTopMarginInit = instructionsHeaderBox.style.topMargin;
     const topMargin = "0.25em";  // uniform top margin setting
+    const headerBottomMargin = "0.75em"; const headerBottomMarginInit = pageHeader.style.marginBottom;
+    // Flags for designating across all functions user actions
     let imageModified = false;  // track that the image has been modified and activate Download button for the modified images only
     let grayScaleImageLoaded = false;  // tracks that the gray-scaled or color image has been uploaded 
     let defaultDisplayStyle;  // records initial display styling for input control boxes for restoring if color image has been uploaded
@@ -118,10 +123,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 }
             } else {
                 window.alert(`Uploaded image with format "${imageFormat}" not supported. Please upload jpeg/jpg, png or bmp image`);
-                clearImagesFromElements();
+                clearImage();
             }
         } else {
-            clearImagesFromElements();
+            clearImage();
         }
     });
 
@@ -285,7 +290,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function changePageStyleImgUploaded(){
         if (!imageRefreshed){
             // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
-            pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; 
+            pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; pageHeader.style.marginBottom = headerBottomMargin; 
             infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
             uploadImageContainer.style.fontWeight = "normal"; uploadImageContainer.style.marginBottom = topMargin; 
             uploadButton.style.width = "8em";  // cut out the file name string associated with the upload button
@@ -301,14 +306,32 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     }
 
-    // Remove previously uploaded image from еру <canvas> element, hide the image processing controls. This function is also invoked when no image uploaded.
-    function clearImagesFromElements(){
+    // Remove previously uploaded image from the <canvas> element, hide the image processing controls. This function is also invoked when no image uploaded.
+    function clearImage(){
         if (!imageUploaded){
             contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = ""; 
-            // Specifying below default styling if the image haven't been uploaded, hide buttons / elements
-            imageControlsBox.style.display = "none";  // automatically hide the uploaded image, width input, download button
-            processingCtrlBox.style.display = "none"; uploadInfoStr.innerHTML = '<span style="color: red;">Image not uploaded!</span> Upload new image:';
+            uploadInfoStr.innerHTML = '<span style="color: red;">Image not uploaded!</span> Upload new image:';
+            setDefaultStyles(); 
         }
+    }
+
+    // Clear the uploaded image and its container
+    clearImageButton.addEventListener('click', () =>{
+        if (imageUploaded){
+            makeAllFiltersDefault();  // return all inputs to the default values
+            imageUploaded = false; uploadInfoStr.innerHTML = '<span style="color: darkorange;">Image has been cleared.</span> Upload new image:';
+            contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = "";
+            setDefaultStyles();
+        }
+    });
+
+    // Return styles of elements if the image has been cleared or not uploaded
+    function setDefaultStyles(){
+        // Specifying below default styling if the image haven't been uploaded, hide buttons / elements
+        instructionsHeaderBox.marginTop = instructionsTopMarginInit;
+        pageHeader.style.marginBottom = headerBottomMarginInit; pageContent.style.marginTop = contentTopMarginInit;
+        imageControlsBox.style.display = "none"; processingCtrlBox.style.display = "none";
+        footerElement.style.marginTop = "30vh";  // shift footer again to the bottom
     }
 
     // Function for downloading processed image
@@ -333,17 +356,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Resetting all applied filters by clicking the button
     resetButton.addEventListener("click", () => {
         imageModified = false; downloadBtn.disabled = true; makeAllFiltersDefault(); applyAllFilters(); 
-    });
-
-    // Clear the uploaded image and its container
-    clearImageButton.addEventListener('click', () =>{
-        if (imageUploaded){
-            makeAllFiltersDefault();  // return all inputs to the default values
-            imageUploaded = false; uploadInfoStr.innerHTML = '<span style="color: darkorange;">Image has been cleared.</span> Upload new image:';
-            contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = "";
-            imageControlsBox.style.display = "none"; processingCtrlBox.style.display = "none";
-            footerElement.style.marginTop = "30vh";  // shift footer again to the bottom
-        }
     });
 
     // Check that pixels in the uploaded image gray-scaled or colored

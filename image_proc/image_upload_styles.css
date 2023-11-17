@@ -1,11 +1,11 @@
 body {
-    font-size: 18px;
     margin: 0; padding: 0;
     background-image: radial-gradient(rgba(38, 174, 224, 0.285) 25%, rgba(156, 18, 232, 0.25) 75%);
 }
 /* Default settings for all elements in the body */
 body * {
     padding: 0.25em; margin: 0.25em;  /* Recommended to em */
+    font-size: 1.15rem; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 /* This class corresponds to the overall flexbox container, all child elements - in a single column */
@@ -34,7 +34,7 @@ body * {
     margin-top: 2%;  /* Note that % calculated from the element width, not height! */
 }
 #project-header{ 
-    font-size: 1.35rem; color: rgb(39, 39, 219);
+    font-size: 1.25em; color: rgb(39, 39, 219);
     margin-bottom: 2.5%; /* Separate the overall header and the brief instructions */
 }
 #usage-info{
@@ -51,8 +51,7 @@ body * {
 /* Image and associated controls (download image, information string, width control) */
 #image-associated-ctrls-box{
     /* display: flex;  */
-    display: none;
-    flex-direction: column; 
+    display: none; flex-direction: column; 
 }
 #associated-controls-container{
     display: flex; flex-direction: row; flex-wrap: wrap;
@@ -73,7 +72,7 @@ body * {
     display: flex;  /* This is necessary to show the ticks specified as <datalist> <option>-s */
     justify-content: space-between;   /* Spread elements on the whole length */
     width: 104%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
-    font-size: 0.95rem;
+    font-size: 0.95em;
 }
 #width-label {
     margin-left: 0.25em;
@@ -149,7 +148,7 @@ body * {
 
 /* Download, reset, clear image buttons */
 #download-button, #reset-button, #clear-image-button{
-    font-size: 0.95rem; padding: 0.125em 0.5em; margin: 0em 0.5em;
+    font-size: 0.95em; padding: 0.125em 0.5em; margin: 0em 0.5em;
 }
 
 /* Styling of radio button selector */
