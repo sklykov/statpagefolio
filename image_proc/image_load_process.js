@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     uploadButton.value = "";  // put default "No file selected" to the input button
     // Styling constants, needed for setting them after uploading / clearing the image
     const contentTopMarginInit = pageContent.style.marginTop; const instructionsTopMarginInit = instructionsHeaderBox.style.topMargin;
+    const topMarginInitUplBox = uploadImageContainer.style.marginTop;
     const topMargin = "0.25em";  // uniform top margin setting
     const headerBottomMargin = "0.75em"; const headerBottomMarginInit = pageHeader.style.marginBottom;
     // Flags for designating across all functions user actions
@@ -328,7 +329,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Return styles of elements if the image has been cleared or not uploaded
     function setDefaultStyles(){
         // Specifying below default styling if the image haven't been uploaded, hide buttons / elements
-        instructionsHeaderBox.marginTop = instructionsTopMarginInit;
+        instructionsHeaderBox.marginTop = instructionsTopMarginInit; uploadImageContainer.style.marginTop = topMarginInitUplBox;
         pageHeader.style.marginBottom = headerBottomMarginInit; pageContent.style.marginTop = contentTopMarginInit;
         imageControlsBox.style.display = "none"; processingCtrlBox.style.display = "none";
         footerElement.style.marginTop = "30vh";  // shift footer again to the bottom

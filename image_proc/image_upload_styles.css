@@ -48,20 +48,21 @@ body * {
     padding: 0.25em; margin: 0;
 }
 
-/* Image and associated controls (download image, information string, width control) */
+
 #image-associated-ctrls-box{
     /* display: flex;  */
     display: none; flex-direction: column; 
 }
-#associated-controls-container{
+/* Image and associated controls (download image, information string, width control) */
+#associated-controls-container {
     display: flex; flex-direction: row; flex-wrap: wrap;
-    align-items: baseline; justify-content: center;
+    align-items: center; justify-content: center;
 }
 /* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
-#width-input-container{
+#width-input-container {
     display: flex;
 }
-#input-ticks-container{
+#input-ticks-container {
     /* display: flex;  */   /* Inherited from the parent above */
     flex-direction: column;  margin: 0em; padding: 0em; margin-top: 0.55em;
 }
@@ -76,6 +77,27 @@ body * {
 }
 #width-label {
     margin-left: 0.25em;
+}
+
+/* Download and clear buttons */
+#download-button {
+    font-size: 0.9em; text-align: center; height: fit-content; width: 6.5em;
+    color: rgb(34, 198, 36); background-color: palegoldenrod;
+    border: 0px;
+}
+#download-button:hover {
+    color: rgb(26, 234, 30); background-color: rgb(252, 244, 164);
+}
+#download-button:disabled {
+    background-color: dimgray; color: darkslategray;
+}
+#clear-image-button {
+    font-size: 0.9em; text-align: center; height: 2em; width: 7em;
+    color: lightcyan; background-color: darkolivegreen;
+    border: 0px;
+}
+#clear-image-button:hover {
+    color: rgb(231, 255, 255); background-color: rgb(104, 134, 52);
 }
 
 /* Upload container and elements inside them styling */
