@@ -1,11 +1,9 @@
 body {
-    margin: 0.25em; width: auto; height: fit-content;
+    margin: 0; padding: 0;
 }
 
 /* All elements in <body> by default get margin and padding from below */
 body *{
-    padding: 0.2em; margin-left: 0.2em; margin-right: 0.2em;
-    margin-top: 0.4em; margin-bottom: 0.4em;
     font-size: 1.055rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     line-height: 1.25em;  /* add additional vertical gaps between lines */
 }
@@ -24,19 +22,28 @@ body *{
 }
 
 #main-page-content {
+    margin: 0.25em;
     position: relative;   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
     /* overflow: hidden;  */ /* if content is larger then the window size, it shall be hidden */ 
+    width: calc(100vw - 0.5em); height: calc(100vh - 0.5em);
+}
+
+#main-page-content * {
+    padding: 0.2em; margin: 0.2em;
 }
 
 /* Setting all boxes to the bigger z-index than the background image */
-#main-page-content > *{
+#main-page-content > * {
     position: relative; z-index: 1; /* Allows to assign the z-index larger than for the background image */  
 }
 
 /* Place header and button by default closer to page center */
-#project-header{ margin-top: 16vh; }
+#project-header{ margin-top: 14vh; }
  
 /* Start (launch) the quiz button styling */
+#launch-quiz-properties-box {
+    margin-bottom: 1.25em; margin-top: 1em;
+}
 #hovered-start-arrows { display: none; }   /* arrows are invisible if the button not hovered */
 #hovered-stop-arrows { display: none; }  /* these arrows will be visible if hovering the button for stop the quiz */
 #launch-control-button { 
@@ -72,6 +79,11 @@ body *{
     color: green; text-decoration: underline overline seagreen;
 }
 #remaining-time-bar{ margin-top: 0.52em; }
+
+/* Overall container for question and answer */
+#quiz-box {
+    margin-left: auto; margin-right: auto;
+}
 
 /* Place question and answer variants in a grid */
 #quiz-question{
@@ -111,7 +123,7 @@ body *{
 
 /* Styling of the report section */
 #report {
-    margin-top: 2em; 
+    margin-top: 2em;  margin-left: auto; margin-right: auto;
     overflow-x: auto;  /* enabling scrollbar if the table is not fit, but the scrollbar appears in the bottom of a page (Firefox) */
     overflow-y: hidden; 
 }
@@ -129,14 +141,14 @@ body *{
 #statistics-table th, td { border: 1px solid brown; }
 
 #page-footer{
-    margin-top: 16vh; margin-left: 2%;  /* ... % of viewport height */
+    margin-top: 25vh; margin-left: 2%;  /* ... % of viewport height */
     text-align: left;  /* prevent footer text to be centrally aligned */
 }
 
 /* Set the background image for the entire page using external resource */
 #background-image-box {
     background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
-    opacity: 0.125;
+    opacity: 0.128;
     /* Preserve initial image sizes */
     background-size: contain;
     /* Stretch the image to cover background */
@@ -144,33 +156,33 @@ body *{
     background-repeat: repeat;   /* allows smoother behavior for different page sizes */
     position: absolute;
     /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
-    width: calc(100% - 2*(0.25em + 0.2em));  /* width reduced for accounting all default margins */
-    height: 100%;   /* Calculated relative to the first relatively placed parent element (<main> element) */
+    width: calc(100vw - 2*(0.25em + 0.2em + 0.2em));  /* width reduced for accounting all default margins */
+    height: calc(100vh - 2*(0.25em + 0.2em + 0.2em));   /* Calculated relative to the first relatively placed parent element (<main> element) */
     z-index: 0;  /* place it behind all other elements */
 }
 
 /* Adjusting styles based on the device width */
 @media screen and (max-width: 1280px) {
     #project-header { margin-top: 15vh; }
-    #page-footer { margin-top: 15vh; }
+    #page-footer { margin-top: 24vh; }
     #statistics-table-box { margin-top: 1.5em; }
 }
 @media screen and (max-width: 1240px) {
     #project-header { margin-top: 14vh; }
-    #page-footer { margin-top: 14vh; }
+    #page-footer { margin-top: 22vh; }
 }
 @media screen and (max-width: 1200px) {
     #project-header { margin-top: 12vh; }
-    #page-footer { margin-top: 12vh; }
+    #page-footer { margin-top: 20vh; }
     #statistics-table-box { margin-top: 1em; }
 }
 @media screen and (max-width: 1120px) {
     #project-header { margin-top: 10vh; }
-    #page-footer { margin-top: 10vh; }
+    #page-footer { margin-top: 18vh; }
 }
 @media screen and (max-width: 1040px) {
     #project-header { margin-top: 6vh; }
-    #page-footer { margin-top: 6vh; }
+    #page-footer { margin-top: 14vh; }
 }
 /* Screen smaller than 1000px, reduce some sizes for better fitting elements */
 @media screen and (max-width: 1000px) {

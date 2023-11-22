@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // const backgroundImageBox = document.getElementById("background-image-box");
     // backgroundImageBox.style.width = `${mainContainerWidth}px`; backgroundImageBox.style.height = `${mainContainerHeight}px`; 
 
-    // Page elements handles
+    // Page elements handles and associated variables
     const startButton = document.getElementById("launch-control-button"); const startButtonText = document.getElementById("launch-button-text");
     const timeLivesBox = document.getElementById("time-lives-box"); const livesNumberElement = document.getElementById("lives-number");
     const timeBar = document.getElementById("remaining-time-bar"); const questionElement = document.getElementById("quiz-question");
@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialStringStatistics = document.getElementById("initial-statistics-string"); 
     const rightAnswersTable = document.getElementById("table-right-answers");  const passedSecondsTable = document.getElementById("passed-time-answers");
     const remainedLivesTable = document.getElementById("remained-lives-answers"); const projectShortInfo = document.getElementById("project-short-description"); 
-    const rank = document.getElementById("rank"); const initialRank = rank.innerText; 
+    const rank = document.getElementById("rank"); const initialRank = rank.innerText;  
+    const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
 
     // Variables and constants for the function within the DOMContentLoaded event handler
     const initMarginRight = parseFloat(getComputedStyle(startButton).getPropertyValue("margin-top"));
@@ -239,6 +240,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let state = await getRandomState();  // randomly get state from the emulated database
         rightAnswerIndex = Math.floor(Math.random()*4);   // randomly select the answer variant with the right answer
         let rightAnswerText = ""; 
+        // Explicitly return default backgrounds for all variants of answers, prevent remained hovered background
+        answer1.style.backgroundColor = `${initialBackground}`; answer2.style.backgroundColor = `${initialBackground}`;
+        answer3.style.backgroundColor = `${initialBackground}`; answer4.style.backgroundColor = `${initialBackground}`;
+        // Compose the question text body
         if (state !== undefined){
             let stateName = state["state_name"];
             // compose the quiz question, record the right answer  
@@ -354,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // After animation of wrong answer, hovering effect removed. The functions below recover it again.
     function assignHoverBackground(event){
-        event.target.style.backgroundColor = "darkslategray";  // directly access to it from CSS is difficult, just copied from the css file
+        event.target.style.backgroundColor = hoveredBackgroundColor;  // directly access to it from CSS is difficult, just copied from the css file
     }
     function assignNormalBackground(event){
         event.target.style.backgroundColor = `${initialBackground}`;
