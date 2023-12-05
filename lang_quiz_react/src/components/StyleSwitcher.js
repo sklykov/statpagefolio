@@ -13,7 +13,9 @@ export default function StyleSwitcher(props) {
     // Style class specification for switching after clicking on button between CSS classes with postfixes  
     let cssStyleSymbol = `style-symbol style-symbol-${context.theme}`; 
     let buttonClassName = `style-switcher style-switcher-${context.theme}`;
+    let symbolSwitchClass = `switch-symbol switch-symbol-${context.theme}`;
 
+    console.log(symbolSwitchClass); 
     // Actual function handling clicking of the button
     const handleSwitch = () => {
         context.changeTheme();  // call of the function that changing the theme
@@ -26,6 +28,7 @@ export default function StyleSwitcher(props) {
 
     return (
         <button className={buttonClassName} onClick={handleSwitch}>
+            <span className={symbolSwitchClass}> &rArr; </span>
             <span className={cssStyleSymbol}> {styleSymbol} </span> 
             <span className="style-string"> {themeName + " Theme"} </span>  
         </button>

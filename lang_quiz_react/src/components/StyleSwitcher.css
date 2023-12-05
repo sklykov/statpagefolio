@@ -30,3 +30,17 @@
 .style-symbol-dark {
     color: orange;
 }
+
+/* Adding hover styling for more dynamic appearance of switch style button */
+.switch-symbol { display: none; }
+.switch-symbol-dark { color: darkorange; }
+.switch-symbol-light { color: silver; }
+@keyframes switchStylesHovered {
+    from { transform: translateX(0em); }
+    to { transform: translateX(0.65em); }
+}
+.style-switcher:hover .switch-symbol {
+    display: flex; margin: 0; padding: 0; font-size: 1.85em; margin-right: 0.55em;
+    animation-name: switchStylesHovered; animation-duration: 2.2s; animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
