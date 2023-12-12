@@ -78,7 +78,6 @@ body *{
     padding-top: 0em; padding-bottom: 0em;
     color: green; text-decoration: underline overline seagreen;
 }
-#remaining-time-bar{ margin-top: 0.52em; }
 
 /* Overall container for question and answer */
 #quiz-box {
@@ -159,6 +158,19 @@ body *{
     width: calc(100vw - 2*(0.25em + 0.2em + 0.2em));  /* width reduced for accounting all default margins */
     height: calc(100vh - 2*(0.25em + 0.2em + 0.2em));   /* Calculated relative to the first relatively placed parent element (<main> element) */
     z-index: 0;  /* place it behind all other elements */
+}
+
+/* Quick search reveals that there isn't direct way to style the <progress> element, so one should use pseudo-classes for each specific browser */
+#remaining-time-bar { margin-top: 0.42em; }
+/* Styling for Firefox */
+#remaining-time-bar::-moz-progress-bar {
+    margin-top: 0em;
+    background: linear-gradient(to right, rgba(254, 4, 4, 1) 0%, rgba(254, 4, 4, 0.5) 50%, rgba(254, 4, 4, 0.1) 100%);
+}
+/* Styling for WebKit-based browsers (Safari, Chromium) */
+#remaining-time-bar::-webkit-progress-bar {
+    margin-top: 0em;
+    background: linear-gradient(to right, rgba(254, 4, 4, 1) 0%, rgba(254, 4, 4, 0.5) 50%, rgba(254, 4, 4, 0.1) 100%);
 }
 
 /* Adjusting styles based on the device width */
