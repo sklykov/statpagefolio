@@ -5,26 +5,56 @@ body {
 /* Default settings for all elements in the body */
 body * {
     padding: 0.25em; margin: 0.25em;  /* Recommended to em */
-    font-size: 1.15rem; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-size: 1.2rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+}
+
+/* Dialog window styling (pop-up window) */
+#info-dialog {
+    position: absolute; margin: 45vh auto; text-align: center;
+    background-image: radial-gradient(rgba(38, 174, 224, 0.3) 25%, rgba(156, 18, 232, 0.3) 70%);
+    border: 4px solid rgba(8, 96, 128, 0.85); line-height: 1.25rem;
+}
+#info-dialog::backdrop { 
+    opacity: 0.825; background-color: gainsboro;  /* Overall page 'shadowing' by overlaying it by this color */
+}
+#info-dialog-close-button {
+    color: rgb(168, 16, 16); background-color: rgb(160, 208, 221); border: none; 
+    box-shadow: 4px 4px 2px rgb(190, 14, 14);
+    margin-bottom: calc(0.25em + 4px);
+}
+#info-dialog-close-button:hover {
+    color: rgb(204, 15, 15); background-color: rgb(175, 219, 235); 
+    transform: translate(4px, 4px); box-shadow: 0px 0px;  /* Effects taking place on hovering */
+    transition-property: transform box-shadow; transition-duration: 0.5s;  /* Animation of the effects above */
+}
+
+/* Page header */
+#page-header {
+    padding: 0em; margin: 0em;
+    background-color: rgba(139, 0, 139, 0.725); color: azure;
+}
+#page-header * {
+    margin-left: 2em; margin-top: 0.75em; margin-bottom: 0.75em; margin-right: 2em; padding: 0.2em;
+}
+#select-button {
+    border-radius: 18%; border: 4px solid darkblue; background-color: beige; color: blue; width: 8em; text-align: center;
+}
+#select-button:hover {
+    background-color: rgb(255, 255, 252); color: rgb(76, 76, 240); border-color: rgb(5, 5, 211);
 }
 
 /* This class corresponds to the overall flexbox container, all child elements - in a single column */
-.flexbox-container{
-    margin-top: 10vh;
-    display: flex; flex-direction: column;
+.flexbox-container {
+    margin-top: 5vh; display: flex; flex-direction: column;
     align-items: stretch; justify-content: space-between; 
 }
 
-#main-container {
-    padding: 0; margin: 0;
-}
+#main-container { padding: 0; margin: 0; }
 
-#page-footer{
-    margin-top: 40vh; margin-left: 1em;
-}
+#page-footer { margin-top: 28vh; margin-left: 1em; }
 
 /* Image container elements: <img> and <canvas>, only <canvas> will be displayed from this version on */
-#img-element{
+#img-element {
     display: none;  /* default value, for the case if no image uploaded */
 }
 
@@ -33,23 +63,21 @@ body * {
     text-align: center;
     margin-top: 2%;  /* Note that % calculated from the element width, not height! */
 }
-#project-header{ 
-    font-size: 1.25em; color: rgb(39, 39, 219);
+#project-header { 
+    font-size: 1.2em; color: rgb(39, 39, 219);
     margin-bottom: 2.5%; /* Separate the overall header and the brief instructions */
 }
-#usage-info{
+#usage-info {
     padding-bottom: 0em; margin-bottom: 0em;  /* Shorten distance between ol header and points */
 }
-#info-list{
+#info-list {
     padding-top: 0em; margin-top: 0.25em; /* Shorten distance between ol header and points */
     list-style-position: inside; list-style-type: square;   /* Makes different marker style and stick them to the element content */
 }
-#info-list > li{
-    padding: 0.25em; margin: 0;
-}
+#info-list > li { padding: 0.25em; margin: 0; }
 
 
-#image-associated-ctrls-box{
+#image-associated-ctrls-box {
     /* display: flex;  */
     display: none; flex-direction: column; 
 }
@@ -59,9 +87,7 @@ body * {
     align-items: center; justify-content: center;
 }
 /* Styling of the width input label, input and datalist elements, which become observable after uploading of an image */
-#width-input-container {
-    display: flex;
-}
+#width-input-container { display: flex; }
 #input-ticks-container {
     /* display: flex;  */   /* Inherited from the parent above */
     flex-direction: column;  margin: 0em; padding: 0em; margin-top: 0.55em;
@@ -75,29 +101,27 @@ body * {
     width: 104%; padding: 0px; margin: 0px;  /* Adjustment to fit with the ticks on <input> element */
     font-size: 0.95em;
 }
-#width-label {
-    margin-left: 0.25em;
-}
+#width-label { margin-left: 0.25em; }
 
 /* Download and clear buttons */
 #download-button {
     font-size: 0.9em; text-align: center; height: fit-content; width: 6.5em;
-    color: rgb(34, 198, 36); background-color: palegoldenrod;
-    border: 0px;
+    color: rgb(38, 170, 40); background-color: rgb(250, 246, 200);
+    border: 2px solid darkblue;
 }
 #download-button:hover {
-    color: rgb(26, 234, 30); background-color: rgb(252, 244, 164);
+    color: rgb(40, 209, 43); background-color: rgb(241, 240, 230); border-color: rgb(5, 5, 211);
 }
 #download-button:disabled {
-    background-color: dimgray; color: darkslategray;
+    background-color: dimgray; color: darkslategray; border: rgba(0, 0, 139, 0.3);
 }
 #clear-image-button {
     font-size: 0.9em; text-align: center; height: 2em; width: 7em;
     color: lightcyan; background-color: darkolivegreen;
-    border: 0px;
+    border: 2px solid lightblue;
 }
 #clear-image-button:hover {
-    color: rgb(231, 255, 255); background-color: rgb(104, 134, 52);
+    color: rgb(231, 255, 255); background-color: rgb(104, 134, 52); border-color: rgb(132, 218, 247);
 }
 
 /* Upload container and elements inside them styling */
@@ -136,16 +160,15 @@ body * {
 }
 
 /* Styling of image manipulation controls */
-#image-manipulation-controls-box{
+#image-manipulation-controls-box {
     display: none;   /* By default, all controls are hidden due to this property */
     /* display: flex;  */  /* Will be changed by the JS script after image upload */
     flex-direction: row; flex-wrap: wrap;
     align-items: center; justify-content: space-evenly;
     padding-left: 0px; 
 }
-#blur-label{
-    padding-left: 0px;
-}
+#blur-label { padding-left: 0px; }
+
 /* Settings for all inputs and their labels */
 #blur-control, #brightness-control, #contrast-control, #saturate-control, #grayscale-control, #huerotate-control{
     width: 200px;
@@ -163,7 +186,7 @@ body * {
 
 /* Additional styling for centering the inputs (sliders) and labels showing the selected values */
 /* It's needed for the responsive design (small width devices) to place info label above of the input (slider) and the label with selected value */
-.input-label-container{
+.input-label-container {
     display: flex; flex-direction: row;
     align-items: center; justify-content: space-between;
 }
@@ -182,82 +205,81 @@ body * {
 }
 
 /* Removing all horizontal padding and margins inside inline elements inherited from body* selector */
-.horizontal-element{
+.horizontal-element {
     margin-left: 0em; margin-right: 0em; padding-left: 0em; padding-right: 0em;
 }
 
 /* Adapt styles to the small mobile screen, decrease all margins, font sizes to better fit content */
 @media screen and (max-width: 640px) {
-    body *{
+    body * {
         margin: 0; padding: 0;  /* Decrease the default margin / padding for all elements */
+        font-size: 0.95rem;  /* Decrease the default font size */
     }
     body {
-        font-size: 16px;  /* Decrease the default font size */
         overflow-wrap: break-word;  /* Prevent overflow if the text in element makes it larger than the <main> size (width) */
     }
+
+    /* Header */
+    #page-header { text-align: center; }
+    #page-header * { margin: 0.5em 1em; padding: 0.2em; display: inline-block; }
+
+    /* Dialog pop-up window and its elements */
+    #info-dialog { margin: 30vh auto; } 
+    #info-dialog * { font-size: 0.9em; margin: 0.2em; padding: 0.2em; } 
+    #info-dialog-close-button {margin-bottom: calc(0.4em + 4px);}
+
     /* Style of the page itself - for better usage of available width / height of a page */
-    .flexbox-container{
-        margin-top: 0.75vh; margin-bottom: 0.2em;
+    .flexbox-container {
+        margin-top: 2vh; margin-bottom: 0.2em;
         margin-left: auto; margin-right: auto;
     }
 
     /* Styled before showing uploaded image */
-    #instructions-header-container{
-        margin: auto; padding: 0.125em;
+    #instructions-header-container {
+        margin: auto; padding: 0.125em; margin-top: 0.4em;
     }
-    #project-header{
-        font-size: 1.15em; 
+    #project-header {
+        font-size: 1.1em; 
     }
-    #upload-image-container{
-        margin: 0.125em 0.25em; padding: 0.15em;
+    #upload-image-container {
+        margin: 0.5em 0.125em; padding: 0.15em;
     }
-    #upload-info{
-        margin: 0.125em auto; padding: 0.15em;
+    #upload-info {
+        margin: 0.25em auto; padding: 0.15em;
     }
-    #upload-button, #clear-image-button, #download-button{
-        font-size: 0.9rem; width: fit-content; margin: 0.125em auto; padding: 0.2em;
+    #upload-button, #clear-image-button, #download-button {
+        font-size: 0.85rem; width: fit-content; margin: 0.125em auto; padding: 0.2em;
     }
 
     /* Styled after showing uploaded image */
-    #upload-image-container{
-        display: flex; flex-direction: column;
-        width: auto;
+    #upload-image-container {
+        display: flex; flex-direction: column; width: auto;
     }
     /* Below styling for Download button, text, width of an image control*/
-    #associated-controls-container *{ 
-        padding: 0.125em; margin: 0.125em auto; 
-        text-align: center;
+    #associated-controls-container * { 
+        padding: 0.125em; margin: 0.125em auto;  text-align: center;
     }
     /* Below - styling of an image itself, takes almost available width */
-    #image-container{ 
-        padding: 0; margin: 0.25em;
-    }
-    #processing-controls *{
-        padding: 0.25em; margin: 0.125em;
-    }
+    #image-container {  padding: 0; margin: 0.25em; }
+    #processing-controls * { padding: 0.25em; margin: 0.125em; }
 
     /* Width input elements styling, make it better fit to the page */
-    #width-input-container{
-        display: flex; flex-direction: row;
-        text-align: center; 
+    #width-input-container {
+        display: flex; flex-direction: row; text-align: center; 
         padding: 0.125em 0.25em; margin: 0.125em auto;
     }
-    #width-ticks{
-        display: none;
-    }
+    #width-ticks { display: none; }
 
     /* Styling of image manipulations controls: blur, brightness and so on */
-    #image-manipulation-controls-box{
-        text-align: center; 
-    }
+    #image-manipulation-controls-box { text-align: center;  }
+
     /* Align content of image processing controls differently than for the desktop displays */
     #blur-control-container, #blur-label, #brightness-control-container, #brightness-label, #contrast-control-container, #contrast-label,
-    #saturate-control-container, #saturate-label, #grayscale-control-container, #grayscale-label, #huerotate-control-container, #huerotate-label{
+    #saturate-control-container, #saturate-label, #grayscale-control-container, #grayscale-label, #huerotate-control-container, #huerotate-label {
         display: block;
     }
 
     /* Move footer relative to the page content */
-    #page-footer{
-        margin-top: 30vh;
-    }
+    #page-footer { margin-top: 20vh; }
+
 }

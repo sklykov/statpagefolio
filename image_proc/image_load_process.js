@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     // Strings with some text representation
     const uploadInfoStr = document.getElementById("upload-info");
     const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
-    const info2images = document.getElementById("info-two-image-elements"); const imageControlsBox = document.getElementById("image-associated-ctrls-box");
+    const imageControlsBox = document.getElementById("image-associated-ctrls-box");
     const footerElement = document.getElementById("page-footer");  // for changing margin of the footer if image uploaded
     // Below - selectors for elements for changing their values if the page is opened on the mobile device
     const minTick = document.getElementById("min-width-tick"); const midTick = document.getElementById("mid-width-tick");
@@ -299,9 +299,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
             imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
             footerElement.style.marginTop = "0.5em";  // shift footer closer to the image / content of a page
-            if (!imageDebugFlag){
-                info2images.innerText = "The image is placed in the <canvas> HTML element below.";
-            } 
         } else {
             imageRefreshed = false;  // set again the flag to the default value, this flag preventing calling this and function above
         }

@@ -16,6 +16,7 @@
 
     <!-- Load page logic from the external script file -->
     <script src="image_load_process.js"></script>
+    <script src="dialog_windows.js" ></script>
 
     <!-- Styling -->
     <link rel="stylesheet" href="image_upload_styles.css"> 
@@ -23,11 +24,29 @@
 </head>
 
 <body>
-    <!-- Overall container of the page - div element with flex display property and  -->
+
+    <dialog id="info-dialog">
+        <p> Some informational points represented in the dialog window. To close it, press 'Esc' or button below. </p>
+        <p id="info-two-image-elements"> 
+            The image is placed in the &lt canvas &gt HTML element, which allows changing image content.
+        </p>
+        <button id="info-dialog-close-button"> &#x2716 Close </button>
+    </dialog>
+
+    <!-- Page header spread on the width of a page -->
+    <header id="page-header">
+        <span> Image processing in JS </span>
+        <select id="select-button">
+            <option id="about-button"> Dev. Hints </option>
+            <option disabled> Credentials </option>
+        </select>
+    </header>
+
+    <!-- Overall container of the page - div element with flex display property for storing children centered and in column  -->
     <div class="flexbox-container"> 
         <main id="main-container" class="flexbox-container">
             <!-- Page header with the tips -->
-            <header id="instructions-header-container">
+            <section id="instructions-header-container">
                 <h3 id="project-header"> Project: Processing of the uploaded image (serverless, no storage except on a browser) using vanilla JS </h3>
                 <p id="usage-info">
                     Short instruction of page functionality usage:
@@ -36,7 +55,7 @@
                         <li id="info-point-2"> Note that the uploaded image is stored only in browser session memory, it will be discarded after page reload / close </li>
                     </ol>
                 </p>
-            </header>
+            </section>
 
             <!-- Upload button, select image file, visible all time -->
             <section id="upload-image-container">
@@ -47,9 +66,6 @@
             <section id="image-associated-ctrls-box">
                 <!-- Controlling of  image width -->
                 <div id="associated-controls-container">
-                    <p id="info-two-image-elements"> 
-                        Below - the image will be shown in the &ltcanvas&gt HTML element, above - in the &ltimg&gt element. This division is intended for debugging.
-                    </p>
                     <!-- Width of the images control, visible only after image upload -->
                     <div id="width-input-container">
                         <div id="input-ticks-container"> 
