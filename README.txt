@@ -1,4 +1,4 @@
 # statpagefolio
-Collection of developed by me static web pages as part of the portfolio (pet projects).
+A collection of static web pages (hosted on GitHub) that I've created for my portfolio. 
 
-Look on the page deployment tab of this project.
+Check the [main page](https://sklykov.github.io/statpagefolio/) of the project.
