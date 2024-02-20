@@ -53,6 +53,12 @@ body * {
 
 #page-footer { margin-top: 28vh; margin-left: 1em; }
 
+.link {
+    color: blue; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;
+}
+.link:visited { color: rgb(136, 28, 238); }
+.link:hover { color: rgb(56, 56, 240); }
+
 /* Image container elements: <img> and <canvas>, only <canvas> will be displayed from this version on */
 #img-element {
     display: none;  /* default value, for the case if no image uploaded */

@@ -1,8 +1,9 @@
-"use strict";  
-// The modifier above always should be on the top of the script, but it's not needed for classes and modules composing
+"use strict";  // This modifier forces to launch this script in 'strict' mode, allowing more mistakes / bugs to be caught
+
+const date = new Date(); const year = date.getFullYear();  // get the actual year
 
 // overall function guarantees that the page loaded before any script functions start working
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
     // Check the browser family (compatibility issues - the canvas.filter property are not implemented in Safari)
     console.log(`Page opened in: ${navigator.userAgent}`);
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const infoPoint1 = document.getElementById("info-point-1"); const infoPoint2 = document.getElementById("info-point-2");
     const imageControlsBox = document.getElementById("image-associated-ctrls-box");
     const footerElement = document.getElementById("page-footer");  // for changing margin of the footer if image uploaded
+    footerElement.innerHTML = `${year}, ` + footerElement.innerHTML;  // set actual year on the web-page
     // Below - selectors for elements for changing their values if the page is opened on the mobile device
     const minTick = document.getElementById("min-width-tick"); const midTick = document.getElementById("mid-width-tick");
 
@@ -44,7 +46,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
     const readerImg = new FileReader();  // IO API from JS
     let imageClass = new Image();  // Image class for providing raster image to the canvas context drawing
-    const imageDebugFlag = false;  // regulates 2 containers with the uploaded image is shown or not
     widthInput.value = parseInt(widthInput.dataset.default); let widthSet = `${widthInput.value}%`;   // default width setting
     let imageUploaded = false;  // flag for referring if image uploaded or not
     let fileType = ""; let imageFormat = "";  // store the uploaded type file / image provided in FileReader.result of method readAsDataURL
