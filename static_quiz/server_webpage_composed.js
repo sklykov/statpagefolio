@@ -9,6 +9,7 @@
 
 // Script-wide variables
 let checkPrinciples = false;  // used for on / off logging into console some principles not related to the working logic of a page
+const date = new Date(); const year = date.getFullYear();  // get the actual year
 
 
 // All logic related to the moment then page is loaded
@@ -34,10 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
     const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head");
     const rightAnswersIndicator = document.getElementById("right-answers"); const statisticsTableBox = document.getElementById("statistics-table-box"); 
-    const initialStringStatistics = document.getElementById("initial-statistics-string"); 
+    const initialStringStatistics = document.getElementById("initial-statistics-string"); const rank = document.getElementById("rank"); const initialRank = rank.innerText; 
     const rightAnswersTable = document.getElementById("table-right-answers");  const passedSecondsTable = document.getElementById("passed-time-answers");
-    const remainedLivesTable = document.getElementById("remained-lives-answers"); const projectShortInfo = document.getElementById("project-short-description"); 
-    const rank = document.getElementById("rank"); const initialRank = rank.innerText;  
+    const remainedLivesTable = document.getElementById("remained-lives-answers"); const projectShortInfo = document.getElementById("project-short-description");  
     const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
 
     // Variables and constants for the function within the DOMContentLoaded event handler
@@ -54,11 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let startLives = parseInt(livesNumberElement.dataset.amount);  let lives = startLives;
     let quizStarted = false; let questionNumber = 0; let rightAnswersTotal = 0;
     let maxTimeForAnswer = 11; let remainedTimerSeconds = maxTimeForAnswer; 
-    let rightAnswerIndex = 0; let givenAnswerIndex = -1; let passedSeconds = 0;
-    let answerTypes = ["Capital", "Largest City"];
+    let rightAnswerIndex = 0; let givenAnswerIndex = -1; let passedSeconds = 0; let answerTypes = ["Capital", "Largest City"];
     const answerVariants = [answer1, answer2, answer3, answer4];  // store all 4 variants HTML elements
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
     let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; let playedGames = 0; 
+    footer.innerHTML = `${year}, ` + footer.innerHTML;  // set actual year on the web-page
 
     // Start / stop the quiz by the button click
     startButton.addEventListener("click", handleStartButtonClick);

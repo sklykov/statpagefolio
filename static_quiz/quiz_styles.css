@@ -39,6 +39,9 @@ body *{
 
 /* Place header and button by default closer to page center */
 #project-header{ margin-top: 14vh; }
+
+/* Remove default margins from inline link */
+#github-link { margin-left: 0; margin-right: 0; padding: 0; }
  
 /* Start (launch) the quiz button styling */
 #launch-quiz-properties-box {
@@ -196,6 +199,7 @@ body *{
     #project-header { margin-top: 6vh; }
     #page-footer { margin-top: 14vh; }
 }
+
 /* Screen smaller than 1000px, reduce some sizes for better fitting elements */
 @media screen and (max-width: 1000px) {
     body {
@@ -208,6 +212,7 @@ body *{
     }
     #page-footer { margin-top: 8vh; }
 }
+
 /* Mobile and small screen design */
 @media screen and (max-width: 925px) {
     #page-footer { text-align: center; }
