@@ -1,7 +1,7 @@
 // Imports
 
 // Component specification
-function ComponentName(props){
+function ComponentName(){
     return (<div> </div>); 
 }
 

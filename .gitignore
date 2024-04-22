@@ -17,26 +17,28 @@ Documents/*
 .vscode/*
 
 
-# Added by the creat-react-app, placed here as in the core file for the repository:
+# Added by Vite configuration, placed here as in the core file for the repository:
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# dependencies
-/lang_quiz_react/node_modules
-/lang_quiz_react/.pnp
-/lang_quiz_react/.pnp.js
+node_modules
+dist
+dist-ssr
+*.local
 
-# testing
-/lang_quiz_react/coverage
-
-# production
-/lang_quiz_react/build
-
-# misc
-/lang_quiz_react/.DS_Store
-/lang_quiz_react/.env.local
-/lang_quiz_react/.env.development.local
-/lang_quiz_react/.env.test.local
-/lang_quiz_react/.env.production.local
-
-/lang_quiz_react/npm-debug.log*
-/lang_quiz_react/yarn-debug.log*
-/lang_quiz_react/yarn-error.log*
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

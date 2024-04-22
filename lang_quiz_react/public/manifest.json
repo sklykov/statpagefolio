@@ -1,6 +1,6 @@
 {
   "short_name": "Lang_Quiz",
-  "name": "Yet another quiz created using ReactJS",
+  "name": "Yet another quiz created using React",
   "icons": [
     {
       "src": "TBD",
@@ -19,7 +19,5 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "standalone"
 }

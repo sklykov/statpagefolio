@@ -2,13 +2,15 @@ import "./NavBar.css";
 import { useState } from "react";
 import StyleSwitcher from "./StyleSwitcher"; 
 
+const date = new Date(); const year = date.getFullYear();  // get the actual year
+
 // Display info after clicking the button in the component below
 function DisplayInfo(){
-    window.alert("Language Quiz created using ReactJS. Author: S.K., license: MIT, Year: 2023"); 
+    window.alert(`Language Quiz created using ReactJS. Author: S.K., license: MIT, Year: ${year}`); 
 }
 
 // The stateless component
-export default function NavBar(props) {
+export default function NavBar() {
     const [styleSymbol, setStyleSymbol] = useState('\u263C');  // can be changed by the Ref in the function?
     return (
         <nav className="navbar">
