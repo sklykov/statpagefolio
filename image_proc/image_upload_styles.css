@@ -130,12 +130,12 @@ body * {
     color: rgb(231, 255, 255); background-color: rgb(104, 134, 52); border-color: rgb(132, 218, 247);
 }
 
-/* Upload container and elements inside them styling */
+/* Styling of the upload container and elements inside it */
 #upload-image-container {
     /* below - put the content to the center of the webpage by adjusting margins */
     margin: auto; margin-top: 4%; margin-bottom: 1em;
     text-align: center; font-weight: bold;  /* make text bold in the container */
-    border: solid 2px darkolivegreen;
+    border: solid 3px darkolivegreen;
     width: fit-content;  /* regulates the size of the container itself, restricted to the content */
     display: flex; flex-direction: row; align-items: center; justify-content: center;
 }
@@ -147,12 +147,13 @@ body * {
     font-size: 0.95em; font-weight: 850;  
     width: 8em; height: 2.25em; margin: 0.25em;
     color: whitesmoke; background-color: darkslateblue;
-    border: 2px solid darkblue;
+    border: 3px solid darkblue;
+    box-shadow: 4px 6px rgb(100, 88, 179);   /* shadow effect for the button */
 }
 /* Animation if upload button is hovered */
 @keyframes fileSelectorButtonHoveredAnimation {
-    from { color: whitesmoke; background-color: darkslateblue; border: 2px solid darkblue;}
-    to { color: darkblue; background-color: beige; border: 2px solid lightsteelblue;}
+    from { color: whitesmoke; background-color: darkslateblue; border: 2px solid darkblue; box-shadow: 4px 6px rgb(100, 88, 179);}
+    to { color: darkblue; background-color: beige; border: 2px solid lightsteelblue; box-shadow: 4px 6px beige;}
 }
 #upload-button::file-selector-button:hover {
     animation-name: fileSelectorButtonHoveredAnimation; 
@@ -163,6 +164,7 @@ body * {
 /* Styling of an image showing element */
 #canvas-element{
     display: block; margin: 0.125em auto;  /* put the image on the center */
+    padding: 0.35em; border: 6px groove darkcyan;
 }
 
 /* Styling of image manipulation controls */
