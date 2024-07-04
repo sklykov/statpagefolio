@@ -30,8 +30,7 @@ body * {
 
 /* Page header */
 #page-header {
-    padding: 0em; margin: 0em;
-    background-color: rgba(139, 0, 139, 0.725); color: azure;
+    padding: 0em; margin: 0em; background-color: rgba(139, 0, 139, 0.725); color: azure;
 }
 #page-header * {
     margin-left: 2em; margin-top: 0.75em; margin-bottom: 0.75em; margin-right: 2em; padding: 0.2em;
@@ -53,25 +52,20 @@ body * {
 
 #page-footer { margin-top: 28vh; margin-left: 1em; }
 
-.link {
-    color: blue; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;
-}
+/* Links styling */
+.link { color: blue; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
 .link:visited { color: rgb(136, 28, 238); }
 .link:hover { color: rgb(56, 56, 240); }
 
 /* Image container elements: <img> and <canvas>, only <canvas> will be displayed from this version on */
-#img-element {
-    display: none;  /* default value, for the case if no image uploaded */
-}
+#img-element { display: none;  /* default value, for the case if no image uploaded */ }
 
 /* Styling going after from top to bottom elements on the page, starting from <header> */
 #instructions-header-container {
-    text-align: center;
-    margin-top: 2%;  /* Note that % calculated from the element width, not height! */
+    text-align: center; margin-top: 2%;  /* Note that % calculated from the element width, not height! */
 }
 #project-header { 
-    font-size: 1.2em; color: rgb(39, 39, 219);
-    margin-bottom: 2.5%; /* Separate the overall header and the brief instructions */
+    font-size: 1.2em; color: rgb(39, 39, 219); margin-bottom: 2.5%; /* Separate the overall header and the brief instructions */
 }
 #usage-info {
     padding-bottom: 0em; margin-bottom: 0em;  /* Shorten distance between ol header and points */
@@ -109,11 +103,13 @@ body * {
 }
 #width-label { margin-left: 0.25em; }
 
-/* Download and clear buttons */
+/* Download, clear, reset buttons */
+#download-button, #clear-image-button, #reset-button {
+    font-size: 0.9em; text-align: center; height: fit-content; width: 7em;
+    border: 2px solid;
+}
 #download-button {
-    font-size: 0.9em; text-align: center; height: fit-content; width: 6.5em;
-    color: rgb(38, 170, 40); background-color: rgb(250, 246, 200);
-    border: 2px solid darkblue;
+    color: rgb(38, 170, 40); background-color: rgb(250, 246, 200); border-color: darkblue;
 }
 #download-button:hover {
     color: rgb(40, 209, 43); background-color: rgb(241, 240, 230); border-color: rgb(5, 5, 211);
@@ -121,13 +117,11 @@ body * {
 #download-button:disabled {
     background-color: dimgray; color: darkslategray; border: rgba(0, 0, 139, 0.3);
 }
-#clear-image-button {
-    font-size: 0.9em; text-align: center; height: 2em; width: 7em;
-    color: lightcyan; background-color: darkolivegreen;
-    border: 2px solid lightblue;
+#clear-image-button, #reset-button {
+    color: rgb(225, 220, 224); background-color: rgb(142, 18, 18); border-color: rgb(244, 79, 37);
 }
-#clear-image-button:hover {
-    color: rgb(231, 255, 255); background-color: rgb(104, 134, 52); border-color: rgb(132, 218, 247);
+#clear-image-button:hover, #reset-button:hover {
+    color: rgb(243, 243, 243); background-color: rgb(193, 27, 27); border-color: rgb(248, 108, 73);
 }
 
 /* Styling of the upload container and elements inside it */
@@ -136,7 +130,7 @@ body * {
     margin: auto; margin-top: 4%; margin-bottom: 1em;
     text-align: center; font-weight: bold;  /* make text bold in the container */
     border: solid 3px darkolivegreen;
-    width: fit-content;  /* regulates the size of the container itself, restricted to the content */
+    width: max-content;  /* regulates the size of the container itself, restricted to the content */
     display: flex; flex-direction: row; align-items: center; justify-content: center;
 }
 #upload-button {
@@ -144,27 +138,28 @@ body * {
     flex-shrink: 0;  /* Important: prevents shrinking the size of the element */
 }
 #upload-button::file-selector-button {
-    font-size: 0.95em; font-weight: 850;  
-    width: 8em; height: 2.25em; margin: 0.25em;
+    font-size: 0.965em; font-weight: 875;  
+    width: 9.5em; height: 2.5em; margin: 0.25em;
     color: whitesmoke; background-color: darkslateblue;
     border: 3px solid darkblue;
     box-shadow: 4px 6px rgb(100, 88, 179);   /* shadow effect for the button */
 }
 /* Animation if upload button is hovered */
 @keyframes fileSelectorButtonHoveredAnimation {
-    from { color: whitesmoke; background-color: darkslateblue; border: 2px solid darkblue; box-shadow: 4px 6px rgb(100, 88, 179);}
-    to { color: darkblue; background-color: beige; border: 2px solid lightsteelblue; box-shadow: 4px 6px beige;}
+    from { color: whitesmoke; background-color: darkslateblue; border-color: darkblue;  box-shadow: 4px 6px rgb(100, 88, 179);}
+    to { color: darkblue; background-color: beige; border-color: lightsteelblue; box-shadow: none;}
 }
 #upload-button::file-selector-button:hover {
+    transform: translateX(1px) translateY(1px); transition: transform 0.85s;
     animation-name: fileSelectorButtonHoveredAnimation; 
-    animation-duration: 4s; animation-iteration-count: infinite;
+    animation-duration: 3s; animation-iteration-count: infinite;
     animation-direction: alternate; animation-timing-function: ease-in-out;
 }
 
 /* Styling of an image showing element */
 #canvas-element{
     display: block; margin: 0.125em auto;  /* put the image on the center */
-    padding: 0.35em; border: 6px groove darkcyan;
+    padding: 0.35em; border: 6px groove darkcyan; background-color: aliceblue;
 }
 
 /* Styling of image manipulation controls */

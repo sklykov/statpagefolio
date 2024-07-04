@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const huerotateInput = document.getElementById("huerotate-control"); const huerotateValue = document.getElementById("huerotate-value");
     const saturateCtrlBox = document.getElementById("saturate-control-container"); const grayscaleCtrlBox = document.getElementById("grayscale-control-container");
     const huerotateCtrlBox = document.getElementById("huerotate-control-container"); const clearImageButton = document.getElementById("clear-image-button"); 
-    const instructionsHeaderBox = document.getElementById("instructions-header-container");
+    const instructionsHeaderBox = document.getElementById("instructions-header-container"); const radioBox = document.getElementById("input-type-container"); 
     // Containers, html elements
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let grayScaleImageLoaded = false;  // tracks that the gray-scaled or color image has been uploaded 
     let defaultDisplayStyle;  // records initial display styling for input control boxes for restoring if color image has been uploaded
     let flagSwitchImages = false;  // for tracking the clicks on the image for switching original / processed
+    let selectedSliders = true;  // flag if the sliders are selected as the input for the image processing options
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
     uploadButton.addEventListener("change", () => {
@@ -295,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
             pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; pageHeader.style.marginBottom = headerBottomMargin; 
             infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
             uploadImageContainer.style.fontWeight = "normal"; uploadImageContainer.style.marginBottom = topMargin; 
-            uploadButton.style.width = "8em";  // cut out the file name string associated with the upload button
+            uploadButton.style.width = "9.5em";  // cut out the file name string associated with the upload button
             uploadButton.style.border = "none"  // removes the default blue 1px border
             imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
@@ -398,5 +399,15 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             applyAllFilters();  // show the processed image
         }
-    });   
+    });
+    
+    // Selection between 2 options on radio box
+    radioBox.addEventListener("change", (e) => {
+        // console.log(e.target); 
+        if (e.target.id == "sliders-selector1") {
+            selectedSliders = true; 
+        } else {
+            selectedSliders = false; 
+        }
+    }); 
 });
