@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saturateCtrlBox = document.getElementById("saturate-control-container"); const grayscaleCtrlBox = document.getElementById("grayscale-control-container");
     const huerotateCtrlBox = document.getElementById("huerotate-control-container"); const clearImageButton = document.getElementById("clear-image-button"); 
     const instructionsHeaderBox = document.getElementById("instructions-header-container"); const radioBox = document.getElementById("input-type-container"); 
+    
     // Containers, html elements
     const pageContent = document.getElementsByClassName("flexbox-container")[0];   // the flexbox - container of all page content
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     footerElement.innerHTML = `${year}, ` + footerElement.innerHTML;  // set actual year on the web-page
     // Below - selectors for elements for changing their values if the page is opened on the mobile device
     const minTick = document.getElementById("min-width-tick"); const midTick = document.getElementById("mid-width-tick");
+    const sliderWidth = brightnessInput.style.width; 
 
     // Default parameters and initialization of classes for image reading and storing
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
@@ -63,6 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let defaultDisplayStyle;  // records initial display styling for input control boxes for restoring if color image has been uploaded
     let flagSwitchImages = false;  // for tracking the clicks on the image for switching original / processed
     let selectedSliders = true;  // flag if the sliders are selected as the input for the image processing options
+    const displayBrightnessValue = brightnessValue.style.display;  // save default display mode for the label (change to none conditionally)
+    const sliderSelector = document.getElementById("sliders-selector1"); sliderSelector.checked = "true";  // set default radio button (otherwise, remain switched after reloading)
 
     // Add event listener to the event, when the file provided through the <input type="file"> button
     uploadButton.addEventListener("change", () => {
@@ -401,13 +405,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     
-    // Selection between 2 options on radio box
+    // Function for changing the representation of input from slider to numerical one
+    function changeInputsAppearance() {
+        if (selectedSliders) {
+            brightnessInput.type = "range"; brightnessInput.style.width = sliderWidth; brightnessValue.style.display = displayBrightnessValue;
+            contrastInput.type = "range";  contrastInput.style.width = sliderWidth; contrastValue.style.display = displayBrightnessValue; 
+        } else {
+            brightnessInput.type = "number"; brightnessInput.style.width = "3.5em"; brightnessValue.style.display = "none"; 
+            contrastInput.type = "number";  contrastInput.style.width = "3.5em"; contrastValue.style.display = "none"; 
+        }
+    }
+
+    // Selection between 2 options on the radio box (inputs as sliders or numerical inputs)
     radioBox.addEventListener("change", (e) => {
         // console.log(e.target); 
         if (e.target.id == "sliders-selector1") {
             selectedSliders = true; 
         } else {
             selectedSliders = false; 
-        }
+        } 
+        changeInputsAppearance();  // call for changing <input> from range to number and back
     }); 
 });
