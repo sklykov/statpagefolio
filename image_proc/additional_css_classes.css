@@ -1,0 +1,15 @@
+/* Additional CSS classes that is applied depending on the selected condition / the page state */
+
+/* Settings for input as a range and as a number */
+.parameter-range-input {
+    width: 184px; 
+}
+.parameter-number-input {
+    width: 3.5em; 
+}
+
+/* Styling for inputs labels */
+.value-label-hide { display: none; }
+.value-label-ranges { 
+    display: block; color: rgb(37, 65, 65); 
+}

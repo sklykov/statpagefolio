@@ -44,13 +44,11 @@ body * {
 
 /* This class corresponds to the overall flexbox container, all child elements - in a single column */
 .flexbox-container {
-    margin-top: 5vh; display: flex; flex-direction: column;
+    margin-top: 4vh; display: flex; flex-direction: column;
     align-items: stretch; justify-content: space-between; 
 }
 
-#main-container { padding: 0; margin: 0; }
-
-#page-footer { margin-top: 28vh; margin-left: 1em; }
+#page-footer { margin-top: 25vh; margin-left: 3em; }  /* Page footer sticks to the left */
 
 /* Links styling */
 .link { color: blue; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
@@ -104,8 +102,8 @@ body * {
 #width-label { margin-left: 0.25em; }
 
 /* Download, clear, reset buttons */
-#download-button, #clear-image-button, #reset-button {
-    font-size: 0.9em; text-align: center; height: fit-content; width: 7em;
+.action-button {
+    font-size: 0.9em; text-align: center; height: 2.25em; width: fit-content;
     border: 2px solid;
 }
 #download-button {
@@ -134,7 +132,7 @@ body * {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
 }
 #upload-button {
-    font-size: 0.9em; color: red; text-align: center;  
+    color: red; text-align: center;  
     flex-shrink: 0;  /* Important: prevents shrinking the size of the element */
 }
 #upload-button::file-selector-button {
@@ -170,20 +168,10 @@ body * {
     align-items: center; justify-content: space-evenly;
     padding-left: 0px; 
 }
-#blur-label { padding-left: 0px; }
-
-/* Settings for all inputs and their labels */
-#blur-control, #brightness-control, #contrast-control, #saturate-control, #grayscale-control, #huerotate-control{
-    width: 200px;
-}
-#blur-value, #brightness-value, #contrast-value, #saturate-value, #grayscale-value, #huerotate-value{
-    color: rgb(37, 65, 65);
-}
 
 /* Styling of each slider box for centering elements inside it */
-#blur-control-container, #brightness-control-container, #contrast-control-container, #saturate-control-container,
-#grayscale-control-container, #huerotate-control-container{
-    /* Align slider with surrounding labels in a <div> container, this needed also for align label with info about element itself and input / label with value */
+.input-container {
+    /* Align slider with surrounding labels in a <div> container, this needed also for align label with info about element itself and label with value */
     display: flex; flex-direction: row;  align-items: center; justify-content: space-between;
 }
 
@@ -195,15 +183,15 @@ body * {
 }
 
 /* Download, reset, clear image buttons */
-#download-button, #reset-button, #clear-image-button{
+#download-button, #reset-button, #clear-image-button {
     font-size: 0.95em; padding: 0.125em 0.5em; margin: 0em 0.5em;
 }
 
 /* Styling of radio button selector */
-#input-type-container{
+#input-type-container {
     display: flex; flex-direction: row; justify-content: space-between; align-items: center; text-align: center;
 }
-.radio-box{
+.radio-box {
     display: flex; align-items: center;
 }
 
@@ -213,7 +201,12 @@ body * {
 }
 
 /* Adapt styles to the small mobile screen, decrease all margins, font sizes to better fit content */
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 884px) {
+    #upload-image-container {
+        display: flex; flex-direction: column; width: auto;
+    }
+}
+@media screen and (max-width: 720px) {
     body * {
         margin: 0; padding: 0;  /* Decrease the default margin / padding for all elements */
         font-size: 0.95rem;  /* Decrease the default font size */
@@ -233,8 +226,8 @@ body * {
 
     /* Style of the page itself - for better usage of available width / height of a page */
     .flexbox-container {
-        margin-top: 2vh; margin-bottom: 0.2em;
-        margin-left: auto; margin-right: auto;
+        margin-top: 2vh; margin-bottom: 0.2em; 
+        margin-left: 0.2em; margin-right: 0.2em;
     }
 
     /* Styled before showing uploaded image */
@@ -250,14 +243,10 @@ body * {
     #upload-info {
         margin: 0.25em auto; padding: 0.15em;
     }
-    #upload-button, #clear-image-button, #download-button {
+    .action-button, #upload-image {
         font-size: 0.85rem; width: fit-content; margin: 0.125em auto; padding: 0.2em;
     }
 
-    /* Styled after showing uploaded image */
-    #upload-image-container {
-        display: flex; flex-direction: column; width: auto;
-    }
     /* Below styling for Download button, text, width of an image control*/
     #associated-controls-container * { 
         padding: 0.125em; margin: 0.125em auto;  text-align: center;
@@ -277,8 +266,7 @@ body * {
     #image-manipulation-controls-box { text-align: center;  }
 
     /* Align content of image processing controls differently than for the desktop displays */
-    #blur-control-container, #blur-label, #brightness-control-container, #brightness-label, #contrast-control-container, #contrast-label,
-    #saturate-control-container, #saturate-label, #grayscale-control-container, #grayscale-label, #huerotate-control-container, #huerotate-label {
+    .input-container {
         display: block;
     }
 
