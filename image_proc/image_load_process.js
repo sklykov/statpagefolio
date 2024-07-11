@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saturateCtrlBox = document.getElementById("saturate-control-container"); const grayscaleCtrlBox = document.getElementById("grayscale-control-container");
     const huerotateCtrlBox = document.getElementById("huerotate-control-container"); const clearImageButton = document.getElementById("clear-image-button"); 
     const instructionsHeaderBox = document.getElementById("instructions-header-container"); const radioBox = document.getElementById("input-type-container"); 
-    const sliderSelector = document.getElementById("sliders-selector1"); 
+    const imageCtrlsBox = document.getElementById("image-ctrls-box"); const sliderSelector = document.getElementById("sliders-selector1"); 
     const inputElements = [blurInput, brightnessInput, contrastInput, saturateInput, grayscaleInput, huerotateInput];
     const inputLabels = [blurValue, brightnessValue, contrastValue, saturateValue, grayscaleValue, huerotateValue];
     
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const footerElement = document.getElementById("page-footer");  // for changing margin of the footer if image uploaded
     footerElement.innerHTML = `${year}, ` + footerElement.innerHTML;  // set actual year on the web-page
     // Below - selectors for elements for changing their values if the page is opened on the mobile device
-    const minTick = document.getElementById("min-width-tick"); const midTick = document.getElementById("mid-width-tick");
+    const minTickImgWidth = document.getElementById("min-width-tick"); const maxTickImgWidth = document.getElementById("max-width-tick");
 
     // Default parameters and initialization of classes for image reading and storing
     const contextCanvas = canvas.getContext("2d");  // get the drawing context - 2d, it composes functions for drawing
@@ -103,13 +103,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     widthInput.value = parseInt(widthInput.dataset.default); widthSet = `${widthInput.value}%`;
 
                     // Set now styling for restrict image sizes, taking into account the window properties. For it, recalculate width set in % of the window width
-                    if (imgElement.naturalWidth < (widthInput.value/100)*windowWidth){  // this case then the image is much smaller then the default % of window, it prevents expanding small images
-                        widthInput.value = Math.round(100*(imgElement.naturalWidth/windowWidth)); widthSet = `${widthInput.value}%`;
-                    } else if (imgElement.naturalWidth > windowWidth){  // if image has width larger then the window size, just set it to the window size
-                        widthInput.value = 100; widthSet = `${widthInput.value}%`;
+                    const maxWidthCtrl = parseInt(maxTickImgWidth.value)
+                    // the image is much smaller then the default % of window, it prevents expanding small images
+                    if (imgElement.naturalWidth < (widthInput.value/maxWidthCtrl)*windowWidth) {
+                        widthInput.value = Math.round(maxWidthCtrl*(imgElement.naturalWidth/windowWidth)); widthSet = `${widthInput.value}%`;
+                    } else if (imgElement.naturalWidth > windowWidth) {  // if image has width larger then the window size, just set it to the window size
+                        widthInput.value = maxWidthCtrl; widthSet = `${widthInput.value}%`;
                         // If the width of an image is larger than the available width of a page (device specific), set ticks and available width control to min 50%
-                        widthInput.min = "50"; minTick.value="50"; minTick.label="50"; midTick.value = "75"; midTick.label = "75"; 
-                        // console.log(widthInput); console.log(minTick); 
+                        widthInput.min = "50"; minTickImgWidth.value="50"; minTickImgWidth.label="50";
                     }
 
                     imageClass.src = readerImg.result;  // transfer loaded image to the Image class and can be bound with the "load" event below
@@ -278,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Change properties of page elements if the image was successfully uploaded to the browser
-    function changePropsImgUploaded(){
+    function changePropsImgUploaded() {
         if (!imageRefreshed){
             // Enable all inputs if only the uploaded file acknowledged as an image
             imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
@@ -306,6 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
             imageControlsBox.style.display = "flex";  // automatically show the uploaded image, width input, download button
             processingCtrlBox.style.display = "flex";  // This is enough, since other properties already specified in the *css file
             footerElement.style.marginTop = "0.5em";  // shift footer closer to the image / content of a page
+            imageCtrlsBox.style.display = "flex"; 
         } else {
             imageRefreshed = false;  // set again the flag to the default value, this flag preventing calling this and function above
         }
@@ -336,6 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
         instructionsHeaderBox.marginTop = instructionsTopMarginInit; uploadImageContainer.style.marginTop = topMarginInitUplBox;
         pageHeader.style.marginBottom = headerBottomMarginInit; pageContent.style.marginTop = contentTopMarginInit;
         imageControlsBox.style.display = "none"; processingCtrlBox.style.display = "none";
+        imageCtrlsBox.style.display = "none"; 
         footerElement.style.marginTop = "30vh";  // shift footer again to the bottom
     }
 

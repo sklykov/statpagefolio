@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -60,12 +61,14 @@
               Upload an image for processing, using the button below;
             </li>
             <li id="info-point-2">
-              Note that the uploaded image is stored only in the browser
-              session memory, it will be discarded after page reload / close; 
+              Note that the uploaded image is stored only in the browser session
+              memory, it will be discarded after page reload / close;
             </li>
             <li id="info-point-3">
-              This page is static (without backend), the host - GitHub pages, the code is 
-              <a class="link" href="https://github.com/sklykov/statpagefolio/tree/main/image_proc" target="_blank">here</a>
+              This page is static (without the running backend) the host -
+              GitHub pages, the code is
+              <a class="link" href="https://github.com/sklykov/statpagefolio/tree/main/image_proc"
+                target="_blank">here</a>
             </li>
           </ol>
         </div>
@@ -76,12 +79,8 @@
         <label id="upload-info" for="upload-button">
           To proceed, upload image using the button:
         </label>
-        <input
-          id="upload-button"
-          type="file"
-          accept="image/.jpg, image/.jpeg, image/.png, image/.bmp"
-          title="Upload Image"
-        />
+        <input id="upload-button" type="file" accept="image/.jpg, image/.jpeg, image/.png, image/.bmp"
+          title="Upload Image" />
       </section>
 
       <section id="image-associated-ctrls-box">
@@ -90,46 +89,44 @@
           <!-- Width of the images control, become visible only after image upload -->
           <div id="width-input-container">
             <div id="input-ticks-container">
-              <input
-                type="range"
-                min="10"
-                max="100"
-                id="width-image-input"
-                name="width-input"
-                value="55"
-                data-default="55"
-                list="width-ticks"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="20" max="98" step="2" id="width-image-input" name="width-input" value="50"
+                data-default="50" list="width-ticks" autocomplete="off" disabled />
               <datalist id="width-ticks">
-                <option id="min-width-tick" value="10" label="10"></option>
-                <option id="mid-width-tick" value="55" label="55"></option>
-                <option id="max-width-tick" value="100" label="100"></option>
+                <option id="min-width-tick" value="20" label="20"></option>
+                <option id="max-width-tick" value="98" label="98"></option>
               </datalist>
             </div>
             <label for="widthImageInput" id="width-label">
-              - Control image width as % of the page width
+              - Control image width shown on the page (% of its width)
             </label>
           </div>
-
-          <!-- Download image button, used for evoking JS code -->
-          <button id="download-button" class="action-button"> Download Image </button>
-
-          <!-- Clear image from the <canvas> element -->
-          <button id="clear-image-button" class="action-button"> Clear Image </button>
         </div>
+      </section>
 
+      <!-- Control buttons: download / clear image, reset filters -->
+      <section id="image-ctrls-box">
+        <div id="buttons-container">
+          <!-- Download image button, used for evoking JS code -->
+          <button id="download-button" class="action-button">
+            Download Image
+          </button>
+          <!-- Clear image from the <canvas> element -->
+          <button id="clear-image-button" class="action-button">
+            Clear Image
+          </button>
+          <!-- Reset Button -->
+          <button id="reset-button" class="action-button">Reset filters</button>
+        </div>
         <div id="image-container">
           <!-- Canvas element - the container for upload image representation -->
           <canvas id="canvas-element">
-            This text is displayed if JavaScript is switched off or the
-            browser doesn't support canvas element.
+            This text is displayed if JavaScript is switched off or the browser
+            doesn't support canvas element.
           </canvas>
         </div>
       </section>
 
-      <!-- Image container + inputs for its processing -->
+      <!-- Container for processing parameters inputs -->
       <section id="processing-controls">
         <!-- Image container, used for comparison of the effect of applied filter with <canvas> element, invisible now -->
         <img id="img-element" alt="No Image Uploaded, if you see this :-)" />
@@ -141,21 +138,11 @@
               Blur by applying Gaussian kernel with width [px]:
             </label>
             <div class="input-label-container">
-              <input
-                type="range"
-                min="0.0"
-                max="10.0"
-                step="0.1"
-                id="blur-control"
-                class="parameter-range-input"
-                name="blur"
-                value="0.0"
-                data-default="0.0"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="0.0" max="10.0" step="0.1" id="blur-control" class="parameter-range-input"
+                name="blur" value="0.0" data-default="0.0" autocomplete="off" disabled />
               <label for="blur-control" id="blur-value" class="value-label-ranges">
-                <strong class="horizontal-element"> 0.0 px </strong> - applied blur
+                <strong class="horizontal-element"> 0.0 px </strong> - applied
+                blur
               </label>
             </div>
           </div>
@@ -165,21 +152,11 @@
               Brightness in [%]:
             </label>
             <div class="input-label-container">
-              <input
-                type="range"
-                min="10"
-                max="250"
-                step="2"
-                id="brightness-control"
-                class="parameter-range-input"
-                name="brightness"
-                value="100"
-                data-default="100"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="10" max="250" step="2" id="brightness-control" class="parameter-range-input"
+                name="brightness" value="100" data-default="100" autocomplete="off" disabled />
               <label for="brightness-control" id="brightness-value" class="value-label-ranges">
-                <strong class="horizontal-element"> 100% </strong> - applied brightness
+                <strong class="horizontal-element"> 100% </strong> - applied
+                brightness
               </label>
             </div>
           </div>
@@ -189,21 +166,11 @@
               Contrast in [%]:
             </label>
             <div class="input-label-container">
-              <input
-                type="range"
-                min="2"
-                max="200"
-                step="2"
-                id="contrast-control"
-                class="parameter-range-input"
-                name="contrast"
-                value="100"
-                data-default="100"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="2" max="200" step="2" id="contrast-control" class="parameter-range-input"
+                name="contrast" value="100" data-default="100" autocomplete="off" disabled />
               <label for="contrast-control" id="contrast-value" class="value-label-ranges">
-                <strong class="horizontal-element"> 100% </strong> - applied contrast
+                <strong class="horizontal-element"> 100% </strong> - applied
+                contrast
               </label>
             </div>
           </div>
@@ -213,20 +180,11 @@
               Saturation in [%]:
             </label>
             <div class="input-label-container">
-              <input
-                type="range"
-                min="0"
-                max="200"
-                step="2"
-                id="saturate-control"
-                name="saturate"
-                value="100"
-                data-default="100"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="0" max="200" step="2" id="saturate-control" name="saturate" value="100"
+                data-default="100" autocomplete="off" disabled />
               <label for="saturate-control" id="saturate-value" class="value-label-ranges">
-                <strong class="horizontal-element"> 100% </strong> - applied saturation
+                <strong class="horizontal-element"> 100% </strong> - applied
+                saturation
               </label>
             </div>
           </div>
@@ -236,18 +194,8 @@
               Grayscale in [%]:
             </label>
             <div class="input-label-container">
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="2"
-                id="grayscale-control"
-                name="grayscale"
-                value="0"
-                data-default="0"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="0" max="100" step="2" id="grayscale-control" name="grayscale" value="0"
+                data-default="0" autocomplete="off" disabled />
               <label for="grayscale-control" id="grayscale-value">
                 <strong class="horizontal-element"> 0% </strong> - applied
                 grayscale
@@ -260,45 +208,23 @@
               Hue-rotate in [deg]:
             </label>
             <div class="input-label-container">
-              <input
-                type="range"
-                min="0"
-                max="360"
-                step="2"
-                id="huerotate-control"
-                name="hue-rotate"
-                value="0"
-                data-default="0"
-                autocomplete="off"
-                disabled
-              />
+              <input type="range" min="0" max="360" step="2" id="huerotate-control" name="hue-rotate" value="0"
+                data-default="0" autocomplete="off" disabled />
               <label for="huerotate-control" id="huerotate-value">
-                <strong class="horizontal-element"> 0deg </strong> - applied hue-rotate
+                <strong class="horizontal-element"> 0deg </strong> - applied
+                hue-rotate
               </label>
             </div>
-          </div>
-          <!-- Reset Button -->
-          <div id="reset-button-container">
-            <button id="reset-button">Reset filters</button>
           </div>
           <!-- Radio button selector -->
           <fieldset id="input-type-container">
             <legend>Select type of the properties inputs:</legend>
             <div class="radio-box">
-              <input
-                type="radio"
-                id="sliders-selector1"
-                name="input-selector"
-                checked
-              />
+              <input type="radio" id="sliders-selector1" name="input-selector" checked />
               <label for="sliders-selector1"> Sliders </label>
             </div>
             <div class="radio-box">
-              <input
-                type="radio"
-                id="sliders-selector2"
-                name="input-selector"
-              />
+              <input type="radio" id="sliders-selector2" name="input-selector" />
               <label for="sliders-selector2"> Numerical Inputs </label>
             </div>
           </fieldset>
@@ -313,4 +239,5 @@
       ), MIT licensed
     </footer>
   </body>
+
 </html>

@@ -100,11 +100,19 @@ body * {
     font-size: 0.95em;
 }
 #width-label { margin-left: 0.25em; }
+ 
+/* Image, buttons, controls container */
+#image-ctrls-box {
+    display: none; flex-direction: row; justify-content: center; align-items: center;
+}
 
-/* Download, clear, reset buttons */
+/* Download, clear, reset buttons + its container */
+#buttons-container {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
 .action-button {
-    font-size: 0.9em; text-align: center; height: 2.25em; width: fit-content;
-    border: 2px solid;
+    font-size: 0.92em; text-align: center; height: 2.4em; width: fit-content;
+    border: 2px solid; padding: 0.125em 0.4em; margin: 0.4em; color: rgb(225, 220, 224);
 }
 #download-button {
     color: rgb(38, 170, 40); background-color: rgb(250, 246, 200); border-color: darkblue;
@@ -115,11 +123,17 @@ body * {
 #download-button:disabled {
     background-color: dimgray; color: darkslategray; border: rgba(0, 0, 139, 0.3);
 }
-#clear-image-button, #reset-button {
-    color: rgb(225, 220, 224); background-color: rgb(142, 18, 18); border-color: rgb(244, 79, 37);
+#clear-image-button {
+    background-color: rgb(142, 18, 18); border-color: rgb(244, 79, 37);
 }
-#clear-image-button:hover, #reset-button:hover {
+#reset-button {
+    background-color: rgb(11, 122, 109); border-color: rgb(44, 26, 242);
+}
+#clear-image-button:hover {
     color: rgb(243, 243, 243); background-color: rgb(193, 27, 27); border-color: rgb(248, 108, 73);
+}
+#reset-button:hover {
+    color: rgb(243, 243, 243); background-color: rgb(16, 171, 153); border-color: rgb(77, 65, 210);
 }
 
 /* Styling of the upload container and elements inside it */
@@ -155,7 +169,7 @@ body * {
 }
 
 /* Styling of an image showing element */
-#canvas-element{
+#canvas-element {
     display: block; margin: 0.125em auto;  /* put the image on the center */
     padding: 0.35em; border: 6px groove darkcyan; background-color: aliceblue;
 }
@@ -182,11 +196,6 @@ body * {
     align-items: center; justify-content: space-between;
 }
 
-/* Download, reset, clear image buttons */
-#download-button, #reset-button, #clear-image-button {
-    font-size: 0.95em; padding: 0.125em 0.5em; margin: 0em 0.5em;
-}
-
 /* Styling of radio button selector */
 #input-type-container {
     display: flex; flex-direction: row; justify-content: space-between; align-items: center; text-align: center;
@@ -202,6 +211,7 @@ body * {
 
 /* Adapt styles to the small mobile screen, decrease all margins, font sizes to better fit content */
 @media screen and (max-width: 884px) {
+    body * { font-size: 1rem; }
     #upload-image-container {
         display: flex; flex-direction: column; width: auto;
     }
