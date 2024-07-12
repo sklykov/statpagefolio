@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pageHeader = document.getElementById("project-header");  // for changing its margin-top
     const imgElement = document.getElementById("img-element");  // it points to the <img> HTML element
     const canvas = document.getElementById("canvas-element");  // HTML <canvas> element allows pixel manipulation in addition to operations
+    const imageContainer = document.getElementById("image-container");  // <div> containing the <canvas> element with the image
     const uploadImageContainer = document.getElementById("upload-image-container"); const infoContainer = document.getElementById("instructions-header-container");
     const processingCtrlBox = document.getElementById("image-manipulation-controls-box");
     // Strings with some text representation
@@ -108,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (imgElement.naturalWidth < (widthInput.value/maxWidthCtrl)*windowWidth) {
                         widthInput.value = Math.round(maxWidthCtrl*(imgElement.naturalWidth/windowWidth)); widthSet = `${widthInput.value}%`;
                     } else if (imgElement.naturalWidth > windowWidth) {  // if image has width larger then the window size, just set it to the window size
-                        widthInput.value = maxWidthCtrl; widthSet = `${widthInput.value}%`;
+                        widthInput.value = 75; widthSet = `${widthInput.value}%`; // instead of setting the maximal available width
                         // If the width of an image is larger than the available width of a page (device specific), set ticks and available width control to min 50%
                         widthInput.min = "50"; minTickImgWidth.value="50"; minTickImgWidth.label="50";
                     }
@@ -119,7 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Draw image on the <canvas> element, !!!: evoked by the call imageClass.src = readerImg.result
                     imageClass.onload = () => {
                         contextCanvas.drawImage(imageClass, 0, 0);  // 0, 0 - coordinates should be provided, it's origin of drawing. This function draws a raster image on canvas
-                        canvas.style.width = widthSet; canvas.style.height = "auto";  // same styling of width / height as for <img> element
+                        // canvas.style.width = '100%'; canvas.style.height = "auto";  // same styling of width / height as for <img> element
+                        imageContainer.style.width = widthSet; // set the container for the <canvas> to the calculated above width
                         // check that it was normal image (width and height more than 1 pixel)
                         if ((Number.parseInt(imgElement.naturalWidth) > 1) && (Number.parseInt(imgElement.naturalHeight) > 1)){
                             changePropsImgUploaded();  // centrally changing of flags and elements content by calling a function
@@ -142,7 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Listen to any change on the page of the width input (slider)
     widthInput.addEventListener("change", () => {
         if (imageUploaded){
-            widthSet = `${widthInput.value}%`; canvas.style.width = widthSet;
+            widthSet = `${widthInput.value}%`; 
+            // canvas.style.width = widthSet;  // it takes only some width of the <div> container 
+            imageContainer.style.width = widthSet;  // sets the width for the <div> container
         }
     });
 
@@ -162,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
             default:
                 unit = ''; break; 
         }
-        return `<strong class="horizontal-element"> ${element.value} ${unit} </strong> - applied ${element.name}`;
+        return `<strong class="horizontal-element"> ${element.value} ${unit} </strong> - ${element.name}`;
     }
 
     // Blurring image if the blur control changed
@@ -280,10 +284,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Change properties of page elements if the image was successfully uploaded to the browser
     function changePropsImgUploaded() {
-        if (!imageRefreshed){
+        if (!imageRefreshed) {
             // Enable all inputs if only the uploaded file acknowledged as an image
-            imageUploaded = true; widthInput.disabled = false; blurInput.disabled = false; brightnessInput.disabled = false;
-            contrastInput.disabled = false; saturateInput.disabled = false; grayscaleInput.disabled = false; huerotateInput.disabled = false;
+            imageUploaded = true; widthInput.disabled = false;
+            for (let input of inputElements) {
+                input.disabled = false;
+            }
             infoPoint1.innerText = "Process image by dragging the sliders below + Adjust its width for checking any small details on it";
             infoPoint2.innerText = "Download the processed image if it is useful. Click on the processed image to switch between it and original one";
             // Composing the information with the file name and the successful status of uploading
@@ -297,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Change styling after uploading image on the page, note that display: none -> display: ... - enough along with previously specified properties
     function changePageStyleImgUploaded(){
-        if (!imageRefreshed){
+        if (!imageRefreshed) {
             // imgElement.style.display = "block";   // Display the <image> element on the page. If commented out, the entire element won't be displayed
             pageContent.style.marginTop = topMargin; pageHeader.style.marginTop = topMargin; pageHeader.style.marginBottom = headerBottomMargin; 
             infoContainer.style.marginTop = topMargin; uploadImageContainer.style.marginTop = topMargin; 
@@ -315,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Remove previously uploaded image from the <canvas> element, hide the image processing controls. This function is also invoked when no image uploaded.
     function clearImage(){
-        if (!imageUploaded){
+        if (!imageUploaded) {
             contextCanvas.clearRect(0, 0, canvas.width, canvas.height); imgElement.src = ""; 
             uploadInfoStr.innerHTML = '<span style="color: red;">Image not uploaded!</span> Upload new image:';
             setDefaultStyles(); 

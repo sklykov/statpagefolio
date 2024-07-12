@@ -1,0 +1,92 @@
+/* Adapt styles to the smaller screens as on the desktop */
+@media screen and (max-width: 1000px) {
+    #buttons-container {
+        margin-right: 0.4em;
+    }
+}
+
+@media screen and (max-width: 884px) {
+    body * { font-size: 1rem; }
+    #upload-image-container {
+        display: flex; flex-direction: column; width: auto;
+    }
+    #image-ctrls-box {
+        flex-direction: column; justify-content: space-between; align-items: center;
+    }
+    #buttons-container {
+        flex-direction: row; justify-content: space-between; align-items: center;
+    }
+    .action-button {
+        margin: 0.25em 0.75em; 
+    }
+}
+
+@media screen and (max-width: 720px) {
+    body * {
+        margin: 0; padding: 0;  /* Decrease the default margin / padding for all elements */
+        font-size: 0.92rem;  /* Decrease the default font size */
+    }
+    body {
+        overflow-wrap: break-word;  /* Prevent overflow if the text in element makes it larger than the <main> size (width) */
+    }
+
+    /* Header */
+    #page-header { text-align: center; }
+    #page-header * { margin: 0.5em 1em; padding: 0.2em; display: inline-block; }
+
+    /* Dialog pop-up window and its elements */
+    #info-dialog { margin: 30vh auto; } 
+    #info-dialog * { font-size: 0.9em; margin: 0.2em; padding: 0.2em; } 
+    #info-dialog-close-button {margin-bottom: calc(0.4em + 4px);}
+
+    /* Style of the page itself - for better usage of available width / height of a page */
+    .flexbox-container {
+        margin-top: 2vh; margin-bottom: 0.2em; 
+        margin-left: 0.2em; margin-right: 0.2em;
+    }
+
+    /* Styled before showing uploaded image */
+    #instructions-header-container {
+        margin: auto; padding: 0.125em; margin-top: 0.4em;
+    }
+    #project-header {
+        font-size: 1.1em; 
+    }
+    #upload-image-container {
+        margin: 0.5em 0.125em; padding: 0.15em;
+    }
+    #upload-info {
+        margin: 0.25em auto; padding: 0.15em;
+    }
+    .action-button, #upload-image {
+        font-size: 0.85rem; width: fit-content; margin: 0.125em 0.4em; padding: 0.2em;
+    }
+
+    /* Below styling for Download button, text, width of an image control*/
+    #associated-controls-container * { 
+        padding: 0.125em; margin: 0.125em auto;  text-align: center;
+    }
+    /* Below - styling of an image itself, takes almost available width */
+    #image-container {  padding: 0; margin: 0.25em; }
+    #processing-controls * { padding: 0.25em; margin: 0.125em; }
+
+    /* Width input elements styling, make it better fit to the page */
+    #width-input-container {
+        display: flex; flex-direction: row; text-align: center; 
+        padding: 0.125em; margin: 0.125em auto;
+    }
+    #width-ticks { display: none; }
+
+    /* Styling of image manipulations controls: blur, brightness and so on */
+    #image-manipulation-controls-box { text-align: center;  }
+
+    /* Align content of image processing controls differently than for the desktop displays */
+    .input-container {
+        flex-direction: column; align-items: center;
+    }
+
+    /* Move footer relative to the page content */
+    #page-footer { 
+        margin-top: 20vh; margin-bottom: 1em;
+    }
+}
