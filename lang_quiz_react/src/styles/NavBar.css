@@ -1,0 +1,25 @@
+/* Navbar - the elements on the top of the page - styling (as the component) */
+.navbar {
+  display: flex; flex-direction: row; align-items: center; 
+}
+.navbar * {
+  margin: 1em; padding: 0.5em;
+}
+.navbar-dark { 
+  background-color: rgb(19, 23, 19); 
+}
+.navbar-light { 
+  background-color: silver; 
+}
+
+/* About button styling (non default) and animation on hover */
+.about-button {
+  height: 2em; width: 8em; background-color: blueviolet; color: aliceblue; 
+  border: solid 2px blueviolet; border-radius: 12px;
+  box-shadow: 1em 0px rgb(104, 46, 158);
+}
+.about-button:hover {
+  background-color: rgb(160, 58, 255); border: rgb(160, 58, 255);
+  transform: translateX(1em); box-shadow: none; 
+  transition: transform 0.2s;
+}

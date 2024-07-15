@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import './StyleSwitcher.css'; 
+import '../styles/StyleSwitcher.css'; 
 import { ThemeContext } from '../store/ThemeContextProvider';
 
 // Style switcher made as the component based on the standard button
@@ -15,7 +15,6 @@ export default function StyleSwitcher(props) {
     let buttonClassName = `style-switcher style-switcher-${context.theme}`;
     let symbolSwitchClass = `switch-symbol switch-symbol-${context.theme}`;
 
-    console.log(symbolSwitchClass); 
     // Actual function handling clicking of the button
     const handleSwitch = () => {
         context.changeTheme();  // call of the function that changing the theme
@@ -30,7 +29,7 @@ export default function StyleSwitcher(props) {
         <button className={buttonClassName} onClick={handleSwitch}>
             <span className={symbolSwitchClass}> &rArr; </span>
             <span className={cssStyleSymbol}> {styleSymbol} </span> 
-            <span className="style-string"> {themeName + " Theme"} </span>  
+            <span className="style-string"> Toggle {themeName + " Mode"} </span>  
         </button>
     );  
 }

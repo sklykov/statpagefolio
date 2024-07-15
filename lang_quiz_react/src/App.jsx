@@ -14,7 +14,7 @@ export default function App() {
 
   // handling switching of the dark / light styling
   let cssClasses = `App ${theme}`;  // CSS classes for switching the styles 
-  
+
   // Page elements specification using the JSX syntax
   return (
       <main className={cssClasses}>

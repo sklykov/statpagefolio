@@ -11,7 +11,7 @@ export default function ThemeContextProvider({children}) {
     const [pageTheme, setPageTheme] = useState(defaultTheme);   // Theme designation
      
     const changePageTheme = () => {
-        setPageTheme(() => {return pageTheme === "dark" ? "light" : "dark"});
+        setPageTheme((prevTheme) => {return prevTheme === "dark" ? "light" : "dark"});
     }
 
     return(

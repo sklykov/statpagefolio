@@ -1,0 +1,55 @@
+/* Overall styling for 2 states for buttons: Start and Stop */
+.start-quiz-button, .stop-quiz-button {
+    padding: auto; text-align: center; margin: 2em; 
+    width: max-content; min-width: 12.5em; height: 3.4em;
+}
+
+.start-quiz-button {
+    font-size: 0.98em; font-weight: 650;
+    border: solid 4px; border-radius: 35%; 
+}
+
+.stop-quiz-button {
+    font-size: 1em; font-weight: 550;
+}
+
+/* Specific styling of the Start Quiz Button for two selectable themes: dark and light as the postfixes */
+.start-quiz-button-dark {
+    background-color: blueviolet; color: aliceblue; border-color: greenyellow;
+}
+@keyframes startButtonDarkHovered {
+    from { border: solid 4px greenyellow; background-color: blueviolet; color: aliceblue; }
+    to { border: solid 4px blueviolet; background-color: greenyellow; color: rgb(45, 70, 70); }
+}
+.start-quiz-button-dark:hover {
+    /* Making an animation if the started button is hovered */
+    animation-name: startButtonDarkHovered; animation-duration: 2.85s; animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+/* Specific styling for the Light theme */
+.start-quiz-button-light {
+    background-color: rgb(181, 178, 177); color: rgb(38, 44, 44); border-color: rgb(146, 202, 220);
+}
+@keyframes startButtonLightHovered {
+    from { border: solid 4px rgb(146, 202, 220); background-color: rgb(181, 178, 177); }
+    to { border: solid 4px rgb(181, 178, 177); background-color: rgb(146, 202, 220); }
+}
+.start-quiz-button-light:hover {
+    /* Making an animation if the started button is hovered */
+    animation-name: startButtonLightHovered; animation-duration: 2.85s; animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* Styling of the Stop Quiz Button depending on the selected theme */
+.stop-quiz-button-dark {
+    background-color: whitesmoke; color: darkred;
+}
+.stop-quiz-button-dark:hover {
+    background-color: rgb(255, 255, 255); color: rgb(182, 9, 9);
+}
+.stop-quiz-button-light {
+    background-color: darkred; color: aliceblue;
+}
+.stop-quiz-button-light:hover {
+    background-color: rgb(182, 9, 9); color: rgb(255, 255, 255);
+}

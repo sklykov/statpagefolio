@@ -15,6 +15,7 @@ Documents/*
 *.pdf
 .idea/*
 .vscode/*
+lang_quiz_react/ignored/*
 
 
 # Added by Vite configuration, placed here as in the core file for the repository:
