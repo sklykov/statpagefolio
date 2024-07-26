@@ -6,7 +6,7 @@ const defaultTheme = "dark";
 // Context shared between the components by the import
 export const ThemeContext = createContext({ theme: defaultTheme, changeTheme: () => {} }); 
 
-// Component for wrapping other component that should use the useContext hook and be re-rendered
+// Component for wrapping other components that should use the useContext hook and be re-rendered
 export default function ThemeContextProvider({children}) {
     const [pageTheme, setPageTheme] = useState(defaultTheme);   // Theme designation
      

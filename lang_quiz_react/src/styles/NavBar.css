@@ -14,9 +14,9 @@
 
 /* About button styling (non default) and animation on hover */
 .about-button {
-  height: 2em; width: 8em; background-color: blueviolet; color: aliceblue; 
+  height: 2.25em; width: 8em; background-color: blueviolet; color: aliceblue; 
   border: solid 2px blueviolet; border-radius: 12px;
-  box-shadow: 1em 0px rgb(104, 46, 158);
+  box-shadow: 1em 0px rgb(104, 46, 158); 
 }
 .about-button:hover {
   background-color: rgb(160, 58, 255); border: rgb(160, 58, 255);

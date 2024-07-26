@@ -2,7 +2,7 @@
 import './styles/App.css';
 
 // Components and React stuff importing
-import NavBar from './components/NavBar'; 
+import NavBar from './components/ui/NavBar'; 
 import QuizSection from './components/QuizSection';
 import { ThemeContext } from './store/ThemeContextProvider';
 import { useContext } from "react";  // access some changes in the state

@@ -3,7 +3,7 @@ import StartQuiz from "./StartQuiz";
 import { useState } from "react";
 
 // Component specification
-function QuizSection(props) {
+export default function QuizSection(props) {
   const [quizStarted, setQuizStart] = useState(props.quizStarted); // will be set by the buttons below
   const [chosenQuizType, setQuizType] = useState("NONE"); // selected type of quiz
 
@@ -47,5 +47,3 @@ function QuizSection(props) {
     );
   }
 }
-
-export default QuizSection; // make it importable in the parent (root) components

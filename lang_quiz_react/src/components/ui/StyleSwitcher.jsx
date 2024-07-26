@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import '../styles/StyleSwitcher.css'; 
-import { ThemeContext } from '../store/ThemeContextProvider';
+import '../../styles/StyleSwitcher.css'; 
+import { ThemeContext } from '../../store/ThemeContextProvider';
 
 // Style switcher made as the component based on the standard button
 export default function StyleSwitcher(props) { 

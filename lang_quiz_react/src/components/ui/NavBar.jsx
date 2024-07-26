@@ -1,7 +1,7 @@
-import "../styles/NavBar.css"; 
+import "../../styles/NavBar.css"; 
 import { useState, useContext } from "react";
 import StyleSwitcher from "./StyleSwitcher"; 
-import { ThemeContext } from '../store/ThemeContextProvider';
+import { ThemeContext } from '../../store/ThemeContextProvider';
 
 const date = new Date(); const year = date.getFullYear();  // get the actual year
 
