@@ -1,0 +1,14 @@
+/* Styling of React component by importing below classes in it and assigning by className HTML attribute */
+.variant {
+    text-align: center; color: lightcyan; background-color: blueviolet;
+    margin: 0.4em 0.5em; padding: 0.25em;
+}
+.variantsBox {
+    /* TODO: grid layout or table for variants */
+    display: flex; flex-direction: row; align-items: center; justify-content: center; 
+    list-style-type: none; margin: 0.5em auto; padding: 0.25em;
+}
+.quizBox {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    margin: 0.5em; margin-top: 1.25em;
+}

@@ -20,6 +20,7 @@ export default function App() {
       <main className={cssClasses}>
         <header className="App-header"> 
           <NavBar />
+          {/* TODO: switch dynamically info below  */}
           <h3> Quiz for training new words / learn them better </h3>
           <p> The goal is to compose the web app that helps to learn new words </p>
         </header>
