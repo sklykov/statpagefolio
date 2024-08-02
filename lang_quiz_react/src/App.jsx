@@ -5,7 +5,8 @@ import './styles/App.css';
 import NavBar from './components/ui/NavBar'; 
 import QuizSection from './components/QuizSection';
 import { ThemeContext } from './store/ThemeContextProvider';
-import { useContext } from "react";  // access some changes in the state
+import { useContext, useState } from "react";  // access some changes in the state
+import AboutInfo from './components/ui/AboutInfo';
 
 // Main component of the webpage - App
 export default function App() {
@@ -15,15 +16,19 @@ export default function App() {
   // handling switching of the dark / light styling
   let cssClasses = `App ${theme}`;  // CSS classes for switching the styles 
 
+  // Show info as the dialog window
+  const [openedInfo, openInfo] = useState(false);
+
   // Page elements specification using the JSX syntax
   return (
-      <main className={cssClasses}>
+      <main className={cssClasses} id="main-body">
         <header className="App-header"> 
-          <NavBar />
+          <NavBar openInfoWindow={openInfo}/>
           {/* TODO: switch dynamically info below  */}
           <h3> Quiz for training new words / learn them better </h3>
           <p> The goal is to compose the web app that helps to learn new words </p>
         </header>
+        <AboutInfo opened={openedInfo}/>
         <QuizSection quizStarted={false} />
       </main>
   );
