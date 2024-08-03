@@ -9,7 +9,9 @@ export default function NavBar({openInfoWindow}) {
 
     // Display info after clicking the button in the component below
   function DisplayInfo(){
-    openInfoWindow((prevState) => !prevState);
+    openInfoWindow((prevState) => {
+      return !prevState;
+    });
   }
 
     return (

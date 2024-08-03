@@ -5,7 +5,7 @@ import './styles/App.css';
 import NavBar from './components/ui/NavBar'; 
 import QuizSection from './components/QuizSection';
 import { ThemeContext } from './store/ThemeContextProvider';
-import { useContext, useState } from "react";  // access some changes in the state
+import { useContext, useState, useRef, useEffect } from "react";  // access some changes in the state
 import AboutInfo from './components/ui/AboutInfo';
 
 // Main component of the webpage - App
@@ -18,17 +18,18 @@ export default function App() {
 
   // Show info as the dialog window
   const [openedInfo, openInfo] = useState(false);
+  const dialogRef = useRef(); const openedOnce = useRef(false); 
 
   // Page elements specification using the JSX syntax
   return (
       <main className={cssClasses} id="main-body">
         <header className="App-header"> 
-          <NavBar openInfoWindow={openInfo}/>
+          <NavBar openInfoWindow={openInfo} dialogWin={dialogRef}/>
           {/* TODO: switch dynamically info below  */}
           <h3> Quiz for training new words / learn them better </h3>
           <p> The goal is to compose the web app that helps to learn new words </p>
         </header>
-        <AboutInfo opened={openedInfo}/>
+        <AboutInfo opened={openedInfo} ref={dialogRef}/>
         <QuizSection quizStarted={false} />
       </main>
   );

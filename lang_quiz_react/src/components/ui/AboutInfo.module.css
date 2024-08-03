@@ -1,3 +1,11 @@
-.aboutWindow {
-    color: darkblue;
+.aboutWindowDark {
+    background-color: rgb(7, 7, 105); color: lightgoldenrodyellow; 
+}
+
+.aboutWindowLight {
+    background-color: lightgoldenrodyellow; color: rgb(7, 7, 105); 
+}
+
+.aboutWindowDark::backdrop {
+    background-color: rgba(149, 52, 240, 0.302);
 }
