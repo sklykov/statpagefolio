@@ -1,11 +1,20 @@
+/* Dark theme selected */
 .aboutWindowDark {
     background-color: rgb(7, 7, 105); color: lightgoldenrodyellow; 
 }
+.aboutWindowDark::backdrop {
+    background-color: rgba(15, 18, 15, 0.555);
+}
 
+/* Light theme selected */
 .aboutWindowLight {
     background-color: lightgoldenrodyellow; color: rgb(7, 7, 105); 
 }
+.aboutWindowLight::backdrop {
+    background-color: rgba(204, 211, 204, 0.555);
+}
 
-.aboutWindowDark::backdrop {
-    background-color: rgba(149, 52, 240, 0.302);
+/* Both themes shared styles */
+.aboutInfoWinBox {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
 }

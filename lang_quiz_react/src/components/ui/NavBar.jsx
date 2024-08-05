@@ -1,19 +1,33 @@
 import "../../styles/NavBar.css"; 
-import { useState, useContext } from "react";
+import { useState, useContext} from "react";
 import StyleSwitcher from "./StyleSwitcher"; 
 import { ThemeContext } from '../../store/ThemeContextProvider';
 
-export default function NavBar({openInfoWindow}) {
+export default function NavBar({openInfoWindow, dialogWin}) {
     const {theme} = useContext(ThemeContext); let navBarClass = `navbar navbar-${theme}`;  // Get current toggled mode
-    const [styleSymbol, setStyleSymbol] = useState('\u263C');  // can be changed by the Ref in the function?
+    const [styleSymbol, setStyleSymbol] = useState('\u263C');  // changing symbol for the theme button switcher
 
-    // Display info after clicking the button in the component below
-  function DisplayInfo(){
-    openInfoWindow((prevState) => {
-      return !prevState;
-    });
-  }
-
+    // Display Information Window after clicking the button in the component below (on the navigation bar)
+    function DisplayInfo() {
+      openInfoWindow((prevState) => {
+        if (!prevState) {
+          dialogWin.current.showModal();  
+        } else {
+          if (dialogWin.current.open) {
+            dialogWin.current.close(); 
+          }
+        }
+        return !prevState;
+      });
+    }
+  
+    // Forbid closing by the clicking of the 'Esc' button on the keyboard
+    if (dialogWin.current) {
+      dialogWin.current.addEventListener('cancel', (e) => {
+        e.preventDefault();
+      }); 
+    }
+  
     return (
       <nav  className={navBarClass}>
         <div> Quiz implemented in ReactJS (serverless) </div>

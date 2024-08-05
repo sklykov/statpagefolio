@@ -1,0 +1,17 @@
+.closeButtonDark {
+    background-color: rgb(255, 255, 192); color: rgb(177, 24, 24); 
+}
+.closeButtonDark:hover {
+    background-color: rgb(255, 255, 220); color: rgb(220, 30, 30); 
+}
+
+.closeButtonLight {
+    background-color: rgb(177, 24, 24); color: rgb(255, 255, 192); 
+}
+.closeButtonLight:hover {
+    color: rgb(255, 255, 220); background-color: rgb(220, 30, 30); 
+}
+
+.closeButtonDark, .closeButtonLight {
+    font-size: 1.1em; width: 6em; margin: 0.5em; margin-top: 0.8em; padding: 0.5em; height: fit-content; 
+}
