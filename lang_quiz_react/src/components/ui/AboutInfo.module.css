@@ -18,3 +18,11 @@
 .aboutInfoWinBox {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
+
+.paragraph{
+    font-size: 1.05em; text-align: center; width: 95%; height: fit-content;
+    line-height: 1.55em; margin: 0.4em auto;
+}
+.link {
+    margin-left: 0.3em; color: chartreuse;
+}

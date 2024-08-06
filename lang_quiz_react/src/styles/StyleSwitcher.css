@@ -5,7 +5,7 @@
     margin-left: auto;  /* shift this button to most left within the flexbox */
     display: flex; flex-direction: row; align-items: center; justify-content: center;
 }
-.style-switcher *{
+.style-switcher * {
     margin: 0.125em; padding: 0.125em;
 }
 .style-string {

@@ -24,6 +24,6 @@ export default function CloseInfoButton({openInfoWindow, dialogWin}) {
       }
     
     return (
-        <button onClick={CloseInfo} className={selectedThemedStyle}> X Close </button>
+        <button onClick={CloseInfo} className={selectedThemedStyle}> {"Close or press 'Esc'"} </button>
     ); 
 }

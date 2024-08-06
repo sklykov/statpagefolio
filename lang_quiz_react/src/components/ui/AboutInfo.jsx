@@ -13,11 +13,21 @@ const AboutInfo = forwardRef(function AboutInfo({openInfoWinFunction, openedInfo
     selectedThemedStyle = styles.aboutWindowLight;  // update theme, will be initialized if Context will be changed
   }
 
+  function handleEscHit(event) {
+    event.preventDefault();  // prevent default action, let the closing action specified in the App component to handle it
+    openInfoWinFunction((prevState) => {
+      return !prevState;
+    });  // change the associated state for triggering useEffect hook for closing operation
+  }
+
   return (
-    <dialog open={openedInfo} ref={ref} className={selectedThemedStyle}>
+    <dialog open={openedInfo} ref={ref} className={selectedThemedStyle} onCancel={handleEscHit}>
       <div className={styles.aboutInfoWinBox}> 
         <h3> Information about this project </h3> 
-        <p> Language Quiz created using ReactJS. Author: S.K., license: MIT, Year: {year} </p>
+        <p className={styles.paragraph}> Language Quiz created using React, ... (more to be used and listed)</p>
+        <p className={styles.paragraph}> Author: S.K., (GitHub: 
+          <a className={styles.link} href="https://github.com/sklykov" target="_blank">@sklykov</a>), 
+          license: MIT, {year} </p>
         <CloseInfoButton dialogWin={ref} openInfoWindow={openInfoWinFunction} />
       </div>
     </dialog>

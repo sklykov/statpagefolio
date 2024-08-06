@@ -13,5 +13,6 @@
 }
 
 .closeButtonDark, .closeButtonLight {
-    font-size: 1.1em; width: 6em; margin: 0.5em; margin-top: 0.8em; padding: 0.5em; height: fit-content; 
+    font-size: 1.05em; margin: 0.5em; margin-top: 2.25em; padding: 0.5em;
+    width: max-content; height: fit-content; 
 }

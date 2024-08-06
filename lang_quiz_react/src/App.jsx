@@ -5,7 +5,7 @@ import './styles/App.css';
 import NavBar from './components/ui/NavBar'; 
 import QuizSection from './components/QuizSection';
 import { ThemeContext } from './store/ThemeContextProvider';
-import { useContext, useState, useRef } from "react";  // access some changes in the state
+import { useContext, useState, useRef, useEffect } from "react";  // access some changes in the state
 import AboutInfo from './components/ui/AboutInfo';
 
 // Main component of the webpage - App
@@ -16,10 +16,24 @@ export default function App() {
   // handling switching of the dark / light styling
   let cssClasses = `App ${theme}`;  // CSS classes for switching the styles 
 
-  // Show info as the dialog window
+  // Show info about the project as the dialog window opened as modal
   const [openedInfo, openInfo] = useState(false);  // manage state of opened / closed Info window
-  // 1 Ref - for accessing the <dialog> properties, 2 - for not attempting closing not opened before window
-  const dialogRef = useRef();
+  const dialogRef = useRef();  // Ref - for accessing the <dialog> built-in properties
+
+  // Provide logic for showModal() and close() methods for <dialog> below connected to the state openedInfo
+  // This function will be fired then the associated state had been changed in the child component (NavBar)
+  useEffect(() => {
+    console.log("useEffect called for <dialog>");
+    if (openedInfo) {
+      if (dialogRef.current) {
+        dialogRef.current.showModal();
+      }
+    } else {
+      if (dialogRef.current) {
+        dialogRef.current.close();
+      }
+    }
+  }, [openedInfo, dialogRef]);
 
   // Page elements specification using the JSX syntax
   return (
