@@ -3,23 +3,28 @@ import { ThemeContext } from '../store/ThemeContextProvider';
 import '../styles/StartQuiz.css';
 
 // Component specification, automatically make it importable by the root components
-export default function StartQuiz({quizStarted, setQuizStart, chosenQuizType, setQuizType, children}) {
+export default function StartQuiz({quizState, setQuizState, children}) {
     const {theme} = useContext(ThemeContext); 
 
     // CSS styles switching depending on the selected theme type
     const cssClassStartBtn = `start-quiz-button start-quiz-button-${theme}`; 
     const cssClassStopBtn = `stop-quiz-button stop-quiz-button-${theme}`; 
 
+    // Update complex quiz state - with flag for started quiz and its type
     const changeQuizState = () => {
-        if (!quizStarted) {
-            setQuizType(children);  // save selected quiz type
-        }
-        setQuizStart(flagStarted => !flagStarted);  // NOTE: change flag based on previous value in the recommended way
+        setQuizState(prevState => {
+            if (!prevState.started) {
+                return {started: true, quizType: children};
+            } else {
+                return {started: false, quizType: null};
+            }
+        });
     }
     
-    if (!quizStarted) {
+    // Render button content depending on the state
+    if (!quizState.started) {
         return (<button onClick={changeQuizState} className={cssClassStartBtn}> Start {children}! </button>); 
     } else {
-        return (<button onClick={changeQuizState} className={cssClassStopBtn}> End {chosenQuizType}... </button>); 
+        return (<button onClick={changeQuizState} className={cssClassStopBtn}> End {quizState.quizType}... </button>); 
     }
 }

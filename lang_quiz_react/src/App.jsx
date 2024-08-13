@@ -20,32 +20,64 @@ export default function App() {
   const [openedInfo, openInfo] = useState(false);  // manage state of opened / closed Info window
   const dialogRef = useRef();  // Ref - for accessing the <dialog> built-in properties
 
+  // Login handling (placeholder)
+  const [userCredentials, setLoginInfo] = useState({user: "demo", password: "test"});
+
+  // Quiz state: started / finished (not yet started)
+  const [quizState, setQuizState] = useState({started: false, quizType: null}); 
+
   // Provide logic for showModal() and close() methods for <dialog> below connected to the state openedInfo
   // This function will be fired then the associated state had been changed in the child component (NavBar)
   useEffect(() => {
-    console.log("useEffect called for <dialog>");
     if (openedInfo) {
       if (dialogRef.current) {
-        dialogRef.current.showModal();
+        dialogRef.current.showModal();  // for deeming the background and make it inactive
       }
     } else {
       if (dialogRef.current) {
         dialogRef.current.close();
       }
     }
-  }, [openedInfo, dialogRef]);
+  }, [openedInfo, dialogRef]);  // dependencies for revoking this function again, if the <dialog> rendered and if its state changed
 
-  // Page elements specification using the JSX syntax
   return (
-      <main className={cssClasses} id="main-body">
-        <header className="App-header"> 
-          <NavBar openInfoWindow={openInfo} dialogWin={dialogRef} />
-          {/* TODO: switch dynamically info below  */}
-          <h3> Quiz for training new words / learn them better </h3>
-          <p> The goal is to compose the web app that helps to learn new words </p>
-        </header>
-        <AboutInfo opened={openedInfo} openInfoWinFunction={openInfo} ref={dialogRef} />
-        <QuizSection quizStarted={false} />
-      </main>
+    <main className={cssClasses} id="main-body">
+      <header className="App-header">
+
+        <NavBar
+          openInfoWindow={openInfo}
+          dialogWin={dialogRef}
+          userInfo={userCredentials}
+          setLoginInfo={setLoginInfo}
+        />
+
+        {!quizState.started ? (
+          <h3>
+            Quiz for training new words / learn them better through various quiz types
+          </h3>
+        ) : (
+          <h3> Active quiz: {quizState.quizType} </h3>
+        )}
+        {!quizState.started && (
+          <p>
+            The goal is to compose the web app based on React that helps to
+            learn new words
+          </p>
+        )}
+      </header>
+      
+      <AboutInfo
+        opened={openedInfo}
+        openInfoWinFunction={openInfo}
+        ref={dialogRef}
+      />
+
+      <QuizSection
+        quizState={quizState}
+        setQuizState={setQuizState}
+        userInfo={userCredentials}
+      />
+      
+    </main>
   );
 }

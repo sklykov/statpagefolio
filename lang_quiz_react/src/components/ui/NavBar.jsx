@@ -16,7 +16,7 @@ export default function NavBar({openInfoWindow}) {
   
     return (
       <nav  className={navBarClass}>
-        <span> Quiz implemented in ReactJS (serverless) </span>
+        <span> Quiz implemented in React (serverless) </span>
         <button type="button" className="about-button" onClick={DisplayInfo}>
           About this Project
         </button>
