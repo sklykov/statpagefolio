@@ -6,7 +6,7 @@
     display: flex; flex-direction: row; align-items: center; justify-content: center;
 }
 .style-switcher * {
-    margin: 0.125em; padding: 0.125em;
+    margin: 0.125em; padding: 0.125em; font-weight: bold;
 }
 .style-string {
     margin-top: 0.45em;   /* centering by flexbox not shifted everything properly */

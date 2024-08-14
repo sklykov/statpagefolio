@@ -22,7 +22,7 @@ export default function QuizSection({quizState, setQuizState, userInfo}) {
           quizState={quizState}
           setQuizState={setQuizState}
         >
-          Variants
+          Article for Noun
         </StartQuiz>
       </section>
     );
