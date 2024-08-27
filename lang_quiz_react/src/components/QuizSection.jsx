@@ -30,7 +30,7 @@ export default function QuizSection({quizState, setQuizState, userInfo}) {
     // Returning the quiz game field and the button for ending it
     return (
       <section>
-        <QuizManager userInfo={userInfo} quizType={quizState.quizType} />
+        <QuizManager userInfo={userInfo} quizState={quizState} />
         <StartQuiz quizState={quizState} setQuizState={setQuizState} />
       </section>
     );

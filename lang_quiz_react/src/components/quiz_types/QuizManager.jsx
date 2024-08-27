@@ -1,14 +1,16 @@
 import NounArticleQuiz from "./NounArticleQuiz";
 
-export default function QuizManager({ userInfo, quizType }) {
+export default function QuizManager({ userInfo, quizState }) {
 
-  return (
-    <div>
-      {quizType === "Article for Noun" ? (
-        <NounArticleQuiz userInfo={userInfo}/>
-      ) : (
-        <div> Flipping Cards Quiz Placeholder </div>
-      )}
-    </div>
-  ); 
+  if (quizState.started) {
+    return (
+      <div>
+        {quizState.quizType === "Article for Noun" ? (
+          <NounArticleQuiz userInfo={userInfo}/>
+        ) : (
+          <div> Flipping Cards Quiz Placeholder </div>
+        )}
+      </div>
+    ); 
+  }
 }
