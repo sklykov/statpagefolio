@@ -33,9 +33,9 @@ export function getNounsSlice(n_words, userCredentials, learntNouns) {
             n_nouns = initialData.length;
         }
         // Select random slice of words for returning, set resolve and reject answers
-        let responseTime = Math.round(Math.random()*100) + 20;  // random ms response time from the specified range
+        let responseTime = Math.round(Math.random()*2000) + 2000;  // random ms response time from the specified range
         // console.log("Expected response time:", responseTime);
-        if ((n_words <= n_nouns) && (userCredentials.user === "demo")) {
+        if ((n_words <= n_nouns) && (userCredentials.authenticated === true)) {
             let nounsSlice = []; 
             // Randomly select and return the slice of 
             for (let i=0; i < n_words; i++) {
@@ -47,7 +47,7 @@ export function getNounsSlice(n_words, userCredentials, learntNouns) {
             if (n_words > n_nouns) {
                 setTimeout(reject("# of requested words is larger than the remained not learnt nouns"), responseTime);
             } else {
-                setTimeout(reject("User not found"), responseTime);
+                setTimeout(reject("User not authenticated (credentials not found)"), responseTime);
             }
         }
     }); 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './NounArticleQuiz.module.css';
-import { getNounsSlice } from '../quiz_data/Nouns';
+import { getNounsSlice } from '../quiz_data/Nouns.js';
 
 let variants = ["der", "die", "das"];   // 3 base articles - fixed answer variants
 
 // Shuffle array function from the https://javascript.info/task/shuffle (Fisher-Yates shuffle algorithm)
-// This function is used for shuffle the 3 variants of articles
+// This function is used for shuffle the 3 variants of articles for answer variants
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -20,27 +20,27 @@ export default function NounArticleQuiz({userInfo}) {
   const [quizGoing, setQuizState] = useState(true); 
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [indexQuestion, setCurrentIndexQuestion] = useState(0);
-  const [fetchingData, setFetchingData] = useState(false); 
   const [quizNouns, setQuizNouns] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
  
   useEffect(() => {
     // Definition of the function for retrieving data from the simulated backend
     async function retrieveData() {
-      setFetchingData(true);
       console.log("Start Retrieving data...");
       try {
-        setQuizNouns(await getNounsSlice(quizLength, userInfo, []));
+        const nouns = await getNounsSlice(quizLength, userInfo, []); 
+        if (nouns.length > 0) {
+          setQuizNouns(nouns);
+        }
       } catch (error) {
         setQuizNouns([]); setErrorMessage(String(error)); 
       }
-      setFetchingData(false);
       console.log("Stop Retrieving data.");
     }
     retrieveData(); 
   }, [quizLength, userInfo]);
   
-  // below - set the first question
+  // below - set the first question, performed when the quizNouns are changed
   useEffect(() => {
     if (quizNouns.length > 0) {
       setCurrentQuestion(quizNouns[0]); setCurrentIndexQuestion((prevIndex) => prevIndex + 1);
@@ -51,6 +51,7 @@ export default function NounArticleQuiz({userInfo}) {
   // Handle click on the variant of an answer
   function handleVariantSelection(e) {
     if (e.target.innerText === currentQuestion.article) {
+      // TODO: add useReducer for saving the learnt words and managing the next quiz round
       console.log("Right answer!"); 
     } else {
       console.log("Wrong answer!");
@@ -63,43 +64,46 @@ export default function NounArticleQuiz({userInfo}) {
     }
   }
 
-  // JSX forming
-  return(
+  // JSX forming conditionally
+  return (
     <>
-    {quizGoing && fetchingData && <div> Waiting for data coming from the backend ... </div>}
-    {quizGoing && !fetchingData && currentQuestion !== null && (
-      <div className={styles.quizBox}>
-      <div lang="de"> Select proper article for: <span className={styles.noun}>{currentQuestion.noun}</span> </div>
-      <ul className={styles.variantsBox}>
-        {variants.map(variant => {
-          // Note that always the HTML tags should be always returned to be rendered and displayed
-          return (<li lang="de" key={variant} className={styles.variant} onClick={handleVariantSelection}>{variant}</li>);
-        })}
-      </ul>
-    </div>
-    )}
-    {!quizGoing && !fetchingData && currentQuestion === null && <div> Rejected with the message: {errorMessage} </div>}
-    {!quizGoing && <div> Quiz finished. </div>}
+      {currentQuestion === null && quizGoing && (
+        <div> Waiting for data coming from the mocked backend ... </div>
+      )}
+      {quizGoing && currentQuestion !== null && (
+        <div className={styles.quizBox}>
+          <div lang="de" className={styles.questionBox}>
+            {" "}
+            Select proper article for:{" "}
+            <span className={styles.noun}>{currentQuestion.noun}</span>{" "}
+          </div>
+          <ul className={styles.variantsBox}>
+            {variants.map((variant) => {
+              // Note that always the HTML tags should be always returned to be rendered and displayed
+              return (
+                <li
+                  lang="de"
+                  key={variant}
+                  className={styles.variant}
+                  onClick={handleVariantSelection}
+                >
+                  {variant}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+      {!quizGoing && currentQuestion === null && (
+        <div> Rejected with the message: {errorMessage} </div>
+      )}
+      {!quizGoing && (
+        <p>
+          <div> Quiz finished! </div>
+          <button> Continue Quiz... </button>
+        </p>
+      )}
     </>
   );
 
-  // if (quizGoing && !fetchingData && currentQuestion !== null) {
-  //   return (
-      // <div className={styles.quizBox}>
-      //   <div lang="de"> Select proper article for: <span className={styles.noun}>{currentQuestion.noun}</span> </div>
-      //   <ul className={styles.variantsBox}>
-      //     {variants.map(variant => {
-      //       // Note that always the HTML tags should be always returned to be rendered and displayed
-      //       return (<li lang="de" key={variant} className={styles.variant} onClick={handleVariantSelection}>{variant}</li>);
-      //     })}
-      //   </ul>
-      // </div>
-  //   ); 
-  // } else if (quizGoing && fetchingData) {
-  //   return <div> Waiting for data coming from the backend ... </div>;
-  // } else if (quizGoing && !fetchingData && currentQuestion === null) {
-  //   return <div> Rejected with the message: {errorMessage} </div>;
-  // } else if (!quizGoing) {
-  //   return <div> Quiz finished. </div>;
-  // }
 }

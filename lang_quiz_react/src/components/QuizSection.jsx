@@ -1,11 +1,10 @@
 // Imports
 import StartQuiz from "./StartQuiz";
 import QuizManager from "./quiz_types/QuizManager";
+import styles from './QuizSection.module.css';
 
 // Component specification
-export default function QuizSection({quizState, setQuizState, userInfo}) {
-
-  // TODO: add retrieving the variants if the quiz started or start managing some complex state by useReducer
+export default function QuizSection({quizState, setQuizState, userInfo, setLoginInfo}) {
 
   // Dynamic returning of components - depending on the state quiz: started or ended
   if (!quizState.started) {
@@ -15,12 +14,16 @@ export default function QuizSection({quizState, setQuizState, userInfo}) {
         <StartQuiz
           quizState={quizState}
           setQuizState={setQuizState}
+          setLoginInfo={setLoginInfo}
+          userInfo={userInfo}
         >
           Flipping Cards
         </StartQuiz>
         <StartQuiz
           quizState={quizState}
           setQuizState={setQuizState}
+          setLoginInfo={setLoginInfo}
+          userInfo={userInfo}
         >
           Article for Noun
         </StartQuiz>
@@ -29,9 +32,14 @@ export default function QuizSection({quizState, setQuizState, userInfo}) {
   } else {
     // Returning the quiz game field and the button for ending it
     return (
-      <section>
+      <section className={styles.quizBox}>
         <QuizManager userInfo={userInfo} quizState={quizState} />
-        <StartQuiz quizState={quizState} setQuizState={setQuizState} />
+        <StartQuiz
+          quizState={quizState}
+          setQuizState={setQuizState}
+          setLoginInfo={setLoginInfo}
+          userInfo={userInfo}
+        />
       </section>
     );
   }

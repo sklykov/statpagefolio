@@ -3,7 +3,7 @@ import { useState, useContext} from "react";
 import StyleSwitcher from "./StyleSwitcher"; 
 import { ThemeContext } from '../../store/ThemeContextProvider';
 
-export default function NavBar({openInfoWindow}) {
+export default function NavBar({openInfoWindow, userInfo}) {
     const {theme} = useContext(ThemeContext); let navBarClass = `navbar navbar-${theme}`;  // Get current toggled mode
     const [styleSymbol, setStyleSymbol] = useState('\u263C');  // changing symbol for the theme button switcher
 
@@ -15,11 +15,19 @@ export default function NavBar({openInfoWindow}) {
     }
   
     return (
-      <nav  className={navBarClass}>
+      <nav className={navBarClass}>
         <span> Quiz implemented in React (serverless) </span>
         <button type="button" className="about-button" onClick={DisplayInfo}>
           About this Project
         </button>
+        <span>
+          Current User: {userInfo.user}, Authenticated:{" "}
+          {userInfo.authenticated
+            ? userInfo.authenticated === true
+              ? "yes"
+              : String(userInfo.authenticated)
+            : "not"}
+        </span>
         <StyleSwitcher
           styleSymbol={styleSymbol}
           setStyleSymbol={setStyleSymbol}

@@ -21,7 +21,7 @@ export default function App() {
   const dialogRef = useRef();  // Ref - for accessing the <dialog> built-in properties
 
   // Login handling (placeholder)
-  const [userCredentials, setLoginInfo] = useState({user: "demo", password: "test"});
+  const [userCredentials, setLoginInfo] = useState({user: "demo", password: "test", authenticated: false});
 
   // Quiz state: started / finished (not yet started)
   const [quizState, setQuizState] = useState({started: false, quizType: null}); 
@@ -59,10 +59,16 @@ export default function App() {
           <h3> Active quiz: {quizState.quizType} </h3>
         )}
         {!quizState.started && (
-          <p>
-            The goal is to compose the web app based on React that helps to
-            learn new words
-          </p>
+          <article>
+            <p>
+              The goal is to compose the web app based on React that helps to
+              learn new words
+            </p>
+            <p>
+              For now, this project only mocks some backend communication.
+              Later on, the fullstack project will be developed. 
+            </p>
+          </article>
         )}
       </header>
       
@@ -76,6 +82,7 @@ export default function App() {
         quizState={quizState}
         setQuizState={setQuizState}
         userInfo={userCredentials}
+        setLoginInfo={setLoginInfo}
       />
       
     </main>

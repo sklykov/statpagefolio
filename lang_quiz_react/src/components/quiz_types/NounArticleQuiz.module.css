@@ -7,14 +7,21 @@
 /* Question + answer variants */
 .quizBox {
     display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    margin: 0.5em; margin-top: 1.25em; font-size: 1.25em;
+    margin: 0.75em; margin-top: 1.25em; font-size: 1.25em;
+    border: 2px solid rgb(178, 160, 195);
+    width: max-content; 
 }
 
 /* Only answer variants box */
 .variantsBox {
     /* TODO: grid layout or table for variants */
     display: flex; flex-direction: row; align-items: center; justify-content: center; 
-    list-style-type: none; margin: 1em auto; padding: 0.25em;
+    list-style-type: none; margin: 1em; padding: 0.5em;
+}
+
+/* Question div (box) */
+.questionBox {
+    margin: 0.5em; margin-top: 1em; padding: 0.5em;
 }
 
 /* Answer variants themselves */
@@ -28,5 +35,5 @@
 
 /* Highlighted text */
 .noun {
-    font-weight: bolder; font-size: 1.1em;
+    font-weight: bolder; font-size: 1.1em; margin-left: 0.2em;
 }
