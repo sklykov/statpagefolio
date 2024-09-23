@@ -1,0 +1,24 @@
+/* Basic customization for elements */
+#navbar-header-text {
+    font-size: 1.2em; 
+    color: #FFE5B4; 
+}
+
+.nav-link:hover {
+    color: cream !important; background-color: #4C4CAA !important;
+    border-radius: 8px;
+}
+
+.dropdown-item:hover {
+    color: whitesmoke !important; background-color: #5B5EA4 !important;
+}
+
+.project-header-link {
+    color: limegreen; font-size: calc(1.1em + 0.1vw);
+}
+.project-header-link:hover {
+    color: rgb(51, 237, 51); text-decoration: none;
+}
+
+
+/* Additional adaptivity to the provided by Bootstrap */

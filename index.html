@@ -25,6 +25,8 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <!-- Include own local stylesheet for customizing page additionally to Bootstrap features -->
+    <link rel="stylesheet" href="./statpagefolio_styles.css" />
   </head>
 
   <!-- Some hints for remembering Bootstrap classes: -->
@@ -40,8 +42,8 @@
       style="background-color: midnightblue"
     >
       <div class="container-fluid">
-        <div class="navbar-header">
-          <span style="font-size: 1.2em"> Static pages portfolio </span>
+        <div class="navbar-header fw-semibold ms-2">
+          <span id="navbar-header-text"> Static pages portfolio </span>
         </div>
 
         <!-- Toggle collapse / expand items button specification -->
@@ -57,14 +59,12 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation bar items -->
-        <div
-          class="collapse navbar-collapse ms-4 me-auto mb-md-0"
-          id="navbarContent"
-        >
+        <!-- Navigation bar items, collapsed to triple stripes button automatically -->
+        <div class="collapse navbar-collapse ms-4 mb-md-0" id="navbarContent">
           <ul class="navbar-nav">
             <!-- Various navigation links, as the texts on a navigation bar -->
-            <li class="nav-item ms-3 me-3">
+            <!-- Note the breakpoints usage: from md and larger: apply mx-3, for smaller: mx-auto  -->
+            <li class="nav-item mx-md-3 mx-sm-auto my-md-auto my-sm-1">
               <a
                 class="nav-link text-white"
                 href="https://github.com/sklykov/statpagefolio"
@@ -72,7 +72,7 @@
                 Code repository
               </a>
             </li>
-            <li class="nav-item ms-3 me-3">
+            <li class="nav-item mx-md-3 mx-sm-auto my-md-auto my-sm-1">
               <a
                 class="nav-link text-white"
                 href="https://github.com/sklykov/statpagefolio/blob/main/LICENSE"
@@ -81,7 +81,7 @@
               </a>
             </li>
             <!-- Dropdown menu with items (links) -->
-            <li class="nav-item dropdown ms-3 me-3">
+            <li class="nav-item dropdown mx-md-3 mx-sm-auto my-md-auto my-sm-1">
               <a
                 class="nav-link dropdown-toggle text-white"
                 role="button"
@@ -90,7 +90,10 @@
               >
                 Implemented Projects
               </a>
-              <ul class="dropdown-menu" style="background-color: midnightblue">
+              <ul
+                class="dropdown-menu p-1"
+                style="background-color: midnightblue"
+              >
                 <!-- Project #1 -->
                 <li>
                   <a
@@ -128,71 +131,99 @@
 
     <!-- Another way of the page layout: using Bootstrap grid system for creating rows, cols in the containers -->
     <div class="container text-center">
-      <!-- NOTE: if any margins are specified, container not centrally aligned anymore! -->
       <!-- Page header -->
-      <div class="row m-1 p-1 mt-4">
-        <h4 class="col">
+      <div class="row p-1 mt-4 mb-3 mx-2">
+        <h3 class="col fw-semibold">
           <!-- Specify the sizing if needed only -->
-          Welcome to the main page of my portfolio!
-        </h4>
+          Welcome to my portfolio with the static webpages!
+        </h3>
       </div>
       <!-- Some info splitted in two columns only starting from medium sized screens -->
-      <div class="row m-1 mb-2 align-items-md-center">
-        <p class="ps-4 pe-4 col-md-8 lh-sm">
+      <div class="row m-1 mb-2 align-items-md-center justify-content-center">
+        <p class="ps-4 pe-4 col-md-6 lh-sm">
           <!-- Breakpoint md used only starting from  -->
-          My projects are listed across this page, which are intended for
-          training Frontend development skills and implementing some interesting
-          and, hopefully, useful functionality.
+          My projects are listed across this page. They are intended for
+          training and providing show-cases of my Frontend development skills
+          and implementing some interesting and, hopefully, useful
+          functionality.
         </p>
-        <p class="ps-4 pe-4 col-md-4 lh-sm">
-          These projects are intended to provide the show-cases for my skills as
-          a Frontend developer.
+        <p class="ps-4 pe-4 col-md-6 lh-sm">
+          This main page is implemented by using Bootstrap 5 (CDN-delivered) and
+          some customization through my own stylesheet and JS script.
         </p>
       </div>
     </div>
 
     <!-- Page content container: the simplest way to align the content - to use flex container ("d-flex") for it -->
-    <div class="d-flex p-2 m-2 ms-4 me-4 flex-column justify-content-center">
+    <div class="d-flex p-2 m-2 my-3 flex-column justify-content-center">
       <!-- List with projects -->
       <h5 class="text-center m-2">
         List with projects along with the short notes about their peculiarities:
       </h5>
       <!-- Alignment of content: d-flex - creates the flexbox container with justify- rule -->
       <ul
-        class="d-flex justify-content-center list-group list-group-horizontal-lg mb-lg-4"
+        class="d-flex justify-content-center list-group list-group-horizontal-xl mb-xl-4 mb-lg-2"
       >
+        <!-- Project #1 -->
         <li
           class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
         >
           <p class="mb-lg-2">
-            <a href="./image_proc/image_upload.html">
+            <a
+              class="project-header-link"
+              href="./image_proc/image_upload.html"
+            >
               Image processing with Vanilla JS</a
             >
           </p>
           <p class="lh-sm">
-            Project has been implemented using only pure stack HTML / CSS / JS
-            for composing the static webpage. It is the show-case of pure JS
+            Project had been made using only pure stack HTML / CSS / JS for
+            composing the static webpage. It is the show-case of pure JS
             functions for image processing, data reading, saving and
             visualizing.
           </p>
         </li>
+        <!-- Project #2 -->
         <li
           class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
         >
           <p class="mb-lg-2">
-            <a href="./static_quiz/quiz.html"> Serverless Quiz</a>
+            <a class="project-header-link" href="./static_quiz/quiz.html">
+              Serverless Quiz</a
+            >
           </p>
           <p class="lh-sm">
-            Project has been implemented using again only pure Front-end stack.
+            Project had been implemented using again only pure Front-end stack.
             It is the show-case of emulating asynchronous requests to the
             back-end code and interact with users by processing their input.
           </p>
         </li>
+        <!-- Project #3 -->
         <li
           class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
         >
+          <p class="mb-lg-2">
+            <a
+              class="project-header-link"
+              href="https://sklykov.github.io/fluoscenepy/"
+            >
+              Project 'fluoscenepy' Page</a
+            >
+          </p>
           <p class="lh-sm">
-            More projects will be added, including React-based.
+            Bootstrap-powered along with own styles customization single page
+            for the Python library uploaded on PyPi.
+          </p>
+        </li>
+        <!-- Project #... -->
+        <li
+          class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
+        >
+          <p class="mb-lg-2">
+            <a class="project-header-link" href="#"> Next Projects ...</a>
+          </p>
+          <p class="lh-sm">
+            More projects will be added soon, including React-based.
           </p>
         </li>
       </ul>
@@ -207,7 +238,7 @@
         <!-- Image processing project -->
         <div
           class="p-3 m-1 bg-dark bg-gradient text-white"
-          style="width: 25em"
+          style="width: 30vw;"
           id="image-processing-card"
         >
           <img
@@ -240,7 +271,7 @@
         <!-- Quiz project -->
         <div
           class="p-3 m-1 bg-dark bg-gradient text-white"
-          style="width: 25em"
+          style="width: 30vw;"
           id="quiz-card"
         >
           <img
@@ -274,24 +305,27 @@
         <!-- Next empty project -->
         <div
           class="p-3 m-1 bg-dark bg-gradient text-white"
-          style="width: 25em"
-          id="next-project-card"
+          style="width: 24vw;"
+          id="fluoscenepy-card"
         >
           <img
-            src="..."
-            class="card-img-top"
-            alt="Next Project Preview Image"
+            src="./fluoscenepy_img.png" class="card-img-top"
+            alt="fluoscenepy Project Image"
           />
           <div class="card-body">
             <h5 class="card-title mt-2 mb-3 text-center">
-              Next Project will be added here
+              Project 'fluoscenepy' Page
             </h5>
             <p class="card-text mt-2 mb-2">
-              Description of the next project...
+              Bootstrap-powered along with own styles customization single page
+              for the Python library uploaded on PyPi.
             </p>
-            <button class="btn btn-primary mt-2" disabled>
-              <a href="..." class="text-white text-decoration-none">
-                Try it out!
+            <button class="btn btn-primary mt-2">
+              <a
+                href="https://sklykov.github.io/fluoscenepy/"
+                class="text-white text-decoration-none"
+              >
+                Check it out!
               </a>
             </button>
           </div>
