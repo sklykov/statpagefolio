@@ -22,3 +22,12 @@
 
 
 /* Additional adaptivity to the provided by Bootstrap */
+/* lg breakpoint */
+@media screen and (max-width: 992px) {
+    #image-processing-card, #quiz-card {
+        width: 64vw !important;
+    }
+    #fluoscenepy-card {
+        width: 44vw !important;
+    }
+}
