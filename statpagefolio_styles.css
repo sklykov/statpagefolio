@@ -20,14 +20,22 @@
     color: rgb(51, 237, 51); text-decoration: none;
 }
 
+/* Displayed on md and sm devices card header styling */
+#image-proc-header {
+    font-size: 1em !important; font-weight: bold !important;
+}
+
+.btn-label {
+    font-size: 0.95em !important;
+}
 
 /* Additional adaptivity to the provided by Bootstrap */
-/* lg breakpoint */
-@media screen and (max-width: 992px) {
+/* xl breakpoint */
+@media screen and (max-width: 1200px) {
     #image-processing-card, #quiz-card {
-        width: 64vw !important;
+        width: 58vw !important;
     }
     #fluoscenepy-card {
-        width: 44vw !important;
+        width: 40vw !important;
     }
 }

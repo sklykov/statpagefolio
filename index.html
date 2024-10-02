@@ -25,8 +25,12 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+
     <!-- Include own local stylesheet for customizing page additionally to Bootstrap features -->
     <link rel="stylesheet" href="./statpagefolio_styles.css" />
+
+    <!-- Own script with custom logic-->
+    <script src="./statpagefolio_script.js"></script>
   </head>
 
   <!-- Some hints for remembering Bootstrap classes: -->
@@ -232,19 +236,18 @@
       <h5 class="text-center m-2">Cards-preview of the projects:</h5>
       <!-- Cards with the projects previews. The class flex-wrap dynamically shifts cards in column if its size not fit in a row -->
       <div
-        class="d-flex flex-lg-row flex-column justify-content-evenly flex-wrap m-2 align-items-lg-start align-items-center"
+        class="d-lg-flex d-none flex-xl-row flex-column justify-content-evenly flex-wrap m-2 align-items-xl-start align-items-center"
         id="cards-container"
       >
         <!-- Image processing project -->
         <div
-          class="p-3 m-1 bg-dark bg-gradient text-white"
-          style="width: 28vw;"
+          class="p-3 m-1 bg-dark bg-gradient text-white col-xl-4"
           id="image-processing-card"
         >
           <img
             src="./image_proc/Preview_ImageProcessing.png"
             class="card-img-top"
-            alt="Image Processing Screenshot"
+            alt="Image Processing Page Screenshot"
           />
           <div class="card-body">
             <h5 class="card-title mt-2 mb-3 text-center">
@@ -270,8 +273,7 @@
 
         <!-- Quiz project -->
         <div
-          class="p-3 m-1 bg-dark bg-gradient text-white"
-          style="width: 30vw;"
+          class="p-3 m-1 bg-dark bg-gradient text-white col-xl-4"
           id="quiz-card"
         >
           <img
@@ -284,9 +286,8 @@
               Serverless Quiz about the U.S. states
             </h5>
             <p class="card-text mt-2 mb-2">
-              Show-case of asynchronous programming using vanilla JS and
-              show-case of styling with pure CSS for various screen sizes
-              (devices)
+              Show-case of asynchronous programming using vanilla JS and of
+              styling with pure CSS for various screen sizes (devices)
             </p>
             <button
               class="btn btn-primary mt-2"
@@ -302,15 +303,15 @@
           </div>
         </div>
 
-        <!-- Next empty project -->
+        <!-- Project 'fluoscenepy' -->
         <div
-          class="p-3 m-1 bg-dark bg-gradient text-white"
-          style="width: 24vw;"
+          class="p-3 m-1 bg-dark bg-gradient text-white col-xl-3"
           id="fluoscenepy-card"
         >
           <img
-            src="./fluoscenepy_img.png" class="card-img-top"
-            alt="fluoscenepy Project Image"
+            src="./fluoscenepy_img.png"
+            class="card-img-top"
+            alt="'fluoscenepy' Project Image"
           />
           <div class="card-body">
             <h5 class="card-title mt-2 mb-3 text-center">
@@ -331,6 +332,127 @@
           </div>
         </div>
       </div>
+
+      <!-- Button group for reveal preview of projects -->
+      <!-- Note that the limitation of item in flexbox in Bootstrap is achieved by setting col-* property -->
+      <div
+        class="btn-group col-lg-8 col-md-10 col-sm-12 align-self-center d-sm-flex d-lg-none my-1 p-1 my-md-2 p-md-2 mx-1"
+        role="group"
+        aria-label="Basic radio toggle button group"
+      >
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio1"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-primary d-flex align-items-center btn-label"
+          for="btnradio1"
+        >
+          Image Processing Page
+        </label>
+
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio2"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-success d-flex align-items-center btn-label"
+          for="btnradio2"
+        >
+          U.S. States Quiz
+        </label>
+
+        <input
+          type="radio"
+          class="btn-check"
+          name="btnradio"
+          id="btnradio3"
+          autocomplete="off"
+        />
+        <label
+          class="btn btn-outline-info d-flex align-items-center btn-label"
+          for="btnradio3"
+        >
+          Project 'fluoscenepy'
+        </label>
+      </div>
+
+      <!-- Individual cards for showing on small screens after clicking on them -->
+      <!-- Project #1: Image Processing -->
+      <div
+        class="d-none p-1 m-1 my-2 bg-dark bg-gradient text-white col-10 align-self-center"
+        id="image-processing-card-ind"
+      >
+        <img
+          src="./image_proc/Preview_ImageProcessing.png"
+          class="card-img-top"
+          alt="Image Processing Page Screenshot"
+        />
+        <div
+          class="card-body d-flex flex-column align-items-center text-center"
+        >
+          <h5 class="card-title my-2" id="image-proc-header">
+            Image processing using Vanilla JS
+          </h5>
+          <p class="card-text my-2 fs-6">
+            Show-case of the available built-in functions in the pure (vanilla)
+            JS for serverless image processing
+          </p>
+          <button
+            class="btn btn-primary my-1"
+            onclick="window.location.href='./image_proc/image_upload.html';"
+          >
+            <a
+              href="./image_proc/image_upload.html"
+              class="text-white text-decoration-none fs-6"
+            >
+              Try it out!
+            </a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Project #2: Static Quiz -->
+      <div
+        class="d-none p-1 m-1 my-2 bg-dark bg-gradient text-white col-10 align-self-center"
+        id="quiz-card-ind"
+      >
+        <img
+          src="./static_quiz/preview_quiz_page.png"
+          class="card-img-top"
+          alt="Quiz Page Screenshot"
+        />
+        <div
+          class="card-body d-flex flex-column align-items-center text-center"
+        >
+          <h5 class="card-title my-2" id="image-proc-header">
+            Serverless Quiz about the U.S. states
+          </h5>
+          <p class="card-text my-2 fs-6">
+            Show-case of asynchronous programming using vanilla JS and of
+            styling with pure CSS for various screen sizes (devices)
+          </p>
+          <button
+            class="btn btn-primary my-1"
+            onclick="window.location.href='./static_quiz/quiz.html';"
+          >
+          <a
+          href="./static_quiz/quiz.html"
+          class="text-white text-decoration-none"
+        >
+          Play it!
+        </a>
+          </button>
+        </div>
+      </div>
+
+      <!-- Placeholder for new elements -->
     </div>
   </body>
 </html>
