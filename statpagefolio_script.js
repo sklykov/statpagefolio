@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardImageProcessing = document.getElementById("image-processing-card-ind");
     const cardImageProcessingClasses = cardImageProcessing.classList;
     const cardQuiz = document.getElementById("quiz-card-ind"); const cardQuizClasses = cardQuiz.classList;
+    const cardFluoscenepy = document.getElementById("fluoscenepy-card-ind"); const cardFluoscenepyClasses = cardFluoscenepy.classList;
     
     // Script variables
     let flagButton1 = false; let flagButton2 = false; let flagButton3 = false; 
@@ -21,6 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cardQuizClasses.contains("d-block")) {
             cardQuizClasses.remove("d-block"); cardQuizClasses.add("d-none");
         }
+        if (cardFluoscenepyClasses.contains("d-block")) {
+            cardFluoscenepyClasses.remove("d-block"); cardFluoscenepyClasses.add("d-none");
+        }
 
         // Show the cards if one of button from radio buttons group has been clicked
         if (e.target.id === "btnradio1") {
@@ -31,6 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.id === "btnradio2") {
             if (e.target.checked) {
                 cardQuizClasses.remove("d-none"); cardQuizClasses.add("d-block");
+            }
+        }
+        if (e.target.id === "btnradio3") {
+            if (e.target.checked) {
+                cardFluoscenepyClasses.remove("d-none"); cardFluoscenepyClasses.add("d-block");
             }
         }
     }
