@@ -39,6 +39,7 @@
 
   <!-- Styling inside the HTML elements by using Bootstrap classes embedded by using CDN request above -->
   <body class="bg-dark text-white">
+
     <!-- Navigation bar on top of the page. Adaptivity by squeezing to the button with 3 lines -->
     <nav
       class="navbar navbar-expand-md"
@@ -49,7 +50,6 @@
         <div class="navbar-header fw-semibold ms-2">
           <span id="navbar-header-text"> Static pages portfolio </span>
         </div>
-
         <!-- Toggle collapse / expand items button specification -->
         <button
           class="navbar-toggler"
@@ -62,7 +62,6 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <!-- Navigation bar items, collapsed to triple stripes button automatically -->
         <div class="collapse navbar-collapse ms-4 mb-md-0" id="navbarContent">
           <ul class="navbar-nav">
@@ -122,6 +121,15 @@
                     Page for the 'fluoscenepy' project
                   </a>
                 </li>
+                <!-- Project #4 -->
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://sklykov.github.io/zernpy/"
+                  >
+                    Page for the 'zernpy' project
+                  </a>
+                </li>
                 <!-- Project #... -->
                 <li>
                   <a class="dropdown-item" href="#"> Next project ... </a>
@@ -133,107 +141,141 @@
       </div>
     </nav>
 
-    <!-- Another way of the page layout: using Bootstrap grid system for creating rows, cols in the containers -->
-    <div class="container text-center">
+    <!-- Container for the Page Header and Text Project Explanation -->
+    <div class="container-fluid-lg text-center">
       <!-- Page header -->
-      <div class="row p-1 mt-4 mb-3 mx-2">
-        <h3 class="col fw-semibold">
+      <div class="row p-1 mt-md-4 mb-md-3 mt-1 mb-1 mx-2 text-center">
+        <h2 class="col fw-semibold">
           <!-- Specify the sizing if needed only -->
           Welcome to my portfolio with the static webpages!
-        </h3>
+        </h2>
       </div>
       <!-- Some info splitted in two columns only starting from medium sized screens -->
-      <div class="row m-1 mb-2 align-items-md-center justify-content-center">
-        <p class="ps-4 pe-4 col-md-6 lh-sm">
-          <!-- Breakpoint md used only starting from  -->
+      <div
+        class="d-xxl-none d-none d-md-flex row m-1 mb-md-2 align-items-md-center justify-content-center text-center fw-medium fs-5"
+      >
+        <p class="ps-md-4 pe-md-4 col-md-6 lh-sm col-xxl-6">
           My projects are listed across this page. They are intended for
           training and providing show-cases of my Frontend development skills
           and implementing some interesting and, hopefully, useful
           functionality.
         </p>
-        <p class="ps-4 pe-4 col-md-6 lh-sm">
+        <p class="ps-md-4 pe-md-4 col-md-6 lh-sm col-xxl-4">
           This main page is implemented by using Bootstrap 5 (CDN-delivered) and
-          some customization through my own stylesheet and JS script.
+          some customization through my custom stylesheet and JS script.
         </p>
       </div>
+      <p class="container d-flex d-md-none d-xxl-flex fw-medium fs-5" id="project-text">
+        My projects are listed across this page. They are intended for training
+        and providing show-cases of my Frontend development skills and
+        implementing some interesting and, hopefully, useful functionality. This
+        main page is implemented by using Bootstrap 5 (CDN-delivered) and some
+        customization through my custom stylesheet and JS script.
+      </p>
     </div>
 
     <!-- Page content container: the simplest way to align the content - to use flex container ("d-flex") for it -->
-    <div class="d-flex p-2 m-2 my-3 flex-column justify-content-center">
+    <div class="d-flex mx-2 flex-column justify-content-center">
       <!-- List with projects -->
-      <h5 class="text-center m-2">
+      <h4 class="text-center mt-2 mt-md-4 mb-1 mb-md-2">
         List with projects along with the short notes about their peculiarities:
-      </h5>
-      <!-- Alignment of content: d-flex - creates the flexbox container with justify- rule -->
-      <ul
-        class="d-flex justify-content-center list-group list-group-horizontal-xl mb-xl-4 mb-lg-2"
-      >
-        <!-- Project #1 -->
-        <li
-          class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
+      </h4>
+
+      <!-- Dev. Note: if row-cols-3 used but 1 column couldn't be filled possibly because of margins and padding -->
+      <div class="container-fluid text-center m-1 mt-md-2 mb-md-3">
+        <!-- Row that should change number of columns used  -->
+        <div
+          class="row row-cols-auto row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 justify-content-center mx-sm-2 fw-medium"
         >
-          <p class="mb-lg-2">
-            <a
-              class="project-header-link"
-              href="./image_proc/image_upload.html"
-            >
-              Image processing with Vanilla JS</a
-            >
-          </p>
-          <p class="lh-sm">
-            Project had been made using only pure stack HTML / CSS / JS for
-            composing the static webpage. It is the show-case of pure JS
-            functions for image processing, data reading, saving and
-            visualizing.
-          </p>
-        </li>
-        <!-- Project #2 -->
-        <li
-          class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
-        >
-          <p class="mb-lg-2">
-            <a class="project-header-link" href="./static_quiz/quiz.html">
-              Serverless Quiz</a
-            >
-          </p>
-          <p class="lh-sm">
-            Project had been implemented using again only pure Front-end stack.
-            It is the show-case of emulating asynchronous requests to the
-            back-end code and interact with users by processing their input.
-          </p>
-        </li>
-        <!-- Project #3 -->
-        <li
-          class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
-        >
-          <p class="mb-lg-2">
-            <a
-              class="project-header-link"
-              href="https://sklykov.github.io/fluoscenepy/"
-            >
-              Project 'fluoscenepy' Page</a
-            >
-          </p>
-          <p class="lh-sm">
-            Bootstrap-powered along with own styles customization single page
-            for the Python library uploaded on PyPi.
-          </p>
-        </li>
-        <!-- Project #... -->
-        <li
-          class="list-group-item text-center p-1 m-2 border-0 bg-dark bg-gradient text-white"
-        >
-          <p class="mb-lg-2">
-            <a class="project-header-link" href="#"> Next Projects ...</a>
-          </p>
-          <p class="lh-sm">
-            More projects will be added soon, including React-based.
-          </p>
-        </li>
-      </ul>
+          <!-- Project #1 -->
+          <div
+            class="col col-lg-5 col-xl-4 col-xxl-3 border border-1 rounded-2 border-light-subtle bg-secondary bg-gradient text-white m-2 p-2"
+            style="--bs-bg-opacity: 0.3"
+          >
+            <p class="mb-lg-3">
+              <a
+                class="project-header-link"
+                href="./image_proc/image_upload.html"
+              >
+                Image processing with Vanilla JS</a
+              >
+            </p>
+            <p class="lh-sm fs-6">
+              Project had been made using only pure stack HTML / CSS / JS for
+              composing the static webpage. It is the show-case of pure JS
+              functions for image processing, data reading, saving and
+              visualizing.
+            </p>
+          </div>
+          <!-- Project #2 -->
+          <div
+            class="col col-lg-5 col-xl-4 col-xxl-3 border border-1 rounded-2 border-light-subtle bg-secondary bg-gradient text-white m-2 p-2"
+            style="--bs-bg-opacity: 0.3"
+          >
+            <p class="mb-lg-3 fs-6">
+              <a class="project-header-link" href="./static_quiz/quiz.html">
+                Serverless Quiz</a
+              >
+            </p>
+            <p class="lh-sm">
+              Project had been implemented using again only pure Front-end
+              stack. It is the show-case of emulating asynchronous requests to
+              the back-end code and interact with users by processing their
+              input.
+            </p>
+          </div>
+          <!-- Project #3 -->
+          <div
+            class="col col-xl-3 border border-1 rounded-2 border-info-subtle bg-secondary bg-gradient text-white m-2 p-2"
+            style="--bs-bg-opacity: 0.3"
+          >
+            <p class="mb-lg-3">
+              <a
+                class="project-header-link"
+                href="https://sklykov.github.io/fluoscenepy/"
+              >
+                Project 'fluoscenepy' Page</a
+              >
+            </p>
+            <p class="lh-sm fs-6">
+              Bootstrap-powered along with own styles customization single page
+              for the Python library
+              <em class="fw-semibold"> fluoscenepy </em> uploaded on PyPi.
+            </p>
+          </div>
+          <!-- Project #4 -->
+          <div
+            class="col border border-1 rounded-2 border-info-subtle bg-secondary bg-gradient text-white m-2 p-2"
+            style="--bs-bg-opacity: 0.3"
+          >
+            <p class="mb-lg-3">
+              <a
+                class="project-header-link"
+                href="https://sklykov.github.io/zernpy/"
+              >
+                Project 'zernpy' Page</a
+              >
+            </p>
+            <p class="lh-sm fs-6">
+              Tailwind-powered two pages ("Main" and "About") for the Python
+              library <em class="fw-semibold"> zernpy </em> uploaded on PyPi.
+            </p>
+          </div>
+          <!-- Project #5 -->
+          <div
+            class="col border border-1 rounded-2 border-dark-subtle bg-secondary bg-gradient text-white m-2 p-2"
+            style="--bs-bg-opacity: 0.3"
+          >
+            <p class="mb-lg-3">
+              <a class="project-header-link" href="#"> Next Project ... </a>
+            </p>
+            <p class="lh-sm">More projects will be added soon...</p>
+          </div>
+        </div>
+      </div>
 
       <!-- Projects preview stored in the cards -->
-      <h5 class="text-center m-2">Cards-preview of the projects:</h5>
+      <h4 class="text-center mt-4 m-2">Cards-preview of the projects:</h4>
       <!-- Cards with the projects previews. The class flex-wrap dynamically shifts cards in column if its size not fit in a row -->
       <div
         class="d-lg-flex d-none flex-xl-row flex-column justify-content-evenly flex-wrap m-2 align-items-xl-start align-items-center"
@@ -253,7 +295,7 @@
             <h5 class="card-title mt-2 mb-3 text-center">
               Image processing using Vanilla JS
             </h5>
-            <p class="card-text mt-2 mb-2">
+            <p class="card-text mt-2 mb-2 fs-6">
               Show-case of the available built-in functions in the pure
               (vanilla) JS for serverless image processing
             </p>
@@ -317,7 +359,7 @@
             <h5 class="card-title mt-2 mb-3 text-center">
               Project 'fluoscenepy' Page
             </h5>
-            <p class="card-text mt-2 mb-2">
+            <p class="card-text mt-2 mb-2 fs-6">
               Bootstrap-powered along with own styles customization single page
               for the Python library uploaded on PyPi.
             </p>
@@ -397,9 +439,9 @@
         <div
           class="card-body d-flex flex-column align-items-center text-center"
         >
-          <h5 class="card-title my-2" id="image-proc-header">
+          <h4 class="card-title my-2" id="image-proc-header">
             Image processing using Vanilla JS
-          </h5>
+          </h4>
           <p class="card-text my-2 fs-6">
             Show-case of the available built-in functions in the pure (vanilla)
             JS for serverless image processing
@@ -431,9 +473,9 @@
         <div
           class="card-body d-flex flex-column align-items-center text-center"
         >
-          <h5 class="card-title my-2" id="image-proc-header">
+          <h4 class="card-title my-2" id="image-proc-header">
             Serverless Quiz about the U.S. states
-          </h5>
+          </h4>
           <p class="card-text my-2 fs-6">
             Show-case of asynchronous programming using vanilla JS and of
             styling with pure CSS for various screen sizes (devices)
@@ -465,9 +507,9 @@
         <div
           class="card-body d-flex flex-column align-items-center text-center"
         >
-          <h5 class="card-title my-2" id="image-proc-header">
+          <h4 class="card-title my-2" id="image-proc-header">
             Project 'fluoscenepy' Page
-          </h5>
+          </h4>
           <p class="card-text my-2 fs-6">
             Bootstrap-powered along with own styles customization single page
             for the Python library uploaded on PyPi

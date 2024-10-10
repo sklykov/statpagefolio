@@ -29,13 +29,42 @@
     font-size: 0.95em !important;
 }
 
+h4, h5 {
+    color: #f5f7e1 !important;
+}
+
 /* Additional adaptivity to the provided by Bootstrap */
 /* xl breakpoint */
 @media screen and (max-width: 1200px) {
     #image-processing-card, #quiz-card {
-        width: 58vw !important;
+        width: 52vw !important;
     }
     #fluoscenepy-card {
-        width: 40vw !important;
+        width: 36vw !important;
+    }
+}
+
+@media screen and (min-width: 1201px) {
+    #image-processing-card, #quiz-card {
+        width: 30vw !important;
+    }
+    #fluoscenepy-card {
+        width: 25vw !important;
+    }
+}
+
+@media screen and (min-width: 1720px) {
+    #image-processing-card, #quiz-card {
+        width: 28vw !important;
+    }
+    #fluoscenepy-card {
+        width: 22vw !important;
+    }
+}
+
+/* sm breakpoint */
+@media screen and (max-width: 576px) {
+    #project-text {
+        font-size: 1.1rem !important;
     }
 }
