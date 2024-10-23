@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import styles from "./NounArticleQuiz.module.css";
 import { getNounsSlice } from "../quiz_data/Nouns.js";
 
-let variants = ["der", "die", "das"]; // 3 base articles - fixed answer variants
+let variants = ["der", "die", "das"]; // 3 base articles - fixed answer variants for nouns
 
 // Shuffle array function from the https://javascript.info/task/shuffle (Fisher-Yates shuffle algorithm)
 // This function is used for shuffle the 3 variants of articles for answer variants
@@ -13,15 +13,38 @@ function shuffle(array) {
   }
 }
 
+// Reducer function for updating stored answers
+function updateAnswers(answersState, invokedAction) {
+  if (invokedAction.type === "answered") {
+    return {
+      rightAnswered: answersState.rightAnswered + 1,
+      score: answersState.score + 1,
+    };
+  }
+  if (invokedAction.type === "not answered") {
+    return {
+      ...answersState,
+      score: answersState.score - 1,
+    };
+  }
+}
+
 // Component function for the preparing quiz question about the article of the noun
 export default function NounArticleQuiz({ userInfo }) {
   let quizLength = 5; // number of words for fetching and asking during the quiz
 
+  // Various states managed using the useState hook
   const [quizGoing, setQuizState] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [indexQuestion, setCurrentIndexQuestion] = useState(0);
   const [quizNouns, setQuizNouns] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Managing complex state (answers) by the useReducer hook
+  const [answers, dispatchAnswers] = useReducer(updateAnswers, {
+    rightAnswered: 0,
+    score: 0,
+  });
 
   useEffect(() => {
     // Definition of the function for retrieving data from the simulated backend
@@ -58,8 +81,10 @@ export default function NounArticleQuiz({ userInfo }) {
     if (e.target.innerText === currentQuestion.article) {
       // TODO: add useReducer for saving the learnt words and managing the next quiz round
       console.log("Right answer!");
+      dispatchAnswers({type: "answered"}); // update associated with answer statistics object
     } else {
       console.log("Wrong answer!");
+      dispatchAnswers({type: "not answered"}); // update associated with answer statistics object
     }
     if (indexQuestion < quizLength) {
       setCurrentQuestion(quizNouns[indexQuestion]);
@@ -103,9 +128,13 @@ export default function NounArticleQuiz({ userInfo }) {
       )}
 
       {indexQuestion >= 2 && (
-        <div>
+        // Statistic with given answers
+        <div className={styles.answersStatistic}>
           <p>Answers Statistics</p>
-          <p> </p>
+          <p>
+            <span> Right Answers: {answers.rightAnswered},</span>
+            <span> Scores: {answers.score}</span>
+          </p>
         </div>
       )}
 
