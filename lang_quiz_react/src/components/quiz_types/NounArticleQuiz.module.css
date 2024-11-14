@@ -1,27 +1,36 @@
 /* Styling of React component by importing below classes in it and assigning by className HTML attribute */
 .variant {
     text-align: center; color: lightcyan; background-color: blueviolet;
-    margin: 0.4em 0.5em; padding: 0.25em;
+    margin: 0.4rem 0.5rem; padding: 0.25rem;
 }
 
-/* Question + answer variants */
+/* Container for the question, variants, progress bar */
 .quizBox {
     display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    margin: 0.75em; margin-top: 1.25em; font-size: 1.25em;
+    margin: 0.75rem; margin-top: 1.25rem; font-size: 1.25rem;
     border: 2px solid rgb(178, 160, 195);
     width: max-content; 
 }
 
-/* Only answer variants box */
-.variantsBox {
-    /* TODO: grid layout or table for variants */
-    display: flex; flex-direction: row; align-items: center; justify-content: center; 
-    list-style-type: none; margin: 1em; padding: 0.5em;
+/* Progress bar */
+.progressBox {
+    margin: 2rem; margin-top: 1rem; margin-bottom: 0.5em;  padding: 1rem; 
 }
+.progressBox > div {
+    margin: 1rem;
+}
+
 
 /* Question div (box) */
 .questionBox {
-    margin: 0.5em; margin-top: 1em; padding: 0.5em;
+    margin: 2rem; margin-top: 1.25rem; margin-bottom: 0.45rem; padding: 0.25rem;
+}
+
+/* Variants of answers box */
+.variantsBox {
+    /* TODO: grid layout or table for variants */
+    display: flex; flex-direction: row; align-items: center; justify-content: center; 
+    list-style-type: none; margin: 2rem; margin-top: 0.45rem; margin-bottom: 2.5rem; padding: 0.25rem;
 }
 
 /* Answer variants themselves */
@@ -33,12 +42,12 @@
     color: rgb(246, 255, 255); background-color: rgb(110, 28, 186); cursor: pointer;
 }
 
-/* Highlighted text */
+/* Highlighted text for Noun in the Quiz question */
 .noun {
     font-weight: bolder; font-size: 1.1em; margin-left: 0.2em;
 }
 
-/* Answer statistic */
+/* Answers Statistics */
 .answersStatistic {
     font-weight: 600; font-size: 1.1em; text-align: center; margin: 0.5em;
 }

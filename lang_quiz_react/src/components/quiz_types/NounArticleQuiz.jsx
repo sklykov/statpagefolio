@@ -1,6 +1,7 @@
 import { useEffect, useState, useReducer } from "react";
 import styles from "./NounArticleQuiz.module.css";
 import { getNounsSlice } from "../quiz_data/Nouns.js";
+import TimerBar from "./TimerBar.jsx";
 
 let variants = ["der", "die", "das"]; // 3 base articles - fixed answer variants for nouns
 
@@ -103,8 +104,12 @@ export default function NounArticleQuiz({ userInfo }) {
       )}
 
       {quizGoing && currentQuestion !== null && (
-        // Quiz Box - the element for a question and answers
+        // Quiz Box - the element for a question and answers + Remained Time indicator + Answers Statistics
         <div className={styles.quizBox}>
+          <div className={styles.progressBox}>
+            <div> Remained Time for Answer: </div>
+            <TimerBar progress={80} />
+          </div>
           <div lang="de" className={styles.questionBox}>
             Select proper article for:{" "}
             <span className={styles.noun}>{currentQuestion.noun}</span>{" "}
