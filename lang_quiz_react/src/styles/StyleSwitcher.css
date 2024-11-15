@@ -1,7 +1,7 @@
 /* Styling of the button and its elements that switches themes */
 .style-switcher {
-    height: 3.5em; width: 17em; padding: 0.6em; 
-    font-weight: bold; border-radius: 32%; border: 3px solid; 
+    height: 3.5rem; width: 15rem; padding: 0.6rem;
+    font-weight: bold; border-radius: 32%; border: 3px solid; font-size: 0.85rem;
     margin-left: auto;  /* shift this button to most left within the flexbox */
     display: flex; flex-direction: row; align-items: center; justify-content: center;
 }

@@ -1,16 +1,16 @@
 /* Overall styling for 2 states for buttons: Start and Stop */
 .start-quiz-button, .stop-quiz-button {
-    padding: auto; text-align: center; margin: 2em; 
-    width: max-content; min-width: 12.5em; height: 3.4em;
+    padding: auto; text-align: center; margin: 2rem; 
+    width: max-content; min-width: 12.5rem; height: 3.4rem;
 }
 
 .start-quiz-button {
-    font-size: 0.98em; font-weight: 650;
+    font-size: 0.98rem; font-weight: 650;
     border: solid 4px; border-radius: 35%; 
 }
 
 .stop-quiz-button {
-    font-size: 0.98em; font-weight: 575;
+    font-size: 0.98rem; font-weight: 575;
 }
 
 /* Specific styling of the Start Quiz Button for two selectable themes: dark and light as the postfixes */

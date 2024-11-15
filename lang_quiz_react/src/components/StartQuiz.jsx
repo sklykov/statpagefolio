@@ -60,7 +60,7 @@ export default function StartQuiz({quizState, setQuizState, children, setLoginIn
         }
     }, [quizState, userInfo]);
     
-    // Render button content depending on the state
+    // Render button (Start / Stop Quiz) content depending on the state
     if (!quizState.started) {
         return (
           <button

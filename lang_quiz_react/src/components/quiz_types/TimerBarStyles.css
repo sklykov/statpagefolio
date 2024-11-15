@@ -1,0 +1,24 @@
+.container-bar {
+    width: 16rem;
+    height: 1.25rem;
+    border: 8px solid;
+    border-radius: 12px;
+}
+.container-bar-dark {
+    background-color: slategray;
+    border-color: grey;
+}
+.container-bar-light {
+    background-color: lightblue;
+    border-color: darkslategray;
+}
+
+.timer-bar {
+    height: 100%;
+}
+.timer-bar-dark {
+    background-color: darkgreen;
+}
+.timer-bar-light {
+    background-color: limegreen;
+}
