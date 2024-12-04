@@ -65,31 +65,41 @@ export default function NounArticleQuiz({ userInfo }) {
     retrieveData();
   }, [quizLength, userInfo]);
 
-  // below - set the first question, performed when the quizNouns are changed
+  // Set the first question (triggered by retrieved data), performed when the quizNouns state is changed
   useEffect(() => {
     if (quizNouns.length > 0) {
       setCurrentQuestion(quizNouns[0]);
       setCurrentIndexQuestion((prevIndex) => prevIndex + 1);
     }
   }, [quizNouns]);
-
+  
+  // This effect is triggered then the currentQUestion set with the noun
   useEffect(() => {
-    shuffle(variants);
-  }, [currentQuestion]); // shuffle the array if noun has been changed
+    shuffle(variants);  // shuffle static array (from the top)
+  }, [currentQuestion]);
 
   // Handle click on the variant of an answer
   function handleVariantSelection(e) {
-    if (e.target.innerText === currentQuestion.article) {
-      // TODO: add useReducer for saving the learnt words and managing the next quiz round
-      console.log("Right answer!");
-      dispatchAnswers({type: "answered"}); // update associated with answer statistics object
+    // Handle clicked variant or null if the timer is expired
+    if (e !== null) {
+      if (e.target.innerText === currentQuestion.article) {
+        // TODO: add useReducer for saving the learnt words and managing the next quiz round
+        console.log("Right answer!");
+        dispatchAnswers({type: "answered"}); // update associated with answer statistics object
+      } else {
+        console.log("Wrong answer!");
+        dispatchAnswers({type: "not answered"}); // update associated with answer statistics object
+      }
     } else {
-      console.log("Wrong answer!");
+      console.log("Not answered within time!");
       dispatchAnswers({type: "not answered"}); // update associated with answer statistics object
     }
+    // FIX: Proceed to the next question (not working properly)
+    console.log("Current Question #:", indexQuestion);
     if (indexQuestion < quizLength) {
-      setCurrentQuestion(quizNouns[indexQuestion]);
-      setCurrentIndexQuestion((prevIndex) => prevIndex + 1);
+      setCurrentIndexQuestion((prevIndex) => { 
+        setCurrentQuestion(quizNouns[prevIndex + 1]);
+        return prevIndex + 1});
     } else {
       setQuizState(false);
     }
@@ -108,7 +118,7 @@ export default function NounArticleQuiz({ userInfo }) {
         <div className={styles.quizBox}>
           <div className={styles.progressBox}>
             <div> Remained Time for Answer: </div>
-            <TimerBar progress={80} />
+            <TimerBar onTimeout={() => {handleVariantSelection(null);}} timeForAnswer={10000} />
           </div>
           <div lang="de" className={styles.questionBox}>
             Select proper article for:{" "}

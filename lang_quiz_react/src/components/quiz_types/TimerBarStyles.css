@@ -17,7 +17,7 @@
     height: 100%;
 }
 .timer-bar-dark {
-    background-color: darkgreen;
+    background-color: rgb(98, 230, 98);
 }
 .timer-bar-light {
     background-color: limegreen;
