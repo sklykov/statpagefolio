@@ -1,0 +1,10 @@
+Collected notes about developing:
+1) "import" logic (like "import func from ./script.js") doesn't work for serverless pages (e.g., uploaded on GitHub pages); 
+2) Local file is isolated from the local file system by a browser; 
+3) Bypassing it by simulation of <input> element upload logic doesn't work;
+4) All associated files with tests of this functionality are removed.
+
+TODOs:
+1) Remove comments about what was tested and not used; 
+2) Possibly split quiz_styles.css or reorganize it; 
+3) Check issues on mobile screens with buttons appearance + footer styling + background; 

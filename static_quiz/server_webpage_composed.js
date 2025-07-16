@@ -1,20 +1,16 @@
 "use strict"; 
 
-//  Since the attempts to load files without server request (fetch API) and the user input (<input> file selection)
-//  were unsuccessful, this script will: 
-//  1) Store information that should stored on the server side (Database)
-//  2) Emulate fetch API requests for getting the information
-//  3) Facilitate the HTML page functionality. 
-//  Thus, this script will be quite lengthy.
+//  This script simulates of communication with a server by:
+//  1) Storing information that should stored on the server side (Database);
+//  2) Emulating fetch API requests for getting the information;
+//  3) Additionally, it facilitates the HTML page functionality. 
 
 // Script-wide variables
 let checkPrinciples = false;  // used for on / off logging into console some principles not related to the working logic of a page
 const date = new Date(); const year = date.getFullYear();  // get the actual year
 
-
-// All logic related to the moment then page is loaded
-document.addEventListener("DOMContentLoaded", () => {
-
+document.addEventListener("DOMContentLoaded", () => {  
+    // All logic related to the moment then page is loaded.
     // Set width and height for the background image element to represent it. There are the issue with getting actual height value of the main element
     // The code below doesn't provide good way of setting the width and height
     const mainElement = document.querySelector("main");  // get the main page content container
@@ -411,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (rightAnswersTotal === 35) {
                 rank.innerText = "Expert"; rank.style.color = "rgb(0, 255, 0)";
                 prepareNextQuestion = false;  // automatically stop the game
-                window.alert("You are Expert of U.S. states! You answered correctly to the 35 questions! CONGRATULATIONS!")
+                window.alert("You are Expert of U.S. states! You answered correctly to 35 questions! CONGRATULATIONS!")
                 setTimeout(()=>{quizStarted = !(quizStarted); changeElementsQuiz(); }, animationsDuration);  // stop quiz
             }
             if (prepareNextQuestion) {
@@ -459,6 +455,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }       
 });
 
+
+// Utility functions 
 // Randomly select a State from available ones
 async function getRandomState(){
     let statesNumber = await getStatesNumber(); 
