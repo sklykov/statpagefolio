@@ -1,46 +1,39 @@
 body {
-    margin: 0; padding: 0;
+    margin: 0; padding: 0; width: 100vw; height: 100vh;
 }
 
-/* All elements in <body> by default get margin and padding from below */
-body *{
-    font-size: 1.055rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+body * {
+    font-size: 1.15rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     line-height: 1.25em;  /* add additional vertical gaps between lines */
 }
 
 /* Standard layout - flexbox with centered columns */
 .flexbox-container{
-    display: flex; margin-left: auto; margin-right: auto;
-    flex-direction: column; text-align: center;
+    display: flex; flex-direction: column; text-align: center;
 }
 /* Layout for flexbox with rows inside of it */
 .flexbox-container-rows{
     display: flex; align-items: center;
     flex-direction: row; text-align: center;
-    /* margin: 0.5em auto; */  /* centering the flexbox itself */
     justify-content: center;  /* centering the content of the flexbox */
 }
 
 #main-page-content {
-    margin: 0.25em;
     position: relative;   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
-    /* overflow: hidden;  */ /* if content is larger then the window size, it shall be hidden */ 
-    width: calc(100vw - 0.5em); height: calc(100vh - 0.5em);
-}
-
-#main-page-content * {
-    padding: 0.2em; margin: 0.2em;
+    width: 100%; height: 100%;
 }
 
 /* Setting all boxes to the bigger z-index than the background image */
 #main-page-content > * {
-    position: relative; z-index: 1; /* Allows to assign the z-index larger than for the background image */  
+    position: relative; z-index: 1; /* Allows to assign a z-index larger than for a background image */  
 }
 
 /* Place header and button by default closer to page center */
-#project-header{ margin-top: 14vh; }
+#project-header { 
+    margin-top: 15vh; color: #1a2233; font-weight: bold;
+}
 
-/* Remove default margins from inline link */
+/* Remove default margins from an inline link */
 #github-link { margin-left: 0; margin-right: 0; padding: 0; }
  
 /* Start (launch) the quiz button styling */
@@ -58,7 +51,7 @@ body *{
     color: rgb(252, 232, 203);  /* Note: text color */
     display: flex; align-items: center; justify-content: center;  /* Centering all spans inside the button with the text */
 } 
-#launch-control-button:hover{
+#launch-control-button:hover {
     background-color: rgb(27, 175, 27); 
     color: rgb(250, 242, 230);
     box-shadow: none; transform: translateY(8px); transition: transform 0.4s;  /* Click effect made as hovering action*/
@@ -88,13 +81,12 @@ body *{
 }
 
 /* Place question and answer variants in a grid */
-#quiz-question{
+#quiz-question {
     grid-area: Question;
     display: flex; align-items: center; justify-content: center;
     background-color: black; color: palegoldenrod;
     border: 4px solid darkslateblue; border-radius: 16px;
-    height: 2em; min-width: 18em;
-    padding: 0.5em;
+    height: 2em; min-width: 18em; padding: 0.5em;
 }
 
 /* Naming for placing variants in a grid */
@@ -104,7 +96,8 @@ body *{
 #answer-variant-4 { grid-area: Answer4; }
 /* Styling of all answers */
 .answer-variant {
-    background-color: navy; color: azure;  
+    background-color: navy; color: azure; 
+    cursor: pointer;   /* Regulates appearance of pointer when it's hovered over the button */ 
     height: 1.85em; min-width: 16em;
     border: 4px solid teal; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
@@ -143,28 +136,26 @@ body *{
 #statistics-table th, td { border: 1px solid brown; }
 
 #page-footer{
-    margin-top: 25vh; margin-left: 2%;  /* ... % of viewport height */
+    margin-top: 30vh; margin-left: 3%;  /* ... % of viewport height */
     text-align: left;  /* prevent footer text to be centrally aligned */
 }
 
 /* Set the background image for the entire page using external resource */
 #background-image-box {
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
-    opacity: 0.128;
-    /* Preserve initial image sizes */
-    background-size: contain;
-    /* Stretch the image to cover background */
-    /* background-size: cover;   */
-    background-repeat: repeat;   /* allows smoother behavior for different page sizes */
+    background-image: url("./images/bckgr_quiz_unsplash_by_mark-boss.jpg");
+    opacity: 0.38;
+    /* background-repeat: repeat;    */  /* allows smoother behavior for different page sizes */
     position: absolute;
-    /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
-    width: calc(100vw - 2*(0.25em + 0.2em + 0.2em));  /* width reduced for accounting all default margins */
-    height: calc(100vh - 2*(0.25em + 0.2em + 0.2em));   /* Calculated relative to the first relatively placed parent element (<main> element) */
+    /* Stretch the image to cover background */
+    background-size: cover;  
+    width: 100%; height: 100%;
     z-index: 0;  /* place it behind all other elements */
 }
 
 /* Quick search reveals that there isn't direct way to style the <progress> element, so one should use pseudo-classes for each specific browser */
-#remaining-time-bar { margin-top: 0.42em; }
+#remaining-time-bar { 
+    margin-left: 0.75em; margin-top: 0.1em;
+}
 /* Styling for Firefox */
 #remaining-time-bar::-moz-progress-bar {
     margin-top: 0em;
