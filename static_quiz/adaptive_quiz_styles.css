@@ -1,0 +1,160 @@
+/* Adjusting styles based on the device's screen width (media queries) */
+@media screen and (max-width: 1280px) {
+  #project-header {
+    margin-top: 15vh;
+  }
+  #page-footer {
+    margin-top: 24vh;
+  }
+  #statistics-table-box {
+    margin-top: 1.5em;
+  }
+}
+@media screen and (max-width: 1240px) {
+  #project-header {
+    margin-top: 14vh;
+  }
+  #page-footer {
+    margin-top: 22vh;
+  }
+}
+@media screen and (max-width: 1200px) {
+  #project-header {
+    margin-top: 12vh;
+  }
+  #page-footer {
+    margin-top: 20vh;
+  }
+  #statistics-table-box {
+    margin-top: 1em;
+  }
+}
+@media screen and (max-width: 1120px) {
+  #project-header {
+    margin-top: 10vh;
+  }
+  #page-footer {
+    margin-top: 18vh;
+  }
+}
+@media screen and (max-width: 1040px) {
+  #project-header {
+    margin-top: 6vh;
+  }
+  #page-footer {
+    margin-top: 14vh;
+  }
+}
+
+/* Screen smaller than 1000px, reduce some sizes for better fitting elements */
+@media screen and (max-width: 1000px) {
+  body {
+    margin: 0.15em;
+  }
+  body * {
+    font-size: 1rem;
+    padding: 0.15em;
+    margin: 0.2em 0.15em;
+    line-height: 1.1em;
+  }
+  #page-footer {
+    margin-top: 8vh;
+  }
+}
+
+/* Mobile and small screen design */
+@media screen and (max-width: 925px) {
+  #page-footer {
+    text-align: center;
+  }
+  #lives-number {
+    font-size: 1em;
+  }
+
+  #launch-quiz-properties-box > * {
+    margin-left: 0.4em;
+    margin-left: 0.4em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  #launch-quiz-properties-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  #time-lives-box > * {
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    margin-left: 0.4em;
+    margin-left: 0.4em;
+  }
+  #time-lives-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 700px) {
+  body * {
+    font-size: 0.95rem;
+  }
+  #remaining-time-bar {
+    width: 125px;
+  }
+  #quiz-grid-box {
+    row-gap: 1em;
+    column-gap: 1.5em;
+  }
+  #quiz-question {
+    height: 1.25em;
+    min-width: fit-content;
+    padding-left: 12\vw;
+    padding-right: 12vw;
+  }
+  .answer-variant {
+    height: 1.25em;
+    min-width: fit-content;
+  }
+  #page-footer {
+    margin-top: 3vh;
+  }
+}
+
+/* After few tests, it's better to apply shrinking of the answers starting from the width of recent iPhones */
+@media screen and (max-width: 392px) {
+  /* Below - squeeze the table */
+  #statistics-table th {
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    padding-bottom: 0.5em;
+  }
+  #statistics-table th,
+  td {
+    font-size: 0.92rem;
+  }
+  body * {
+    overflow-wrap: break-word;
+  } /* Force all elements to break into lines */
+  /* NOTE: for adjusting elements width for breaking into words, one needed to fix width property */
+  #quiz-grid-box {
+    width: fit-content;
+  }
+}
+@media screen and (max-width: 320px) {
+  #remaining-time-bar {
+    width: 110px;
+  }
+  #quiz-grid-box {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 300px) {
+  #launch-control-button {
+    width: 12em;
+  }
+}
