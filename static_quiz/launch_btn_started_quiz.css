@@ -1,4 +1,4 @@
-/* This particular style will be applied after starting the quiz */
+/* This particular style will be loaded by JS script and applied after starting a quiz */
 #launch-control-button {
     box-shadow: 0px 10px rgb(170, 111, 105);
     background-color: rgb(255, 84, 65);
@@ -15,7 +15,6 @@
     box-shadow: none;
     transform: translateY(8px);
     transition: transform 0.5s;
-    /* Click effect made as hovering action*/
 }
 
 /* Change style of the child element if the parent element get some CSS property (containing button hovered) */

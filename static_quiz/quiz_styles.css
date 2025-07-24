@@ -42,13 +42,23 @@ main {
 main * {
   position: relative;
   z-index: 1;
-  /* Allows to assign a z-index larger than for a background image */
+}
+
+main > * {
+  /* Allow to grow all children of <main> for taking up all available space in it */
+  flex: 1;
 }
 
 header {
   margin-top: 15vh;
   color: #1a2233;
   font-weight: bold;
+}
+
+footer {
+  margin-top: 14vh; 
+  margin-left: 3%;
+  text-align: left;
 }
 
 /* Remove default margins from an inline link */
@@ -79,18 +89,14 @@ header {
   height: 3.2em;
   margin-top: 2em;
   cursor: pointer;
-  /* Regulates appearance of pointer when it's hovered over the button */
   box-shadow: 0px 10px rgb(116, 175, 116);
-  /* shadow effect */
   background-color: forestgreen;
   border: 1px solid rgb(24, 161, 24);
   border-radius: 20px;
   color: rgb(252, 232, 203);
-  /* Note: text color */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Centering all spans inside the button with the text */
 }
 
 #launch-control-button:hover {
@@ -99,7 +105,6 @@ header {
   box-shadow: none;
   transform: translateY(8px);
   transition: transform 0.5s;
-  /* Click effect made as hovering action*/
 }
 
 /* Change style of the child element if the parent element get some CSS property (containing button hovered) */
@@ -182,8 +187,7 @@ header {
   justify-content: center;
 }
 
-/* .answer-variant:hover { background-color: darkslategray; } */
-/* This effect moved to the JS script (mouseenter / mouseleave) */
+/* This effect for changing background color for answer variants managed by a JS script (mouseenter / mouseleave) */
 
 /* Styling of the grid box with a question and answers */
 #quiz-grid-box {
@@ -203,8 +207,8 @@ header {
   margin-top: 2em;
   margin-left: auto;
   margin-right: auto;
-  overflow-x: auto;
   /* enabling scrollbar if the table is not fit, but the scrollbar appears in the bottom of a page (Firefox) */
+  overflow-x: auto;
   overflow-y: hidden;
 }
 
@@ -231,27 +235,19 @@ td {
   border: 1px solid brown;
 }
 
-#page-footer {
-  margin-top: 30vh;
-  margin-left: 3%;
-  /* ... % of viewport height */
-  text-align: left;
-  /* prevent footer text to be centrally aligned */
-}
-
 /* Set the background image for the entire page using external resource */
 #background-image-box {
   background-image: url("./images/bckgr_quiz_unsplash_by_mark-boss.jpg");
   opacity: 0.38;
   /* background-repeat: repeat;    */
-  /* allows smoother behavior for different page sizes */
+  /* repeat:  allows smoother behavior for different page sizes */
   position: absolute;
   /* Stretch the image to cover background */
   background-size: cover;
   width: 100%;
   height: 100%;
   z-index: 0;
-  /* place it behind all other elements */
+  /* z-index for placing it behind all other elements */
 }
 
 /* Styling of a <progress> should be done using pseudo-classes for each specific browser */

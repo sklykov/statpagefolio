@@ -1,70 +1,19 @@
 /* Adjusting styles based on the device's screen width (media queries) */
-@media screen and (max-width: 1280px) {
-  #project-header {
-    margin-top: 15vh;
-  }
-  #page-footer {
-    margin-top: 24vh;
-  }
-  #statistics-table-box {
-    margin-top: 1.5em;
-  }
-}
-@media screen and (max-width: 1240px) {
-  #project-header {
-    margin-top: 14vh;
-  }
-  #page-footer {
-    margin-top: 22vh;
-  }
-}
-@media screen and (max-width: 1200px) {
-  #project-header {
-    margin-top: 12vh;
-  }
-  #page-footer {
-    margin-top: 20vh;
-  }
-  #statistics-table-box {
-    margin-top: 1em;
-  }
-}
-@media screen and (max-width: 1120px) {
-  #project-header {
-    margin-top: 10vh;
-  }
-  #page-footer {
-    margin-top: 18vh;
-  }
-}
-@media screen and (max-width: 1040px) {
-  #project-header {
-    margin-top: 6vh;
-  }
-  #page-footer {
-    margin-top: 14vh;
-  }
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+  
 }
 
-/* Screen smaller than 1000px, reduce some sizes for better fitting elements */
-@media screen and (max-width: 1000px) {
-  body {
-    margin: 0.15em;
-  }
-  body * {
-    font-size: 1rem;
-    padding: 0.15em;
-    margin: 0.2em 0.15em;
-    line-height: 1.1em;
-  }
-  #page-footer {
-    margin-top: 8vh;
-  }
+/* Medium devices (tablets, from 768px and up to ~ 992px) */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  #background-image-box {
+    background-size: contain;
+  }  
 }
 
 /* Mobile and small screen design */
 @media screen and (max-width: 925px) {
-  #page-footer {
+  footer {
     text-align: center;
   }
   #lives-number {
@@ -100,7 +49,7 @@
 }
 @media screen and (max-width: 700px) {
   body * {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
   #remaining-time-bar {
     width: 125px;
@@ -112,7 +61,7 @@
   #quiz-question {
     height: 1.25em;
     min-width: fit-content;
-    padding-left: 12\vw;
+    padding-left: 12vw;
     padding-right: 12vw;
   }
   .answer-variant {
@@ -151,10 +100,5 @@
   #quiz-grid-box {
     display: flex;
     flex-direction: column;
-  }
-}
-@media screen and (max-width: 300px) {
-  #launch-control-button {
-    width: 12em;
   }
 }
