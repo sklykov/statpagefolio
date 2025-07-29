@@ -21,12 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizBox = document.getElementById("quiz-box"); const footer = document.getElementById("page-footer");
     const answer1 = document.getElementById("answer-variant-1"); const answer2 = document.getElementById("answer-variant-2");
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
-    const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head");
+    const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head"); 
     const rightAnswersIndicator = document.getElementById("right-answers"); const statisticsTableBox = document.getElementById("statistics-table-box");
-    const initialStringStatistics = document.getElementById("initial-statistics-string"); const rank = document.getElementById("rank"); const initialRank = rank.innerText;
+    const initialStringStatistics = document.getElementById("initial-statistics-string"); const rank = document.getElementById("rank"); 
     const rightAnswersTable = document.getElementById("table-right-answers"); const passedSecondsTable = document.getElementById("passed-time-answers");
     const remainedLivesTable = document.getElementById("remained-lives-answers"); const projectShortInfo = document.getElementById("project-short-description");
-    const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
+    const initialRank = rank.innerText; const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
 
     // Variables and constants for the function within the DOMContentLoaded event handler
     const initMarginRight = parseFloat(getComputedStyle(startButton).getPropertyValue("margin-top"));
@@ -60,10 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (playedGames === 0) {
                 initialStringStatistics.style.display = "none";  // remove the initial informational string
             }
-            // For the small screen width devices - remove the project short description
-            if (window.screen.width <= 925) { projectShortInfo.style.display = "none"; }
-            // Preserve initial margin for the medium- and large-length devices
-            if (window.screen.width <= 1280) { pageHeader.style.marginTop = initMarginTop; }
             // Remove event listener for disable clicking on the button between transitions
             startButton.removeEventListener("click", handleStartButtonClick);
             animateStartButton();  // visualize that the clicking is disabled
@@ -107,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 animateStartButton(true);  // animate Start button appearance
                 animateStatisticsTable(); statisticsTableBox.style.display = "flex";  // animate the appearance of the table with statistics
-                startButtonText.innerText = "Start the Quiz"; startButton.style.marginRight = `${initMarginRight}px`;
+                startButtonText.innerText = "Start the Quiz";
                 // Remove styling of started button, keep default one by the removing the special external style
                 head.removeChild(buttonStartedStyle);  // default style will be returned back to "Start Button"
                 // Return initial styling by the assigning stored in this script values

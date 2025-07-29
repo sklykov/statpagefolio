@@ -6,5 +6,4 @@ Collected notes about developing:
 
 TODOs:
 1) Remove comments about what was tested and not used; 
-2) Possibly split quiz_styles.css or reorganize it; 
-3) Check issues on mobile screens with buttons appearance + footer styling + background; 
+3) Check issues on mobile screens with buttons appearance + footer styling; 

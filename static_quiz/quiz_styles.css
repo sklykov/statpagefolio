@@ -1,4 +1,5 @@
 /* Autoformatted with Prettier (expand content to many lines) */
+/* More general selectors: html page elements + their children */
 body {
   margin: 0;
   padding: 0;
@@ -7,28 +8,11 @@ body {
 }
 
 body * {
-  font-size: 1.18rem;
+  font-size: 1.175rem;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  line-height: 1.25em;
+  line-height: 1.25rem;
   /* add additional vertical gaps between lines */
-}
-
-/* Standard layout - flexbox with centered columns */
-.flexbox-container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-/* Layout for flexbox with rows inside of it */
-.flexbox-container-rows {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  text-align: center;
-  justify-content: center;
-  /* centering the content of the flexbox */
 }
 
 main {
@@ -50,7 +34,7 @@ main > * {
 }
 
 header {
-  margin-top: 15vh;
+  margin-top: 16vh;
   color: #1a2233;
   font-weight: bold;
 }
@@ -61,7 +45,23 @@ footer {
   text-align: left;
 }
 
-/* Remove default margins from an inline link */
+/* Standard layout - flexbox with centered columns */
+.flexbox-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Layout for flexbox with rows inside of it */
+.flexbox-container-rows {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 2em;
+}
+
+/* Link element (footer): remove default margins from an inline link */
 #github-link {
   margin-left: 0;
   margin-right: 0;
@@ -69,11 +69,6 @@ footer {
 }
 
 /* Start (launch) the quiz button styling */
-#launch-quiz-properties-box {
-  margin-bottom: 1.25em;
-  margin-top: 1em;
-}
-
 #hovered-start-arrows {
   display: none;
 }
@@ -187,8 +182,6 @@ footer {
   justify-content: center;
 }
 
-/* This effect for changing background color for answer variants managed by a JS script (mouseenter / mouseleave) */
-
 /* Styling of the grid box with a question and answers */
 #quiz-grid-box {
   display: grid;
@@ -207,6 +200,7 @@ footer {
   margin-top: 2em;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 2em;
   /* enabling scrollbar if the table is not fit, but the scrollbar appears in the bottom of a page (Firefox) */
   overflow-x: auto;
   overflow-y: hidden;
@@ -244,8 +238,10 @@ td {
   position: absolute;
   /* Stretch the image to cover background */
   background-size: cover;
-  width: 100%;
-  height: 100%;
+  background-position: center;
+  /* Setting width and height for better scaling with viewport sizes */
+  width: 100vw;
+  height: 100vh;
   z-index: 0;
   /* z-index for placing it behind all other elements */
 }
