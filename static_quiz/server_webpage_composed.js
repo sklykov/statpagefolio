@@ -29,13 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialRank = rank.innerText; const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
 
     // Variables and constants for the function within the DOMContentLoaded event handler
-    const initMarginRight = parseFloat(getComputedStyle(startButton).getPropertyValue("margin-top"));
-    const headerMarginTopDefault = parseFloat(getComputedStyle(pageHeader).getPropertyValue("margin-top"));
     const initComputedStartButtonWidth = parseFloat(getComputedStyle(startButton).getPropertyValue("width"));  // getting computed button width
     const initComputedStartButtonHeight = parseFloat(getComputedStyle(startButton).getPropertyValue("height"));
-    const initMarginTop = getComputedStyle(mainElement).getPropertyValue("margin-top");  // direct access through mainElement.style.marginTop is impossible
     const initialBackground = getComputedStyle(answer1).getPropertyValue("background-color");  // direct access return the empty string, so this way works
-    const initMarginTopStartButton = getComputedStyle(startButton).getPropertyValue("margin-top");
     const initialFontSizeLives = parseFloat(getComputedStyle(livesNumberElement).getPropertyValue("font-size"));
     const heartSymbol = "&#10084"; const animationsDuration = 2000; quizBox.style.display = "none";
     let startLives = parseInt(livesNumberElement.dataset.amount); let lives = startLives;
@@ -70,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             lives = startLives; remainedTimerSeconds = maxTimeForAnswer;
             rightAnswersTotal = 0; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`;
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `; rank.innerText = initialRank; rank.style.color = "black";
-            startButtonText.innerText = "Stop the Quiz"; startButton.style.marginTop = initMarginTop;
+            startButtonText.innerText = "Stop the Quiz";
             animateTimeLivesBox(); timeLivesBox.style.display = "flex";   // Animate appearance of the box with remaining time, # of lives and right answers 
             animateQuizBox(); quizBox.style.display = "flex";  // Animate appearance of the box with the quiz question and answer variants
             // Change styling of elements around appeared elements
@@ -109,10 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Return initial styling by the assigning stored in this script values
                 startButton.style.width = `${initComputedStartButtonWidth}px`;  // initial button width
                 startButton.style.height = `${initComputedStartButtonHeight}px`;  // initial button height
-                startButton.style.marginTop = initMarginTopStartButton;  // initial margin top
                 footer.style.display = "";  // footer will appear in the end of animation
-                // tune some margins for small device width
-                pageHeader.style.marginTop = `${Math.floor(0.55 * headerMarginTopDefault)}px`;
             },
                 animationsDuration);  // visualize appearance of the Start button with the initial style
             // Below - returning back handle to clicking of the Start button
@@ -224,10 +217,10 @@ document.addEventListener("DOMContentLoaded", () => {
             let stateName = state["state_name"];
             // compose the quiz question, record the right answer  
             if (questionIndex === 0) {
-                questionElement.innerText = `What is the capital city of ${stateName}?`;
+                questionElement.innerText = `What is the capital city of state ${stateName}?`;
                 rightAnswerText = state["capital_city"];
             } else if (questionIndex === 1) {
-                questionElement.innerText = `What is the largest city of ${stateName}?`;
+                questionElement.innerText = `What is the largest city of state ${stateName}?`;
                 rightAnswerText = state["largest_city"];
             }
             // compose the answer variants - only for question types #1 and #2
@@ -317,7 +310,9 @@ document.addEventListener("DOMContentLoaded", () => {
             answer3.addEventListener('click', getClickedElement); answer4.addEventListener('click', getClickedElement);
             // Recover hovering on the answer variants effect of changing background
             answer1.addEventListener('mouseenter', assignHoverBackground); answer1.addEventListener('mouseleave', assignNormalBackground);
+            answer1.addEventListener('touchstart', assignHoverBackground); answer1.addEventListener('touchend', assignNormalBackground);
             answer2.addEventListener('mouseenter', assignHoverBackground); answer2.addEventListener('mouseleave', assignNormalBackground);
+            answer2.addEventListener('touchstart', assignHoverBackground); answer2.addEventListener('touchend', assignNormalBackground);
             answer3.addEventListener('mouseenter', assignHoverBackground); answer3.addEventListener('mouseleave', assignNormalBackground);
             answer4.addEventListener('mouseenter', assignHoverBackground); answer4.addEventListener('mouseleave', assignNormalBackground);
         } else {
@@ -326,7 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
             answer3.removeEventListener('click', getClickedElement); answer4.removeEventListener('click', getClickedElement);
             // Remove tracking of hovering on the variants
             answer1.removeEventListener('mouseenter', assignHoverBackground); answer1.removeEventListener('mouseleave', assignNormalBackground);
+            answer1.removeEventListener('touchstart', assignHoverBackground); answer1.removeEventListener('touchend', assignNormalBackground);
             answer2.removeEventListener('mouseenter', assignHoverBackground); answer2.removeEventListener('mouseleave', assignNormalBackground);
+            answer2.removeEventListener('touchstart', assignHoverBackground); answer2.removeEventListener('touchend', assignNormalBackground);
             answer3.removeEventListener('mouseenter', assignHoverBackground); answer3.removeEventListener('mouseleave', assignNormalBackground);
             answer4.removeEventListener('mouseenter', assignHoverBackground); answer4.removeEventListener('mouseleave', assignNormalBackground);
         }
@@ -362,31 +359,36 @@ document.addEventListener("DOMContentLoaded", () => {
         if (givenAnswerIndex === (rightAnswerIndex + 1)) {
             rightAnswersTotal += 1;
             rightAnswersIndicator.innerText = ` Right answers: ${rightAnswersTotal} `;
-            let prepareNextQuestion = true;
+            let prepareNextQuestion = true;  
             // Assign some ranking depending on the # of right answers
+            if (rightAnswersTotal >= 3) {
+                rank.style.backgroundColor = "rgba(60, 65, 60, 1)";
+            } else {
+                rank.style.backgroundColor = "transparent";
+            }
             if (rightAnswersTotal === 3) {
                 maxTimeForAnswer += 1;
-                rank.innerText = "Trainee"; rank.style.color = "rgb(118, 161, 118)";
+                rank.innerText = "Trainee"; rank.style.color = "rgba(81, 213, 81, 1)";
             } else if (rightAnswersTotal === 5) {
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
                 maxTimeForAnswer += 2;
-                rank.innerText = "Junior"; rank.style.color = "rgb(95, 187, 95)";
+                rank.innerText = "Junior"; rank.style.color = "rgba(60, 221, 60, 1)";
             } else if (rightAnswersTotal === 10) {
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
                 maxTimeForAnswer += 1;
-                rank.innerText = "Intermediate"; rank.style.color = "rgb(73, 206, 73)";
+                rank.innerText = "Intermediate"; rank.style.color = "rgba(51, 226, 51, 1)";
             } else if (rightAnswersTotal === 15) {
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
                 maxTimeForAnswer += 1;
-                rank.innerText = "Upper Intermediate"; rank.style.color = "rgb(58, 218, 58)";
+                rank.innerText = "Upper Intermediate"; rank.style.color = "rgba(44, 229, 44, 1)";
             } else if (rightAnswersTotal === 20) {
                 maxTimeForAnswer -= 4;
                 lives += 1; livesNumberElement.innerHTML = `${heartSymbol}: ${lives}`; animateLivesNumber();
-                rank.innerText = "Advanced"; rank.style.color = "rgb(48, 230, 48)";
+                rank.innerText = "Advanced"; rank.style.color = "rgba(20, 240, 20, 1)";
             } else if (rightAnswersTotal === 35) {
                 rank.innerText = "Expert"; rank.style.color = "rgb(0, 255, 0)";
                 prepareNextQuestion = false;  // automatically stop the game
-                window.alert("You are Expert of U.S. states! You answered correctly to 35 questions! CONGRATULATIONS!")
+                window.alert("You are Expert of the U.S. states! You answered correctly to 35 questions! CONGRATULATIONS!")
                 setTimeout(() => { quizStarted = !(quizStarted); changeElementsQuiz(); }, animationsDuration);  // stop quiz
             }
             if (prepareNextQuestion) {

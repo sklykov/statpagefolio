@@ -16,10 +16,9 @@ body * {
 }
 
 main {
-  /* position: regulates calculation of background image sizes: if not active, it will be calculated relative to an entire body */
+  /* position regulates calculation of background image sizes: if not active, it will be calculated relative to an entire body */
   position: relative;
-  width: 100%;
-  height: 100%;
+  min-height: 100vh;
 }
 
 /* Setting all boxes to the bigger z-index than the background image */
@@ -40,8 +39,9 @@ header {
 }
 
 footer {
-  margin-top: 14vh; 
+  margin-top: 12vh;
   margin-left: 3%;
+  margin-bottom: 3em;
   text-align: left;
 }
 
@@ -82,7 +82,7 @@ footer {
 #launch-control-button {
   width: 18em;
   height: 3.2em;
-  margin-top: 2em;
+  margin: 2em;
   cursor: pointer;
   box-shadow: 0px 10px rgb(116, 175, 116);
   background-color: forestgreen;
@@ -92,6 +92,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 #launch-control-button:hover {
@@ -110,13 +111,13 @@ footer {
 }
 
 /* Control elements styling: answers, lives counters, buttons */
-#time-lives-box * {
-  margin-top: 0em;
-  margin-bottom: 0em;
-  padding-top: 0em;
-  padding-bottom: 0em;
-  margin-left: 1em;
-  margin-right: 1em;
+#time-lives-box {
+  margin: 2em;
+}
+#time-lives-box > * {
+  margin: 1em;
+  /* Style below forbids to break text into 2 lines */
+  white-space: nowrap;
 }
 
 #lives-number {
@@ -148,6 +149,7 @@ footer {
   height: 2em;
   min-width: 18em;
   padding: 0.5em;
+  cursor: none;
 }
 
 /* Naming for placing variants in a grid */
@@ -201,40 +203,31 @@ footer {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2em;
-  /* enabling scrollbar if the table is not fit, but the scrollbar appears in the bottom of a page (Firefox) */
-  overflow-x: auto;
-  overflow-y: hidden;
 }
 
 #statistics-table-box {
+  /* display property managed by JS script */
   display: none;
-  /* will be shown after 1 played quiz game */
   font-weight: bold;
   margin-top: 2em;
+}
+#statistics-table-box span {
+  margin: 0.75em;
 }
 
 #statistics-table {
   border-collapse: collapse;
-  /* makes border collapse for th ('table headers') and td ('table data') */
 }
 
-#statistics-table th {
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-bottom: 0.5em;
-}
-
-#statistics-table th,
-td {
-  border: 1px solid brown;
+#statistics-table th, td {
+  border: 2px solid rgb(180, 39, 39);
+  padding: 0.75em;
 }
 
 /* Set the background image for the entire page using external resource */
 #background-image-box {
   background-image: url("./images/bckgr_quiz_unsplash_by_mark-boss.jpg");
   opacity: 0.38;
-  /* background-repeat: repeat;    */
-  /* repeat:  allows smoother behavior for different page sizes */
   position: absolute;
   /* Stretch the image to cover background */
   background-size: cover;
@@ -242,8 +235,8 @@ td {
   /* Setting width and height for better scaling with viewport sizes */
   width: 100vw;
   height: 100vh;
-  z-index: 0;
   /* z-index for placing it behind all other elements */
+  z-index: 0;
 }
 
 /* Styling of a <progress> should be done using pseudo-classes for each specific browser */
