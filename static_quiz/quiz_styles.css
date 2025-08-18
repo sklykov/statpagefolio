@@ -1,260 +1,272 @@
+/* Autoformatted with Prettier (expand content to many lines) */
+/* More general selectors: html page elements + their children */
 body {
-    margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  /* height auto allows to grow entire body size after placing quiz grid section */
+  min-height: 100%;
+  height: auto; 
 }
 
-/* All elements in <body> by default get margin and padding from below */
-body *{
-    font-size: 1.055rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    line-height: 1.25em;  /* add additional vertical gaps between lines */
+body * {
+  font-size: 1.175rem;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  line-height: 1.25rem;
+  /* add additional vertical gaps between lines */
 }
 
-/* Standard layout - flexbox with centered columns */
-.flexbox-container{
-    display: flex; margin-left: auto; margin-right: auto;
-    flex-direction: column; text-align: center;
-}
-/* Layout for flexbox with rows inside of it */
-.flexbox-container-rows{
-    display: flex; align-items: center;
-    flex-direction: row; text-align: center;
-    /* margin: 0.5em auto; */  /* centering the flexbox itself */
-    justify-content: center;  /* centering the content of the flexbox */
-}
-
-#main-page-content {
-    margin: 0.25em;
-    position: relative;   /* Regulates calculation of background image sizes: if not active, it will be calculated relative to entire body */ 
-    /* overflow: hidden;  */ /* if content is larger then the window size, it shall be hidden */ 
-    width: calc(100vw - 0.5em); height: calc(100vh - 0.5em);
-}
-
-#main-page-content * {
-    padding: 0.2em; margin: 0.2em;
+main {
+  /* position regulates calculation of background image sizes: if not active, it will be calculated relative to an entire body */
+  position: relative;
+  min-height: 100vh;
 }
 
 /* Setting all boxes to the bigger z-index than the background image */
-#main-page-content > * {
-    position: relative; z-index: 1; /* Allows to assign the z-index larger than for the background image */  
+main * {
+  position: relative;
+  z-index: 1;
 }
 
-/* Place header and button by default closer to page center */
-#project-header{ margin-top: 14vh; }
+main > * {
+  /* Allow to grow all children of <main> for taking up all available space in it */
+  flex: 1;
+}
 
-/* Remove default margins from inline link */
-#github-link { margin-left: 0; margin-right: 0; padding: 0; }
- 
+header {
+  margin-top: 16vh;
+  color: #1a2233;
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 12vh;
+  margin-left: 3%;
+  margin-bottom: 3em;
+  text-align: left;
+}
+
+/* Standard layout - flexbox with centered columns */
+.flexbox-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Layout for flexbox with rows inside of it */
+.flexbox-container-rows {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 2em;
+}
+
+/* Link element (footer): remove default margins from an inline link */
+#github-link {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+}
+
 /* Start (launch) the quiz button styling */
-#launch-quiz-properties-box {
-    margin-bottom: 1.25em; margin-top: 1em;
+#hovered-start-arrows {
+  display: none;
 }
-#hovered-start-arrows { display: none; }   /* arrows are invisible if the button not hovered */
-#hovered-stop-arrows { display: none; }  /* these arrows will be visible if hovering the button for stop the quiz */
-#launch-control-button { 
-    width: 18em; height: 3.2em; margin-top: 2em;
-    cursor: pointer;   /* Regulates appearance of pointer when it's hovered over the button */
-    box-shadow: 0px 10px rgb(116, 175, 116);   /* shadow effect */
-    background-color: forestgreen;
-    border: 1px solid rgb(24, 161, 24); border-radius: 20px;
-    color: rgb(252, 232, 203);  /* Note: text color */
-    display: flex; align-items: center; justify-content: center;  /* Centering all spans inside the button with the text */
-} 
-#launch-control-button:hover{
-    background-color: rgb(27, 175, 27); 
-    color: rgb(250, 242, 230);
-    box-shadow: none; transform: translateY(8px); transition: transform 0.4s;  /* Click effect made as hovering action*/
+
+/* arrows are invisible if the button not hovered */
+#hovered-stop-arrows {
+  display: none;
 }
-/* Change style of the child element if the parent element get some CSS property */
-#launch-control-button:hover #hovered-start-arrows { display: inline-block; }
+
+/* these arrows will be visible if hovering the button for stop the quiz */
+#launch-control-button {
+  width: 18em;
+  height: 3.2em;
+  margin: 2em;
+  cursor: pointer;
+  box-shadow: 0px 10px rgb(116, 175, 116);
+  background-color: forestgreen;
+  border: 1px solid rgb(24, 161, 24);
+  border-radius: 20px;
+  color: rgb(252, 232, 203);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+#launch-control-button:hover {
+  background-color: rgb(27, 175, 27);
+  color: rgb(250, 242, 230);
+  box-shadow: none;
+  transform: translateY(8px);
+  transition: transform 0.5s;
+}
+
+/* Change style of the child element if the parent element get some CSS property (containing button hovered) */
+#launch-control-button:hover #hovered-start-arrows {
+  display: inline-block;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
 
 /* Control elements styling: answers, lives counters, buttons */
-#remaining-time-box{ 
-    margin-right: 1em; margin-left: 1em; margin-top: 0em; margin-bottom: 0em; 
-    padding-top: 0em; padding-bottom: 0em; 
+#time-lives-box {
+  margin: 2em;
 }
-#lives-number{ 
-    margin-top: 0em; margin-bottom: 0em; margin-left: 1em; margin-right: 1em;
-    padding-top: 0em; padding-bottom: 0em; 
-    color: red; font-size: 1.25em;
+#time-lives-box > * {
+  margin: 1em;
+  /* Style below forbids to break text into 2 lines */
+  white-space: nowrap;
 }
-#right-answers{
-    margin-top: 0em; margin-bottom: 0em; margin-left: 1em;
-    padding-top: 0em; padding-bottom: 0em;
-    color: green; text-decoration: underline overline seagreen;
+
+#lives-number {
+  color: red;
+  font-size: 1.25em;
+}
+
+#right-answers {
+  color: green;
+  text-decoration: underline overline seagreen;
 }
 
 /* Overall container for question and answer */
 #quiz-box {
-    margin-left: auto; margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Place question and answer variants in a grid */
-#quiz-question{
-    grid-area: Question;
-    display: flex; align-items: center; justify-content: center;
-    background-color: black; color: palegoldenrod;
-    border: 4px solid darkslateblue; border-radius: 16px;
-    height: 2em; min-width: 18em;
-    padding: 0.5em;
+#quiz-question {
+  grid-area: Question;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: palegoldenrod;
+  border: 4px solid darkslateblue;
+  border-radius: 16px;
+  height: 2em;
+  min-width: 18em;
+  padding: 0.5em;
+  cursor: none;
 }
 
 /* Naming for placing variants in a grid */
-#answer-variant-1 { grid-area: Answer1;}
-#answer-variant-2 { grid-area: Answer2; }
-#answer-variant-3 { grid-area: Answer3; }
-#answer-variant-4 { grid-area: Answer4; }
+#answer-variant-1 {
+  grid-area: Answer1;
+}
+
+#answer-variant-2 {
+  grid-area: Answer2;
+}
+
+#answer-variant-3 {
+  grid-area: Answer3;
+}
+
+#answer-variant-4 {
+  grid-area: Answer4;
+}
+
 /* Styling of all answers */
 .answer-variant {
-    background-color: navy; color: azure;  
-    height: 1.85em; min-width: 16em;
-    border: 4px solid teal; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
+  background-color: navy;
+  color: azure;
+  cursor: pointer;
+  /* Regulates appearance of pointer when it's hovered over the button */
+  height: 1.85em;
+  min-width: 16em;
+  border: 4px solid teal;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/* .answer-variant:hover { background-color: darkslategray; } */   /* This effect moved to the JS script (mouseenter / mouseleave) */
 
 /* Styling of the grid box with a question and answers */
-#quiz-grid-box{
-    display: grid;
-    width: max-content;
-    text-align: center; 
-    row-gap: 1.25em; column-gap: 4.5em;
-    grid-template-areas: 
-        "Question Question"
-        "Answer1 Answer2"
-        "Answer3 Answer4";
+#quiz-grid-box {
+  display: grid;
+  width: max-content;
+  text-align: center;
+  row-gap: 1.25em;
+  column-gap: 4.5em;
+  grid-template-areas:
+    "Question Question"
+    "Answer1 Answer2"
+    "Answer3 Answer4";
 }
 
 /* Styling of the report section */
 #report {
-    margin-top: 2em;  margin-left: auto; margin-right: auto;
-    overflow-x: auto;  /* enabling scrollbar if the table is not fit, but the scrollbar appears in the bottom of a page (Firefox) */
-    overflow-y: hidden; 
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2em;
 }
-#statistics-table-box {
-    display: none;   /* will be shown after 1 played quiz game */
-    font-weight: bold; margin-top: 2em;
-    /* white-space: nowrap; */  /* disallow to use whitespace for wrapping content */ 
-}
-#statistics-table {
-    border-collapse: collapse;  /* makes border collapse for th ('table headers') and td ('table data') */
-}  
-#statistics-table th {
-    padding-left: 1em; padding-right: 1em; padding-bottom: 0.5em;
-}
-#statistics-table th, td { border: 1px solid brown; }
 
-#page-footer{
-    margin-top: 25vh; margin-left: 2%;  /* ... % of viewport height */
-    text-align: left;  /* prevent footer text to be centrally aligned */
+#statistics-table-box {
+  /* display property managed by JS script */
+  display: none;
+  font-weight: bold;
+  margin-top: 2em;
+}
+#statistics-table-box span {
+  margin: 0.75em;
+}
+
+#statistics-table {
+  border-collapse: collapse;
+}
+
+#statistics-table th, td {
+  border: 2px solid rgb(180, 39, 39);
+  padding: 0.75em;
 }
 
 /* Set the background image for the entire page using external resource */
 #background-image-box {
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_the_United_States_of_America.png);
-    opacity: 0.128;
-    /* Preserve initial image sizes */
-    background-size: contain;
-    /* Stretch the image to cover background */
-    /* background-size: cover;   */
-    background-repeat: repeat;   /* allows smoother behavior for different page sizes */
-    position: absolute;
-    /* Possibly, actual size of the page recalculated, and these values calculated wrongly (100% causes scroll bar appearance) */
-    width: calc(100vw - 2*(0.25em + 0.2em + 0.2em));  /* width reduced for accounting all default margins */
-    height: calc(100vh - 2*(0.25em + 0.2em + 0.2em));   /* Calculated relative to the first relatively placed parent element (<main> element) */
-    z-index: 0;  /* place it behind all other elements */
+  background-image: url("./images/bckgr_quiz_unsplash_by_mark-boss.jpg");
+  opacity: 0.38;
+  position: absolute;
+  /* Stretch the image to cover background */
+  background-size: cover;
+  background-position: center;
+  /* Setting width and height for better scaling with viewport sizes */
+  width: 100vw;
+  /* following setting for an entire <body> for adapting after adding the quiz section*/
+  min-height: 100%;
+  height: auto; 
+  /* z-index for placing it behind all other elements */
+  z-index: 0;
 }
 
-/* Quick search reveals that there isn't direct way to style the <progress> element, so one should use pseudo-classes for each specific browser */
-#remaining-time-bar { margin-top: 0.42em; }
+/* Styling of a <progress> should be done using pseudo-classes for each specific browser */
+/* First, remove any browser-specific behavior */
+#remaining-time-bar {
+  margin-left: 0.75em;
+  margin-top: 0.1em;
+  /* below - remove any standard for specific browsers appearance of progress bar */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 /* Styling for Firefox */
 #remaining-time-bar::-moz-progress-bar {
-    margin-top: 0em;
-    background: linear-gradient(to right, rgba(254, 4, 4, 1) 0%, rgba(254, 4, 4, 0.5) 50%, rgba(254, 4, 4, 0.1) 100%);
+  margin-top: 0em;
+  background: linear-gradient(to right,
+      rgba(254, 4, 4, 1) 0%,
+      rgba(254, 4, 4, 0.5) 50%,
+      rgba(254, 4, 4, 0.1) 100%);
 }
+
 /* Styling for WebKit-based browsers (Safari, Chromium) */
 #remaining-time-bar::-webkit-progress-bar {
-    margin-top: 0em;
-    background: linear-gradient(to right, rgba(254, 4, 4, 1) 0%, rgba(254, 4, 4, 0.5) 50%, rgba(254, 4, 4, 0.1) 100%);
+  margin-top: 0em;
+  background: linear-gradient(to right,
+      rgba(254, 4, 4, 1) 0%,
+      rgba(254, 4, 4, 0.5) 50%,
+      rgba(254, 4, 4, 0.1) 100%);
 }
-
-/* Adjusting styles based on the device width */
-@media screen and (max-width: 1280px) {
-    #project-header { margin-top: 15vh; }
-    #page-footer { margin-top: 24vh; }
-    #statistics-table-box { margin-top: 1.5em; }
-}
-@media screen and (max-width: 1240px) {
-    #project-header { margin-top: 14vh; }
-    #page-footer { margin-top: 22vh; }
-}
-@media screen and (max-width: 1200px) {
-    #project-header { margin-top: 12vh; }
-    #page-footer { margin-top: 20vh; }
-    #statistics-table-box { margin-top: 1em; }
-}
-@media screen and (max-width: 1120px) {
-    #project-header { margin-top: 10vh; }
-    #page-footer { margin-top: 18vh; }
-}
-@media screen and (max-width: 1040px) {
-    #project-header { margin-top: 6vh; }
-    #page-footer { margin-top: 14vh; }
-}
-
-/* Screen smaller than 1000px, reduce some sizes for better fitting elements */
-@media screen and (max-width: 1000px) {
-    body {
-        margin: 0.15em;
-    }
-    body *{
-        font-size: 1rem;
-        padding: 0.15em; margin: 0.2em 0.15em;
-        line-height: 1.1em;  
-    }
-    #page-footer { margin-top: 8vh; }
-}
-
-/* Mobile and small screen design */
-@media screen and (max-width: 925px) {
-    #page-footer { text-align: center; }
-    #lives-number { font-size: 1em;}
-
-    #launch-quiz-properties-box > * {
-        margin-left: 0.4em; margin-left: 0.4em;
-        margin-top: 0.5em; margin-bottom: 0.5em;
-    }
-    #launch-quiz-properties-box {
-        display: flex; flex-direction: column; flex-wrap: wrap;
-        align-items: center; justify-content: center;
-    }
-    #time-lives-box > *{
-        margin-top: 0.4em; margin-bottom: 0.4em;
-        margin-left: 0.4em; margin-left: 0.4em;
-    }
-    #time-lives-box{
-        display: flex; flex-direction: row; flex-wrap: wrap; 
-        align-items: center; justify-content: center;
-    }
-}
-@media screen and (max-width: 700px) {
-    body *{ font-size: 0.95rem; } 
-    #remaining-time-bar { width: 125px;}
-    #quiz-grid-box { row-gap: 1em; column-gap: 1.5em; }
-    #quiz-question { height: 1.25em; min-width: fit-content; padding-left: 12\vw; padding-right: 12vw;} 
-    .answer-variant { height: 1.25em; min-width: fit-content; } 
-    #page-footer { margin-top: 3vh; }
-}
-
-/* After few tests, it's better to apply shrinking of the answers starting from the width of recent iPhones */
-@media screen and (max-width: 392px) {
-    /* Below - squeeze the table */
-    #statistics-table th { padding-left: 0.25em; padding-right: 0.25em; padding-bottom: 0.5em; }
-    #statistics-table th, td { font-size: 0.92rem };
-    body *{ overflow-wrap: break-word; }  /* Force all elements to break into lines */
-    /* NOTE: for adjusting elements width for breaking into words, one needed to fix width property */
-    #quiz-grid-box { width: fit-content; }
-}
-@media screen and (max-width: 320px) {
-    #remaining-time-bar { width: 110px;}
-    #quiz-grid-box { display: flex; flex-direction: column; }
-}
-@media screen and (max-width: 300px) { #launch-control-button { width: 12em; } }

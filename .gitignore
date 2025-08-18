@@ -16,7 +16,7 @@ Documents/*
 .idea/*
 .vscode/*
 lang_quiz_react/ignored/*
-
+!static_quiz/images/bckgr_quiz_unsplash_by_mark-boss.jpg
 
 # Added by Vite configuration, placed here as in the core file for the repository:
 # Logs

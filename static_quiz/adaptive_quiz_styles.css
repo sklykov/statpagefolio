@@ -1,0 +1,153 @@
+/* Adjusting styles based on the device's screen width (media queries) */
+/* Extra large devices (desktop screens):  @media (min-width: 1200px) */
+/* Large devices (desktops, 992px and up): @media (min-width: 992px) and (max-width: 1199.98px) */
+/* Medium devices (tablets, from 768px and up to ~ 992px): @media (min-width: 768px) and (max-width: 991.98px) */
+/* Small devices:  @media (min-width: 576px) and (max-width: 767.98px)*/
+/* Extra small device: @media (max-width: 575.98px) */
+
+/* Extra large devices (desktop screens) - increase sizes (font) */
+@media (min-width: 1200px) {
+  body * {
+    font-size: 1.275rem;
+  }
+}
+
+/* All screens less than extra large breakpoint */
+@media (max-width: 1199.98px) {
+  header {
+    margin-top: 12vh;
+  }
+
+  footer {
+    margin-top: 8vh;
+  }
+
+  .flexbox-container-rows {
+    flex-wrap: wrap;
+  }
+}
+
+/* Medium and small screen devices */
+@media (max-width: 991.98px) {
+  header {
+    margin-top: 8vh;
+  }
+
+  footer {
+    margin-top: 4vh;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  body * {
+    font-size: 1.05rem;
+    line-height: 1.1rem;
+  }
+
+  #lives-number {
+    font-size: 1em;
+  }
+}
+
+/* Small and extra small devices */
+@media (max-width: 767.98px) {
+  header {
+    margin-top: 4vh;
+  }
+
+  main header, section, footer {
+    margin-left: 1em; margin-right: 1em;
+    white-space: normal;
+  }
+  #report {
+    margin-left: 1em; margin-right: 1em;
+  }
+
+  .flexbox-container-rows,
+  #launch-control-button,
+  #time-lives-box, #quiz-box {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+
+  #remaining-time-bar {
+    width: 125px;
+  }
+
+  #quiz-grid-box {
+    row-gap: 1em;
+    column-gap: 1.5em;
+  }
+
+  #quiz-question {
+    height: 1.25em;
+    min-width: fit-content;
+    padding-left: 12vw;
+    padding-right: 12vw;
+  }
+
+  .answer-variant {
+    padding: 0.25em;
+    height: 1.25em;
+    min-width: fit-content;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 575.98px) {
+  body * {
+    font-size: 1.0rem;
+    line-height: 1.05rem;
+  }
+  header {
+    margin-top: 1.5em;
+  }
+  /* Stacking all answer variants in a column */
+  #quiz-grid-box {
+    grid-template-areas: "Question"
+    "Answer1"
+    "Answer2"
+    "Answer3"
+    "Answer4";
+  }
+  /* Allow all variants to use entire available width */
+  #quiz-grid-box {
+    width: calc(100% - 2em); 
+    margin-left: auto; margin-right: auto;
+  }
+  #quiz-question {
+    min-width: 0;
+  }
+  /* Decrease margins between elements */
+  #quiz-box {
+    margin-top: 0.65em;
+    margin-bottom: 0.65em;
+  }
+  #time-lives-box * {
+    margin: 0.5em;
+  }
+  #remaining-time-bar {
+    margin-top: 0.5em; 
+    margin-bottom: 0.75em;
+  }
+  /* Styling table for fitting it to the small size screen */
+  #report {
+    overflow-x: auto;
+    margin-left: 0.5em; margin-right: 0.5em;
+  }
+  #statistics-table-box * {
+    font-size: 0.92rem;
+  }
+}
+
+/* Additional reducing of the used font-size for small screen mobiles */
+@media (max-width: 350.98px) {
+  body * {
+    font-size: 0.95rem;
+    line-height: 0.95rem;
+  }
+  #statistics-table-box * {
+    font-size: 0.85rem;
+  }
+}
