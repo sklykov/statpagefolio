@@ -9,11 +9,8 @@
 let checkPrinciples = false;  // used for on / off logging into console some principles not related to the working logic of a page
 const date = new Date(); const year = date.getFullYear();  // get the actual year
 
+// All logic related to the moment then page is loaded.
 document.addEventListener("DOMContentLoaded", () => {
-    // All logic related to the moment then page is loaded.
-    // Set width and height for the background image element to represent it. There are the issue with getting actual height value of the main element
-    const mainElement = document.querySelector("main");  // get the main page content container
-
     // Page elements handles and associated variables
     const startButton = document.getElementById("launch-control-button"); const startButtonText = document.getElementById("launch-button-text");
     const timeLivesBox = document.getElementById("time-lives-box"); const livesNumberElement = document.getElementById("lives-number");
@@ -21,12 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizBox = document.getElementById("quiz-box"); const footer = document.getElementById("page-footer");
     const answer1 = document.getElementById("answer-variant-1"); const answer2 = document.getElementById("answer-variant-2");
     const answer3 = document.getElementById("answer-variant-3"); const answer4 = document.getElementById("answer-variant-4");
-    const pageHeader = document.getElementById("project-header"); const head = document.querySelector("head"); 
-    const rightAnswersIndicator = document.getElementById("right-answers"); const statisticsTableBox = document.getElementById("statistics-table-box");
+    const head = document.querySelector("head"); const rightAnswersIndicator = document.getElementById("right-answers"); 
+    const statisticsTableBox = document.getElementById("statistics-table-box");
     const initialStringStatistics = document.getElementById("initial-statistics-string"); const rank = document.getElementById("rank"); 
     const rightAnswersTable = document.getElementById("table-right-answers"); const passedSecondsTable = document.getElementById("passed-time-answers");
-    const remainedLivesTable = document.getElementById("remained-lives-answers"); const projectShortInfo = document.getElementById("project-short-description");
-    const initialRank = rank.innerText; const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
+    const remainedLivesTable = document.getElementById("remained-lives-answers");  const initialRank = rank.innerText;
+    const hoveredBackgroundColor = "darkslategray";  // difficult to retrieve stored for CSS pseudoclass value in JS
 
     // Variables and constants for the function within the DOMContentLoaded event handler
     const initComputedStartButtonWidth = parseFloat(getComputedStyle(startButton).getPropertyValue("width"));  // getting computed button width
@@ -41,6 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let timerHandle = undefined;  // store handle for counting down the remained for giving an answer time
     let buttonStartedStyleElementCreated = false; let buttonStartedStyle = undefined; let playedGames = 0;
     footer.innerHTML = `${year}, ` + footer.innerHTML;  // set actual year on the web-page
+
+    // Adaptivity for animation of remaining lives for small screens
+    let fontMagnifier = 1.5; 
+    if (window.innerWidth < 576) {
+        fontMagnifier = 1.3;
+    }
 
     // Start / stop the quiz by the button click
     startButton.addEventListener("click", handleStartButtonClick);
@@ -196,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Animate that the lives number changed
-    const livesNumberEffect = [{ fontSize: `${initialFontSizeLives}px` }, { fontSize: `${1.5 * initialFontSizeLives}px` },
+    const livesNumberEffect = [{ fontSize: `${initialFontSizeLives}px` }, { fontSize: `${fontMagnifier * initialFontSizeLives}px` },
     { fontSize: `${initialFontSizeLives}px` }];
     const livesNumberTiming = { duration: 0.8 * animationsDuration, iterations: 1 };
     function animateLivesNumber() {

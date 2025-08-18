@@ -5,5 +5,5 @@ Collected notes about developing:
 4) All associated files with tests of this functionality are removed.
 
 TODOs:
-1) Remove comments about what was tested and not used; 
-3) Check issues on mobile screens with buttons appearance + footer styling; 
+- Final check: after merging a branch and auto-deploying how it works on mobile / PC screens. 
+  If something will be completely wrong, create new branch for fixes.

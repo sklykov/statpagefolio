@@ -96,9 +96,14 @@
 
 /* Extra small devices */
 @media (max-width: 575.98px) {
+  body * {
+    font-size: 1.0rem;
+    line-height: 1.05rem;
+  }
   header {
     margin-top: 1.5em;
   }
+  /* Stacking all answer variants in a column */
   #quiz-grid-box {
     grid-template-areas: "Question"
     "Answer1"
@@ -106,11 +111,43 @@
     "Answer3"
     "Answer4";
   }
+  /* Allow all variants to use entire available width */
   #quiz-grid-box {
     width: calc(100% - 2em); 
     margin-left: auto; margin-right: auto;
   }
   #quiz-question {
     min-width: 0;
+  }
+  /* Decrease margins between elements */
+  #quiz-box {
+    margin-top: 0.65em;
+    margin-bottom: 0.65em;
+  }
+  #time-lives-box * {
+    margin: 0.5em;
+  }
+  #remaining-time-bar {
+    margin-top: 0.5em; 
+    margin-bottom: 0.75em;
+  }
+  /* Styling table for fitting it to the small size screen */
+  #report {
+    overflow-x: auto;
+    margin-left: 0.5em; margin-right: 0.5em;
+  }
+  #statistics-table-box * {
+    font-size: 0.92rem;
+  }
+}
+
+/* Additional reducing of the used font-size for small screen mobiles */
+@media (max-width: 350.98px) {
+  body * {
+    font-size: 0.95rem;
+    line-height: 0.95rem;
+  }
+  #statistics-table-box * {
+    font-size: 0.85rem;
   }
 }

@@ -4,7 +4,9 @@ body {
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 100vh;
+  /* height auto allows to grow entire body size after placing quiz grid section */
+  min-height: 100%;
+  height: auto; 
 }
 
 body * {
@@ -234,7 +236,9 @@ footer {
   background-position: center;
   /* Setting width and height for better scaling with viewport sizes */
   width: 100vw;
-  height: 100vh;
+  /* following setting for an entire <body> for adapting after adding the quiz section*/
+  min-height: 100%;
+  height: auto; 
   /* z-index for placing it behind all other elements */
   z-index: 0;
 }
