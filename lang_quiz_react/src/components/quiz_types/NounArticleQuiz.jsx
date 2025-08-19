@@ -2,8 +2,9 @@ import { useEffect, useState, useReducer } from "react";
 import styles from "./NounArticleQuiz.module.css";
 import { getNounsSlice } from "../quiz_data/Nouns.js";
 import TimerBar from "./TimerBar.jsx";
+import { useCallback } from "react";
 
-let variants = ["der", "die", "das"]; // 3 base articles - fixed answer variants for nouns
+let variants = ["der", "die", "das"]; // 3 base articles - fixed answer variants of articles for nouns
 
 // Shuffle array function from the https://javascript.info/task/shuffle (Fisher-Yates shuffle algorithm)
 // This function is used for shuffle the 3 variants of articles for answer variants
@@ -14,7 +15,7 @@ function shuffle(array) {
   }
 }
 
-// Reducer function for updating stored answers
+// Reducer function for updating provided by an user answers (# of right answers and # of scores)
 function updateAnswers(answersState, invokedAction) {
   if (invokedAction.type === "answered") {
     return {
@@ -33,6 +34,7 @@ function updateAnswers(answersState, invokedAction) {
 // Component function for the preparing quiz question about the article of the noun
 export default function NounArticleQuiz({ userInfo }) {
   let quizLength = 5; // number of words for fetching and asking during the quiz
+  const timeForAnswerInMs = 5_000;  // in ms overall time for
 
   // Various states managed using the useState hook
   const [quizGoing, setQuizState] = useState(true);
@@ -40,6 +42,7 @@ export default function NounArticleQuiz({ userInfo }) {
   const [indexQuestion, setCurrentIndexQuestion] = useState(0);
   const [quizNouns, setQuizNouns] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [answerProvided, setAnswerProvided] = useState(false); 
 
   // Managing complex state (answers) by the useReducer hook
   const [answers, dispatchAnswers] = useReducer(updateAnswers, {
@@ -47,13 +50,16 @@ export default function NounArticleQuiz({ userInfo }) {
     score: 0,
   });
 
+  // Definition of the function for retrieving data from the simulated backend
   useEffect(() => {
-    // Definition of the function for retrieving data from the simulated backend
-    async function retrieveData() {
+    let componentMounted = true;
+    // because below is the async function used, it should be somehow cleaned up for preventing launching it again, 
+    // if the component remounts
+    async function retrieveData(quizLength, userInfo) {
       console.log("Start Retrieving data...");
       try {
         const nouns = await getNounsSlice(quizLength, userInfo, []);
-        if (nouns.length > 0) {
+        if (nouns.length > 0 && componentMounted) {
           setQuizNouns(nouns);
         }
       } catch (error) {
@@ -62,7 +68,8 @@ export default function NounArticleQuiz({ userInfo }) {
       }
       console.log("Stop Retrieving data.");
     }
-    retrieveData();
+    retrieveData(quizLength, userInfo);
+    return () => {componentMounted = false};   // manual clean up logic 
   }, [quizLength, userInfo]);
 
   // Set the first question (triggered by retrieved data), performed when the quizNouns state is changed
@@ -80,7 +87,8 @@ export default function NounArticleQuiz({ userInfo }) {
 
   // Handle click on the variant of an answer
   function handleVariantSelection(e) {
-    // Handle clicked variant or null if the timer is expired
+    // Handle clicked variant or null if the timer is expired`
+    setAnswerProvided(true); 
     if (e !== null) {
       if (e.target.innerText === currentQuestion.article) {
         // TODO: add useReducer for saving the learnt words and managing the next quiz round
@@ -90,20 +98,32 @@ export default function NounArticleQuiz({ userInfo }) {
         console.log("Wrong answer!");
         dispatchAnswers({type: "not answered"}); // update associated with answer statistics object
       }
-    } else {
-      console.log("Not answered within time!");
-      dispatchAnswers({type: "not answered"}); // update associated with answer statistics object
     }
-    // FIX: Proceed to the next question (not working properly)
+    setAnswerProvided(false); 
+    // Proceed to the next question
+    moveToTheNextQuestion(indexQuestion, quizLength, quizNouns); 
+  }
+
+  // Handle proceeding to the next question
+  function moveToTheNextQuestion(indexQuestion, quizLength, quizNouns) {
     console.log("Current Question #:", indexQuestion);
-    if (indexQuestion < quizLength) {
+    if (indexQuestion < quizLength-1) {
       setCurrentIndexQuestion((prevIndex) => { 
         setCurrentQuestion(quizNouns[prevIndex + 1]);
         return prevIndex + 1});
+        console.log("Proceed to the next question");
     } else {
       setQuizState(false);
+      console.log("Round finished");
     }
   }
+
+  // Handle timeout event - hook useCallback wraps up the function that shouldn't cause any new re-rendering
+  const handleTimeout = useCallback(() => {
+    console.log("Not answered within time!");
+    dispatchAnswers({type: "not answered"});
+    moveToTheNextQuestion(indexQuestion, quizLength, quizNouns); 
+  }, [indexQuestion, quizLength, quizNouns]);
 
   // JSX forming conditionally
   return (
@@ -118,7 +138,10 @@ export default function NounArticleQuiz({ userInfo }) {
         <div className={styles.quizBox}>
           <div className={styles.progressBox}>
             <div> Remained Time for Answer: </div>
-            <TimerBar onTimeout={() => {handleVariantSelection(null);}} timeForAnswer={10000} />
+            {/* Used tricks for TimerBar: 1) "key" changing refreshes the component + timer;
+             2) useCallback prevents refresh of the component on each refresh of this component */}
+            <TimerBar key={indexQuestion} onTimeout={handleTimeout} timeForAnswer={timeForAnswerInMs} 
+              quizIsStillGoing = {quizGoing} answered = {answerProvided}/>
           </div>
           <div lang="de" className={styles.questionBox}>
             Select proper article for:{" "}

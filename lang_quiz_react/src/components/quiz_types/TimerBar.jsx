@@ -3,30 +3,44 @@ import "./TimerBarStyles.css";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../store/ThemeContextProvider.jsx";
 
-export default function TimerBar({ timeForAnswer, onTimeout }) {
+export default function TimerBar({
+  timeForAnswer,
+  onTimeout,
+  quizIsStillGoing,
+  answered,
+}) {
   // Handle timer by using hooks
-  let stepTimer = 0.02 * timeForAnswer; // 1% of the width - step for counting interval
-  const [widthProgress, setWidthProgress] = useState(100);
+  const defaultProgressWidth = 100;
+  const stepTimer = 0.02 * timeForAnswer; // 2% of the width - step for counting interval
+  const [widthProgress, setWidthProgress] = useState(defaultProgressWidth);
   const [remainingTime, setRemainingTime] = useState(timeForAnswer);
-
-  // console.log(`${widthProgress}%`, remainingTime, onTimeout);
 
   // Setting handle for timeout event - proceed to the next question on the parent component
   useEffect(() => {
-    setTimeout(onTimeout, timeForAnswer);
-  }, [timeForAnswer, onTimeout]);
+    const timeoutEvent = setTimeout(onTimeout, timeForAnswer);
+    return () => clearTimeout(timeoutEvent); 
+  }, [onTimeout, timeForAnswer]);
 
   // Set the interval for reducing the remained time
   useEffect(() => {
-    setInterval(() => {
-      setRemainingTime((prevTime) => {
-        if (prevTime - stepTimer >= 0) {
-          setWidthProgress((prevProgress) => prevProgress - 2);
+    // schedule callbacks with interval in ms
+    if (!answered && quizIsStillGoing) {
+      const countdownInterval = setInterval(() => {
+        if (remainingTime - stepTimer >= 0 && quizIsStillGoing && !answered) {
+          // change states of interval and state of a progress bar
+          setRemainingTime((prevTime) => {
+            setWidthProgress((prevProgress) => prevProgress - 2);
+            return prevTime - stepTimer;
+          });
+        } else {
+          clearInterval(countdownInterval); // clear interval task
+          setRemainingTime(timeForAnswer); // getting back to the starting time
+          setWidthProgress(defaultProgressWidth); // getting back full width of a progress bar
         }
-        return prevTime - stepTimer;
-      });
-    }, stepTimer);
-  }, [stepTimer]);
+      }, stepTimer);
+      return () => clearInterval(countdownInterval); // clean up function in the end (e.g. if component is unmounted)
+    }
+  }, [remainingTime, stepTimer, timeForAnswer, quizIsStillGoing, answered]);
 
   let { theme } = useContext(ThemeContext);
 
@@ -36,16 +50,18 @@ export default function TimerBar({ timeForAnswer, onTimeout }) {
 
   // Progress Bar simulation inspired by: https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css
   return (
-    <div className={outerDivStyles}>
-      <div
-        style={{
-          width: `${widthProgress}%`,
-        }}
-        className={innerDivStyles}
-      >
-        {" "}
+    <section>
+      <div className={outerDivStyles}>
+        <div
+          style={{
+            width: `${widthProgress}%`,
+          }}
+          className={innerDivStyles}
+        >
+          {" "}
+        </div>
       </div>
-      <div> Remaining Time: {remainingTime} ms </div>
-    </div>
+      <p> Remaining Time: {remainingTime} ms </p>
+    </section>
   );
 }
