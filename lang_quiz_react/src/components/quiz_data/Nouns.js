@@ -15,7 +15,7 @@ const nouns_data = [
 ]
 
 // function returning Promise with the sliced data from the array above
-export function getNounsSlice(n_words, userCredentials, learntNouns) {
+export function getNounsSlice(n_words, authenticated, learntNouns) {
     let response = new Promise((resolve, reject) => {
         let n_nouns = nouns_data.length; let initialData = nouns_data.slice();
         // Filter out the already learnt nouns from the initial array with words
@@ -35,7 +35,7 @@ export function getNounsSlice(n_words, userCredentials, learntNouns) {
         // Select random slice of words for returning, set resolve and reject answers
         let responseTime = Math.round(Math.random()*2000) + 2000;  // random ms response time from the specified range
         // console.log("Expected response time:", responseTime);
-        if ((n_words <= n_nouns) && (userCredentials.authenticated === true)) {
+        if ((n_words <= n_nouns) && (authenticated)) {
             let nounsSlice = []; 
             // Randomly select and return the slice of 
             for (let i=0; i < n_words; i++) {

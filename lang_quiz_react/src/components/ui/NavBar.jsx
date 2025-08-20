@@ -22,11 +22,7 @@ export default function NavBar({openInfoWindow, userInfo}) {
         </button>
         <span>
           Current User: {userInfo.user}, Authenticated:{" "}
-          {userInfo.authenticated
-            ? userInfo.authenticated === true
-              ? "yes"
-              : String(userInfo.authenticated)
-            : "not"}
+          {userInfo.authenticated ? "yes" : "not"}, Status: {userInfo.status}
         </span>
         <StyleSwitcher
           styleSymbol={styleSymbol}

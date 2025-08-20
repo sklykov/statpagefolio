@@ -34,7 +34,7 @@ function updateAnswers(answersState, invokedAction) {
 // Component function for the preparing quiz question about the article of the noun
 export default function NounArticleQuiz({ userInfo }) {
   let quizLength = 5; // number of words for fetching and asking during the quiz
-  const timeForAnswerInMs = 5_000;  // in ms overall time for
+  const timeForAnswerInMs = 8_000;  // in ms overall time for
 
   // Various states managed using the useState hook
   const [quizGoing, setQuizState] = useState(true);
@@ -55,10 +55,10 @@ export default function NounArticleQuiz({ userInfo }) {
     let componentMounted = true;
     // because below is the async function used, it should be somehow cleaned up for preventing launching it again, 
     // if the component remounts
-    async function retrieveData(quizLength, userInfo) {
+    async function retrieveData(quizLength, authenticated) {
       console.log("Start Retrieving data...");
       try {
-        const nouns = await getNounsSlice(quizLength, userInfo, []);
+        const nouns = await getNounsSlice(quizLength, authenticated, []);
         if (nouns.length > 0 && componentMounted) {
           setQuizNouns(nouns);
         }
@@ -66,17 +66,19 @@ export default function NounArticleQuiz({ userInfo }) {
         setQuizNouns([]);
         setErrorMessage(String(error));
       }
-      console.log("Stop Retrieving data.");
+      console.log("Data retrieving finished.");
     }
-    retrieveData(quizLength, userInfo);
+    // Retrieve data if only user was authenticated (simple flag is True)
+    if (userInfo.authenticated) {
+      retrieveData(quizLength, userInfo.authenticated);
+    }
     return () => {componentMounted = false};   // manual clean up logic 
   }, [quizLength, userInfo]);
 
   // Set the first question (triggered by retrieved data), performed when the quizNouns state is changed
   useEffect(() => {
     if (quizNouns.length > 0) {
-      setCurrentQuestion(quizNouns[0]);
-      setCurrentIndexQuestion((prevIndex) => prevIndex + 1);
+      setCurrentQuestion(quizNouns[0]); setCurrentIndexQuestion(0); 
     }
   }, [quizNouns]);
   
@@ -106,12 +108,12 @@ export default function NounArticleQuiz({ userInfo }) {
 
   // Handle proceeding to the next question
   function moveToTheNextQuestion(indexQuestion, quizLength, quizNouns) {
-    console.log("Current Question #:", indexQuestion);
+    console.log("Answered Question #:", indexQuestion+1);
     if (indexQuestion < quizLength-1) {
       setCurrentIndexQuestion((prevIndex) => { 
         setCurrentQuestion(quizNouns[prevIndex + 1]);
         return prevIndex + 1});
-        console.log("Proceed to the next question");
+      console.log("Proceed to the next question");
     } else {
       setQuizState(false);
       console.log("Round finished");

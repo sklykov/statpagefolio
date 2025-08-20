@@ -25,6 +25,7 @@ export default function App() {
     user: "demo",
     password: "test",
     authenticated: false,
+    status: "authentication not started",
   });
 
   // Quiz state: started / finished (not yet started)
@@ -71,7 +72,7 @@ export default function App() {
               learn new words
             </p>
             <p>
-              For now, this project only mocks some backend communication. Later
+              For now, this project only mocks some back-end communication. Later
               on, the fullstack project will be developed.
             </p>
           </article>
